@@ -1,16 +1,13 @@
 [configuration]
 
 entry_symbol = "rgn_library_init"
+compatibility_minimum = "4.1"
 
 [libraries]
 
-macos.debug = "bin/rgn.macos.debug.framework"
-macos.release = "bin/rgn.macos.release.framework"
-windows.debug.x86_64 = "bin/rgn.windows.debug.x86_64.dll"
-windows.release.x86_64 = "bin/rgn.windows.release.x86_64.dll"
-linux.debug.x86_64 = "bin/rgn.linux.debug.x86_64.so"
-linux.release.x86_64 = "bin/rgn.linux.release.x86_64.so"
-linux.debug.arm64 = "bin/rgn.linux.debug.arm64.so"
-linux.release.arm64 = "bin/rgn.linux.release.arm64.so"
-linux.debug.rv64 = "bin/rgn.linux.debug.rv64.so"
-linux.release.rv64 = "bin/rgn.linux.release.rv64.so"
+macos.debug = "bin/rgn.macos.template_debug.framework"
+macos.release = "bin/rgn.macos.template_release.framework"
+windows.debug.x86_64 = "bin/rgn.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "bin/rgn.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "bin/librgn.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "bin/librgn.linux.template_release.x86_64.so"

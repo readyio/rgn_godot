@@ -1,3 +1,11 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1700555813
+::res://::1700691082
 icon.svg::CompressedTexture2D::5219335724467064237::1700555810::1700555815::1::::<><>::
+Node2D.gd::GDScript::-1::1700670420::0::1::::<>Node2D<>::
+node_2d.tscn::PackedScene::1625294372430888871::1700690598::0::1::::<><>::res://Node2D.gd
+::res://addons/::1700555875
+::res://addons/rgn/::1700673062
+rgn.gdextension::GDExtension::-1::1700567438::0::1::::<><>::
+::res://addons/rgn/bin/::1700673062
+::res://addons/rgn/bin/rgn.macos.template_debug.framework/::1700567372
+::res://addons/rgn/bin/rgn.macos.template_release.framework/::1700567372
