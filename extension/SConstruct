@@ -21,17 +21,9 @@ env.Append(CPPPATH=[
 ])
 sources = Glob("plugin/source/*.cpp") + Glob("plugin/source/**/*.cpp")
 
-if env["platform"] == "macos":
-    library = env.SharedLibrary(
-        "build/rgn.{}.{}.framework/rgn.{}.{}".format(
-            env["platform"], env["target"], env["platform"], env["target"]
-        ),
-        source=sources,
-    )
-else:
-    library = env.SharedLibrary(
-        "build/rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
-        source=sources,
-    )
+library = env.SharedLibrary(
+    "bin/rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+    source=sources,
+)
 
 Default(library)

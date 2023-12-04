@@ -1,0 +1,17 @@
+[config]
+name="rgn-iac"
+binary="rgn-iac.xcframework"
+
+initialization="godot_plugin_init"
+deinitialization="godot_plugin_deinit"
+
+[dependencies]
+linked=[]
+embedded=[]
+system=[]
+
+capabilities=[]
+
+files=[]
+
+[plist]
