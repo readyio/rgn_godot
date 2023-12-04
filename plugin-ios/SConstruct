@@ -146,7 +146,7 @@ else:
     print("No valid version to set flags for.")
     quit();
 
-# Adding header files
+# Adding godot header files
 if env['version'] == '3.x':
     env.Append(CPPPATH=[
         '.', 
@@ -159,6 +159,11 @@ else:
         'godot', 
         'godot/platform/ios',
     ])
+
+# Adding rgn-core header files
+env.Append(CPPPATH=['../extension/plugin/include'])
+env.Append(CPPPATH=['../extension/plugin/include/Godot'])
+env.Append(CPPPATH=['../extension/plugin/include/Https'])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 sources = Glob('src/*.cpp')
