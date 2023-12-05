@@ -161,7 +161,10 @@ else:
     ])
 
 # Adding rgn-core deeplink header file
-env.Append(CPPPATH=['../extension/plugin/include/DeepLink'])
+env.Append(CPPPATH=[
+    'include/',
+    '../extension/include/DeepLink'
+])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 sources = Glob('src/*.cpp')

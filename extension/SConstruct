@@ -14,14 +14,11 @@ env = SConscript("godot-cpp/SConstruct")
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=[
-    "plugin/source/",
-    "plugin/source/Http",
-    "plugin/source/DeepLink",
-    "plugin/include/",
-    "plugin/include/Http",
-    "plugin/include/DeepLink"
+    "include/",
+    "include/Http",
+    "include/DeepLink"
 ])
-sources = Glob("plugin/source/*.cpp") + Glob("plugin/source/**/*.cpp")
+sources = Glob("src/*.cpp") + Glob("src/**/*.cpp")
 
 library = env.SharedLibrary(
     "bin/rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),

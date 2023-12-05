@@ -1,6 +1,8 @@
 *.obj
 .sconsign.dblite
 *.os
+*.o
+*.d
 /.vscode
 /extension/bin/*
 /plugin-ios/bin/**/*.a
