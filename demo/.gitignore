@@ -6,3 +6,11 @@
 
 # IPA files
 *.ipa
+*.pck
+
+# Xcode Project Files
+/demo/**/*
+/demo.xcarchive/**/*
+/demo.xcframework/**/*
+/demo.xcodeproj/**/*
+/MoltenVK.xcframework/**/*
