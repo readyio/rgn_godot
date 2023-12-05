@@ -16,8 +16,10 @@ env = SConscript("godot-cpp/SConstruct")
 env.Append(CPPPATH=[
     "plugin/source/",
     "plugin/source/Http",
+    "plugin/source/DeepLink",
     "plugin/include/",
     "plugin/include/Http",
+    "plugin/include/DeepLink"
 ])
 sources = Glob("plugin/source/*.cpp") + Glob("plugin/source/**/*.cpp")
 
