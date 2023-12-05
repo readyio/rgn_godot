@@ -19,6 +19,9 @@ scons target=$1 arch=arm64 simulator=yes version=$2
 lipo -create "./bin/lib$plugin.x86_64-simulator.$1.a" "./bin/lib$plugin.arm64-simulator.$1.a" -output "./bin/$plugin-simulator.$1.a"
 lipo -create "./bin/lib$plugin.armv7-ios.$1.a" "./bin/lib$plugin.arm64-ios.$1.a" -output "./bin/$plugin-device.$1.a"
 
+# Delete previous xcframework
+rm -r "./bin/$plugin.$1.xcframework"
+
 # Creating a xcframework 
 xcodebuild -create-xcframework \
     -library "./bin/$plugin-device.$1.a" \

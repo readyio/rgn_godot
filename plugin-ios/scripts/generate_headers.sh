@@ -7,9 +7,9 @@ else
     if [[ "$2" == "debug" ]];
     then
         cd ./godot && \
-            ./../scripts/timeout scons platform=iphone target=template_debug
+            ./../scripts/timeout scons platform=ios target=template_debug
     else
         cd ./godot && \
-            ./../scripts/timeout scons platform=iphone target=template_release
+            ./../scripts/timeout scons platform=ios target=template_release
     fi
 fi

@@ -160,10 +160,8 @@ else:
         'godot/platform/ios',
     ])
 
-# Adding rgn-core header files
-env.Append(CPPPATH=['../extension/plugin/include'])
-env.Append(CPPPATH=['../extension/plugin/include/Godot'])
-env.Append(CPPPATH=['../extension/plugin/include/Https'])
+# Adding rgn-core deeplink header file
+env.Append(CPPPATH=['../extension/plugin/include/DeepLink'])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 sources = Glob('src/*.cpp')

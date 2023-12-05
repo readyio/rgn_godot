@@ -3,3 +3,6 @@
 
 # Log files
 *.log
+
+# IPA files
+*.ipa

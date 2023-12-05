@@ -1,5 +1,7 @@
 #include "Godot/G_RGNCore.h"
 #include "Http/Http.h"
+#include "DeepLink/DeepLink.h"
+#include <string>
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/string.hpp>
@@ -21,6 +23,12 @@ G_RGNCore::G_RGNCore()
 {
 	ERR_FAIL_COND(singleton != nullptr);
 	singleton = this;
+
+	DeepLink::Initialize();
+	DeepLink::Start();
+	DeepLink::Listen([](std::string payload) {
+		godot::UtilityFunctions::print("DEEPLINK RECEIVED IN RGNCORE!");
+	});
 }
 
 G_RGNCore::~G_RGNCore()
