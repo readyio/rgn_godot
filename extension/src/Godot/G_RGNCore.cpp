@@ -26,8 +26,8 @@ G_RGNCore::G_RGNCore()
 
 	DeepLink::Initialize();
 	DeepLink::Start();
-	DeepLink::Listen([](std::string payload) {
-		godot::UtilityFunctions::print("DEEPLINK RECEIVED IN RGNCORE!");
+	DeepLink::Listen([this](std::string payload) {
+		godot::UtilityFunctions::print("DEEPLINK RECEIVED IN RGNCORE! LOLOMG");
 	});
 }
 

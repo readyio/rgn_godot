@@ -4,9 +4,16 @@
 # Log files
 *.log
 
+# APK
+*.apk
+
 # IPA files
 *.ipa
 *.pck
+
+# Android Project FIles
+/android/build/**/*
+/android/.build_version
 
 # Xcode Project Files
 /demo/**/*

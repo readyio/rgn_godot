@@ -1,0 +1,11 @@
+[config]
+
+name="rgn-iac"
+binary_type="local"
+binary="rgn-iac.aar"
+
+[dependencies]
+
+local=[]
+remote=[]
+custom_maven_repos=[]
