@@ -1,5 +1,5 @@
-#include "Godot/G_RGNUpdater.h"
-#include "Http/HttpGodot.h"
+#include "G_RGNUpdater.h"
+#include "HttpGodot.h"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>

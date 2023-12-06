@@ -1,5 +1,5 @@
-#include "Http/HttpMethod.h"
-#include "Http/HttpGodotRequest.h"
+#include "HttpMethod.h"
+#include "HttpGodotRequest.h"
 #include <godot_cpp/classes/http_client.hpp>
 #include <string>
 #include <vector>

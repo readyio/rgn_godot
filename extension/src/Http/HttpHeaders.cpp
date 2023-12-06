@@ -1,4 +1,4 @@
-#include "Http/HttpHeaders.h"
+#include "HttpHeaders.h"
 #include <algorithm>
 
 void HttpHeaders::add(const std::string key, const std::string value) {

@@ -1,4 +1,4 @@
-#include "Http/HttpResponse.h"
+#include "HttpResponse.h"
 
 const std::string& HttpResponse::getResponseBody() const
 {

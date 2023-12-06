@@ -1,5 +1,5 @@
-#include "Http/HttpGodotRequest.h"
-#include "Http/HttpUtility.h"
+#include "HttpGodotRequest.h"
+#include "HttpUtility.h"
 #include <godot_cpp/classes/tls_options.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>

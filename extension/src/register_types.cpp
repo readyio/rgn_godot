@@ -1,7 +1,7 @@
 #include "register_types.h"
 
-#include "Godot/G_RGNCore.h"
-#include "Godot/G_RGNUpdater.h"
+#include "G_RGNCore.h"
+#include "G_RGNUpdater.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>

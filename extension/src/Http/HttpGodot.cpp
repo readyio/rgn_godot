@@ -1,6 +1,6 @@
-#include "Http/Http.h"
-#include "Http/HttpGodot.h"
-#include "Http/HttpGodotRequest.h"
+#include "Http.h"
+#include "HttpGodot.h"
+#include "HttpGodotRequest.h"
 #include <godot_cpp/classes/http_client.hpp>
 #include <godot_cpp/classes/tls_options.hpp>
 #include <godot_cpp/variant/string.hpp>

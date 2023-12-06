@@ -1,4 +1,4 @@
-#include "Http/HttpUtility.h"
+#include "HttpUtility.h"
 
 std::string HttpUtility::GetUrlHost(const std::string& url) {
     size_t host_start = url.find("://");

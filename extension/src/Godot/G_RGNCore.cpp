@@ -1,6 +1,7 @@
-#include "Godot/G_RGNCore.h"
-#include "Http/Http.h"
-#include "DeepLink/DeepLink.h"
+#include "G_RGNCore.h"
+#include "Http.h"
+#include "DeepLink.h"
+#include "Os.h"
 #include <string>
 
 #include <godot_cpp/core/class_db.hpp>
@@ -39,14 +40,15 @@ G_RGNCore::~G_RGNCore()
 
 void G_RGNCore::test()
 {
-	HttpHeaders headers;
-    headers.add("Content-type", "application/json");
-	Http::Request("https://random-d.uk/api/v2/random", HttpMethod::GET, headers, "", [](HttpResponse httpResponse) {
-		godot::String responseBody = godot::String(httpResponse.getResponseBody().c_str());
-		godot::UtilityFunctions::print(responseBody);
-	});
-	Http::Request("https://random-d.uk/api/v2/random", HttpMethod::GET, headers, "", [](HttpResponse httpResponse) {
-		godot::String responseBody = godot::String(httpResponse.getResponseBody().c_str());
-		godot::UtilityFunctions::print(responseBody);
-	});
+	Os::OpenURL("https://google.com");
+	// HttpHeaders headers;
+    // headers.add("Content-type", "application/json");
+	// Http::Request("https://random-d.uk/api/v2/random", HttpMethod::GET, headers, "", [](HttpResponse httpResponse) {
+	// 	godot::String responseBody = godot::String(httpResponse.getResponseBody().c_str());
+	// 	godot::UtilityFunctions::print(responseBody);
+	// });
+	// Http::Request("https://random-d.uk/api/v2/random", HttpMethod::GET, headers, "", [](HttpResponse httpResponse) {
+	// 	godot::String responseBody = godot::String(httpResponse.getResponseBody().c_str());
+	// 	godot::UtilityFunctions::print(responseBody);
+	// });
 }
