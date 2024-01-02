@@ -18,7 +18,8 @@ env.Append(CPPPATH=[
     "include/Godot",
     "include/Http",
     "include/DeepLink",
-    "include/Os"
+    "include/Os",
+    "include/SharedPrefs"
 ])
 sources = Glob("src/*.cpp") + Glob("src/**/*.cpp")
 

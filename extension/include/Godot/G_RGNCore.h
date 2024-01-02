@@ -18,5 +18,6 @@ public:
 	G_RGNCore();
 	~G_RGNCore();
 
-	void test();
+	void test_read();
+	void test_write();
 };
