@@ -1,7 +1,6 @@
 #pragma once
 
 #include <godot_cpp/classes/object.hpp>
-#include <godot_cpp/core/class_db.hpp>
 
 class G_RGNCore : public godot::Object
 {
@@ -18,6 +17,6 @@ public:
 	G_RGNCore();
 	~G_RGNCore();
 
-	void test_read();
-	void test_write();
+	void initialize(godot::Dictionary p_configure_data);
+	void update();
 };

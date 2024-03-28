@@ -1,27 +1,29 @@
-#include "HttpHeaders.h"
+#include "Http/HttpHeaders.h"
 #include <algorithm>
 
-void HttpHeaders::add(const std::string key, const std::string value) {
-    store[key] = value;
-}
-
-std::string HttpHeaders::get(const std::string& key) const {
-    if (store.find(key) != store.end()) {
-        return store.at(key);
+namespace RGN {
+    void HttpHeaders::add(const std::string key, const std::string value) {
+        store[key] = value;
     }
-    return "";
-}
 
-void HttpHeaders::remove(const std::string& key) {
-    if (store.find(key) != store.end()) {
-        store.erase(key);
+    std::string HttpHeaders::get(const std::string& key) const {
+        if (store.find(key) != store.end()) {
+            return store.at(key);
+        }
+        return "";
     }
-}
 
-std::vector<std::string> HttpHeaders::keys() const {
-    std::vector<std::string> keys;
-    for (const auto& kv : store) {
-        keys.push_back(kv.first);
+    void HttpHeaders::remove(const std::string& key) {
+        if (store.find(key) != store.end()) {
+            store.erase(key);
+        }
     }
-    return keys;
+
+    std::vector<std::string> HttpHeaders::keys() const {
+        std::vector<std::string> keys;
+        for (const auto& kv : store) {
+            keys.push_back(kv.first);
+        }
+        return keys;
+    }
 }

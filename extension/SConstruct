@@ -1,31 +1,32 @@
 #!/usr/bin/env python
-import os
-import sys
+import SCons.Script
 
+# Define the GlobRecursive function
+def GlobRecursive(pattern, node='.'):
+    results = []
+    for f in Glob(str(node) + '/*', source=True):
+        if type(f) is SCons.Node.FS.Dir:
+            results += GlobRecursive(pattern, f)
+    results += Glob(str(node) + '/' + pattern, source=True)
+    return results
+
+# Import SCons and create the base environment
 env = SConscript("godot-cpp/SConstruct")
 
-# For reference:
-# - CCFLAGS are compilation flags shared between C and C++
-# - CFLAGS are for C-specific compilation flags
-# - CXXFLAGS are for C++-specific compilation flags
-# - CPPFLAGS are for pre-processor flags
-# - CPPDEFINES are for pre-processor defines
-# - LINKFLAGS are for linking flags
+# Add include directories to the environment
+env.Append(CPPPATH=["include"])
 
-# tweak this if you want to use different folders, or more folders, to store your source code in.
-env.Append(CPPPATH=[
-    "include/",
-    "include/Godot",
-    "include/Http",
-    "include/DeepLink",
-    "include/Os",
-    "include/SharedPrefs"
-])
-sources = Glob("src/*.cpp") + Glob("src/**/*.cpp")
+# Glob all source files recursively in the src folder
+sources = GlobRecursive('*.cpp', node='src')
 
+# Create shared library
 library = env.SharedLibrary(
     "bin/rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
     source=sources,
 )
 
-Default(library)
+# Install the built library
+install_targets = env.Install(env.Dir("../demo/addons/rgn/bin"), library)
+
+# Set default targets
+Default(install_targets)

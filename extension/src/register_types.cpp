@@ -1,7 +1,7 @@
 #include "register_types.h"
 
-#include "G_RGNCore.h"
-#include "G_RGNUpdater.h"
+#include "Godot/Core/G_RGNCore.h"
+#include "Godot/Core/G_RGNEnvironmentTarget.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -9,36 +9,31 @@
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/engine.hpp>
 
-using namespace godot;
-
 static G_RGNCore* _g_rgnCore;
-static G_RGNUpdater* _g_rgnUpdater;
+static G_RGNEnvironmentTarget* _g_rgnEnvironmentTarget;
 
-void initialize_module(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+void initialize_module(godot::ModuleInitializationLevel p_level) {
+	if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
 
-	ClassDB::register_class<G_RGNCore>();
-	ClassDB::register_class<G_RGNUpdater>();
-
+	godot::ClassDB::register_class<G_RGNCore>();
+	godot::ClassDB::register_class<G_RGNEnvironmentTarget>();
 	_g_rgnCore = memnew(G_RGNCore);
-	_g_rgnUpdater = memnew(G_RGNUpdater);
-
-	Engine::get_singleton()->register_singleton("G_RGNCore", G_RGNCore::get_singleton());
-	Engine::get_singleton()->register_singleton("G_RGNUpdater", G_RGNUpdater::get_singleton());
+	_g_rgnEnvironmentTarget = memnew(G_RGNEnvironmentTarget);
+	godot::Engine::get_singleton()->register_singleton("RGNCore", G_RGNCore::get_singleton());
+	godot::Engine::get_singleton()->register_singleton("RGNEnvironmentTarget", G_RGNEnvironmentTarget::get_singleton());
 }
 
-void uninitialize_module(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+void uninitialize_module(godot::ModuleInitializationLevel p_level) {
+	if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
 
-	Engine::get_singleton()->unregister_singleton("G_RGNCore");
-	Engine::get_singleton()->unregister_singleton("G_RGNUpdater");
-
+	godot::Engine::get_singleton()->unregister_singleton("RGNCore");
+	godot::Engine::get_singleton()->unregister_singleton("RGNEnvironmentTarget");
 	memdelete(_g_rgnCore);
-	memdelete(_g_rgnUpdater);
+	memdelete(_g_rgnEnvironmentTarget);
 }
 
 extern "C" {
@@ -48,11 +43,11 @@ extern "C" {
 		const GDExtensionClassLibraryPtr p_library,
 		GDExtensionInitialization *r_initialization
 	) {
-		GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
+		godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 
 		init_obj.register_initializer(initialize_module);
 		init_obj.register_terminator(uninitialize_module);
-		init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
+		init_obj.set_minimum_library_initialization_level(godot::MODULE_INITIALIZATION_LEVEL_SCENE);
 
 		return init_obj.init();
 	}
