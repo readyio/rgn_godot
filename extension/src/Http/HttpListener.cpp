@@ -1,30 +1,40 @@
 #include "Http/HttpListener.h"
-#include "Http/HttpUtility.h"
 
 namespace RGN {
-	std::function<void(std::string)> _callback;
+	HttpListener::HttpListener() : pImpl(std::make_unique<HttpListenerImpl>()) {}
+	HttpListener::HttpListener(const HttpListener& other) : pImpl(std::make_unique<HttpListenerImpl>(*other.pImpl)) {}
+	HttpListener::HttpListener(HttpListener&& other) noexcept : pImpl(std::move(other.pImpl)) {}
+	HttpListener::~HttpListener() = default;
+	HttpListener& HttpListener::operator=(const HttpListener& other) {
+		if (this != &other) {
+			pImpl = std::make_unique<HttpListenerImpl>(*other.pImpl);
+		}
+		return *this;
+	}
+	HttpListener& HttpListener::operator=(HttpListener&& other) noexcept {
+		if (this != &other) {
+			pImpl = std::move(other.pImpl);
+		}
+		return *this;
+	}
 
 	bool HttpListener::isListening() {
-		// TODO
-		return false;
+		return pImpl->isListening();
 	}
 
 	int32_t HttpListener::getPort() {
-		// TODO
-		return 0;
+		return pImpl->getPort();
 	}
 
 	bool HttpListener::startListen(int32_t port, const std::function<void(std::string)>& callback, int32_t& boundedToPort) {
-		// TODO
-		return isListening();
+		return pImpl->startListen(port, callback, boundedToPort);
 	}
 
 	bool HttpListener::stopListen() {
-		// TODO
-		return true;
+		return pImpl->stopListen();
 	}
 
 	void HttpListener::poll() {
-		// TODO
+		return pImpl->poll();
 	}
 }

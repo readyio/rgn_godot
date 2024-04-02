@@ -1,8 +1,7 @@
 #include "register_types.h"
 
-#include "Godot/Core/G_RGNCore.h"
-#include "Godot/Core/G_RGNEnvironmentTarget.h"
-
+#include "Impl/Core/G_RGNCore.h"
+#include "Impl/Core/G_RGNEnvironmentTarget.h"
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -37,7 +36,6 @@ void uninitialize_module(godot::ModuleInitializationLevel p_level) {
 }
 
 extern "C" {
-	// Initialization.
 	GDExtensionBool GDE_EXPORT rgn_library_init(
 		GDExtensionInterfaceGetProcAddress p_get_proc_address,
 		const GDExtensionClassLibraryPtr p_library,

@@ -1,10 +1,10 @@
-#include "Godot/Core/G_RGNCore.h"
+#include "Impl/Core/G_RGNCore.h"
 #include "Core/RGNCore.h"
 #include "Core/RGNEnvironmentTarget.h"
-#include <string>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <string>
 
 G_RGNCore *G_RGNCore::singleton = nullptr;
 

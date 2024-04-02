@@ -2,8 +2,8 @@
 
 #include "RGNConfigureData.h"
 #include "RGNEnvironmentTarget.h"
-#include "../Utility/CancellationToken.h"
-#include "../json.hpp"
+#include "Utility/CancellationToken.h"
+#include "json.hpp"
 
 namespace RGN {
     class RGNCore {

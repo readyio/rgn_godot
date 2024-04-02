@@ -1,7 +1,4 @@
 #include "DeepLink/DeepLink.h"
-#if ANDROID_ENABLED
-#include "Godot/DeepLink/DeepLinkGodot.h"
-#endif
 #include <queue>
 
 namespace RGN {
@@ -44,9 +41,12 @@ namespace RGN {
 }
 
 #if ANDROID_ENABLED
-void JNICALL Java_io_getready_rgn_iac_RGNPlugin_onInvocation(JNIEnv* env, jobject instance, jstring Url) {
-    const char* urlChars = env->GetStringUTFChars(Url, nullptr);
-    std::string urlString = std::string(urlChars);
-    RGN::DeepLink::OnDeepLink(false, urlString);
+#include <jni.h>
+extern "C" {
+    JNIEXPORT void JNICALL Java_io_getready_rgn_iac_RGNPlugin_onInvocation(JNIEnv* env, jobject instance, jstring Url) {
+        const char* urlChars = env->GetStringUTFChars(Url, nullptr);
+        std::string urlString = std::string(urlChars);
+        RGN::DeepLink::OnDeepLink(false, urlString);
+    }
 }
 #endif

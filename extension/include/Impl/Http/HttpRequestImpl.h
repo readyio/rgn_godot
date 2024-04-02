@@ -8,7 +8,7 @@
 #include <godot_cpp/classes/http_client.hpp>
 
 namespace RGN {
-    class HttpRequestGodot {
+    class HttpRequestImpl {
     private:
         std::string url;
         HttpMethod method;
@@ -19,12 +19,12 @@ namespace RGN {
         godot::HTTPClient* httpClient;
         static godot::HTTPClient::Method GetGodotRequestMethod(HttpMethod method);
     public:
-        HttpRequestGodot();
-        HttpRequestGodot(const HttpRequestGodot& request);
-        HttpRequestGodot& operator=(const HttpRequestGodot& other);
-        HttpRequestGodot(HttpRequestGodot&& other) noexcept;
-        HttpRequestGodot& operator=(HttpRequestGodot&& other) noexcept;
-        ~HttpRequestGodot();
+        HttpRequestImpl();
+        HttpRequestImpl(const HttpRequestImpl& request);
+        HttpRequestImpl& operator=(const HttpRequestImpl& other);
+        HttpRequestImpl(HttpRequestImpl&& other) noexcept;
+        HttpRequestImpl& operator=(HttpRequestImpl&& other) noexcept;
+        ~HttpRequestImpl();
         void setUrl(std::string url);
         void setMethod(HttpMethod method);
         void setHeaders(HttpHeaders headers);
