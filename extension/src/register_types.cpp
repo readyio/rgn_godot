@@ -2,6 +2,7 @@
 
 #include "Impl/Core/G_RGNCore.h"
 #include "Impl/Core/G_RGNEnvironmentTarget.h"
+#include "Impl/Core/G_Timer.h"
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -18,6 +19,7 @@ void initialize_module(godot::ModuleInitializationLevel p_level) {
 
 	godot::ClassDB::register_class<G_RGNCore>();
 	godot::ClassDB::register_class<G_RGNEnvironmentTarget>();
+	godot::ClassDB::register_class<G_Timer>();
 	_g_rgnCore = memnew(G_RGNCore);
 	_g_rgnEnvironmentTarget = memnew(G_RGNEnvironmentTarget);
 	godot::Engine::get_singleton()->register_singleton("RGNCore", G_RGNCore::get_singleton());

@@ -20,8 +20,11 @@ env.Append(CPPPATH=["include"])
 sources = GlobRecursive('*.cpp', node='src')
 
 # Create shared library
+output_name = "rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"])
+if env["platform"] == "android":
+    output_name = "lib" + output_name  # Append 'lib' for Android platform
 library = env.SharedLibrary(
-    "bin/rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+    "bin/" + output_name,
     source=sources,
 )
 

@@ -6,7 +6,12 @@ func _ready():
 		apiKey = "",
 		environmentTarget = RGNEnvironmentTarget.DEVELOPMENT()
 	}
-	RGNCore.initialize(configureData)
+	RGNCore.initialize(self, configureData)
 
 func _process(delta):
 	RGNCore.update()
+	
+func _input(event):
+	if event is InputEventKey:
+		if (event.is_pressed() && event.keycode == KEY_SPACE):
+			RGNCore.signIn();
