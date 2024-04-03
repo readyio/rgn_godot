@@ -14,4 +14,6 @@ func _process(delta):
 func _input(event):
 	if event is InputEventKey:
 		if (event.is_pressed() && event.keycode == KEY_SPACE):
-			RGNCore.signIn();
+			RGNCore.signIn(func(isLoggedIn):
+				print("OnSignIn, isLoggedIn: " + str(isLoggedIn))
+			)
