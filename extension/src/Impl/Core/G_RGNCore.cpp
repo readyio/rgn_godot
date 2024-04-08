@@ -68,7 +68,6 @@ void G_RGNCore::initialize(godot::Node* node, godot::Dictionary p_configure_data
 		((godot::String)p_configure_data["emulatorHost"]).utf8().get_data() : "127.0.0.1";
     configureData.emulatorPort = p_configure_data.has("emulatorPort") ?
 		((godot::String)p_configure_data["emulatorPort"]).utf8().get_data() : "5001";
-	RGN::RGNCore::Initialize(configureData);
 	RGN::RGNAuth::BindAuthChangeCallback([&](bool isLoggedIn) {
         for (auto callback : _authCallbacks) {
 			if (callback.is_valid()) {
@@ -78,6 +77,7 @@ void G_RGNCore::initialize(godot::Node* node, godot::Dictionary p_configure_data
 			}
         }
     });
+	RGN::RGNCore::Initialize(configureData);
 	// Observer events when the app is focused/unfocused to properly handle cancel of webform process
 	_node = node;
 	godot::Window* gwin = _node->get_window();

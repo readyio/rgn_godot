@@ -6,6 +6,7 @@
 
 namespace RGN {
     std::vector<HttpRequestImpl> requests;
+    std::vector<HttpRequestImpl> pendingRequests;
     std::map<int32_t, HttpListener*> listeners;
 
     void Http::Request(std::string url, HttpMethod method, HttpHeaders& headers, std::string body,
@@ -17,7 +18,7 @@ namespace RGN {
         request.setBody(body);
         request.setCallback(callback);
         if (request.processRequest()) {
-            requests.push_back(std::move(request));
+            pendingRequests.push_back(std::move(request));
         }
     }
 
@@ -50,8 +51,11 @@ namespace RGN {
 	}
 
     void Http::Update() {
-        for (decltype(requests)::iterator it = requests.begin(); it != requests.end();) {
-            if ((*it).update()) {
+        requests.insert(requests.end(), std::make_move_iterator(pendingRequests.begin()), std::make_move_iterator(pendingRequests.end()));
+        pendingRequests.clear();
+        for (auto it = requests.begin(); it != requests.end();) {
+            bool keepRequest = it->update();
+            if (keepRequest) {
                 ++it;
             } else {
                 it = requests.erase(it);
