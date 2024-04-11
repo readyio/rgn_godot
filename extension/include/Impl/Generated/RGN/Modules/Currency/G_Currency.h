@@ -1,33 +1,39 @@
 #pragma once
-
-#include "Generated/RGN/Modules/Currency/Currency.h"
+// This file is generated: please don't modify. Go to Unity code generator if you need changes.
+#include "../../../../../Generated/RGN/Modules/Currency/Currency.h"
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/variant.hpp>
 #include <string>
+#include <vector>
+#include <unordered_map>
 
 struct G_Currency {
-    static void ConvertToGodotModel(const RGN::Modules::Currency::Currency& source, godot::Dictionary& target) {
-        godot::Array g_appIds = godot::Array();
-        for (const auto& appId : source.appIds) {
-            g_appIds.push_back(godot::String(appId.c_str()));
+	static void ConvertToGodotModel(const RGN::Modules::Currency::Currency& source, godot::Dictionary& target) {
+        godot::Array g_target_appIds;
+        for (const auto& source_appIds_item : source.appIds) {
+            godot::String g_source_appIds_item;
+            g_source_appIds_item = godot::String(source_appIds_item.c_str());
+            g_target_appIds.push_back(g_source_appIds_item);
         }
-        godot::String g_name = godot::String(source.name.c_str());
-        int g_quantity = source.quantity;
-        target["name"] = g_name;
-        target["quantity"] = g_quantity;
-    }
+        target["appIds"] = g_target_appIds;
+        target["name"] = godot::String(source.name.c_str());
+        target["quantity"] = source.quantity;
+	}
 
-    static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Currency::Currency& target) {
-        godot::Array g_appIds = source["appIds"];
-        godot::String g_name = source["name"];
-        int g_quantity = source["quantity"];
-        for (int i = 0; i < g_appIds.size(); ++i) {
-            godot::String g_appId = g_appIds[i];
-            target.appIds.push_back(std::string(g_appId.utf8().get_data()));
+	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Currency::Currency& target) {
+        godot::Array g_target_appIds = source["appIds"];
+        for (int i = 0; i < g_target_appIds.size(); ++i) {
+            godot::String g_target_appIds_item = g_target_appIds[i];
+            string cpp_source_appIds_item;
+            godot::String g_g_target_appIds_item = g_target_appIds_item;
+            cpp_source_appIds_item = std::string(g_g_target_appIds_item.utf8().get_data());
+            target.appIds.push_back(cpp_source_appIds_item);
         }
-        target.name = std::string(g_name.utf8().get_data());;
-        target.quantity = g_quantity;
-    }
+        godot::String g_source_name = source["name"];
+        target.name = std::string(g_source_name.utf8().get_data());
+        int32_t g_source_quantity = source["quantity"];
+        target.quantity = g_source_quantity;
+	}
 };

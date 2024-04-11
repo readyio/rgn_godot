@@ -7,12 +7,13 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/variant/array.hpp>
+#include <godot_cpp/classes/object.hpp>
 
 G_RGNCore *G_RGNCore::singleton = nullptr;
 
 void G_RGNCore::_bind_methods() {
-	godot::ClassDB::bind_method(godot::D_METHOD("on_focus"), &G_RGNCore::_on_focus);
-	godot::ClassDB::bind_method(godot::D_METHOD("on_unfocus"), &G_RGNCore::_on_unfocus);
+	godot::ClassDB::bind_method(godot::D_METHOD("on_focus"), &G_RGNCore::_onFocus);
+	godot::ClassDB::bind_method(godot::D_METHOD("on_unfocus"), &G_RGNCore::_onUnfocus);
 	godot::ClassDB::bind_method(godot::D_METHOD("initialize", "p_configure_data"), &G_RGNCore::initialize);
 	godot::ClassDB::bind_method(godot::D_METHOD("update"), &G_RGNCore::update);
 	godot::ClassDB::bind_method(godot::D_METHOD("bindAuthChangeCallback", "p_callback"), &G_RGNCore::bindAuthChangeCallback);
@@ -46,11 +47,11 @@ void G_RGNCore::startTimer(double delay, std::function<void()> callback) {
 	timer->start(delay, callback);
 }
 
-void G_RGNCore::_on_focus() {
+void G_RGNCore::_onFocus() {
 	onFocusEvent.raise();
 }
 
-void G_RGNCore::_on_unfocus() {
+void G_RGNCore::_onUnfocus() {
 	onUnfocusEvent.raise();
 }
 

@@ -17,8 +17,8 @@ class G_RGNCore : public godot::Object
 	godot::Node* _node;
 protected:
 	static void _bind_methods();
-	void _on_focus();
-	void _on_unfocus();
+	void _onFocus();
+	void _onUnfocus();
 public:
 	static G_RGNCore *get_singleton();
 	G_RGNCore();
