@@ -1,0 +1,673 @@
+[gd_scene load_steps=25 format=3 uid="uid://dkooff2ebduy8"]
+
+[ext_resource type="Script" path="res://scripts/demo.gd" id="1_31mbv"]
+[ext_resource type="Texture2D" uid="uid://bg6tpyf8mxls6" path="res://sprites/spinner.svg" id="1_r76pc"]
+[ext_resource type="Script" path="res://scripts/ui/spinner.gd" id="2_amm8p"]
+[ext_resource type="Script" path="res://scripts/ui/panels/signInPanel.gd" id="2_b4tw2"]
+[ext_resource type="Script" path="res://scripts/ui/panels/homePanel.gd" id="3_3nyi7"]
+[ext_resource type="Script" path="res://scripts/ui/panels/messagePanel.gd" id="4_7kijh"]
+[ext_resource type="Script" path="res://scripts/ui/panels/currencyPanel.gd" id="4_wugno"]
+[ext_resource type="Script" path="res://scripts/ui/panels/inventoryPanel.gd" id="5_e6ndd"]
+[ext_resource type="Script" path="res://scripts/ui/panels/addItemToInventoryPanel.gd" id="5_qmryo"]
+[ext_resource type="Script" path="res://scripts/ui/panels/achievementsPanel.gd" id="6_lumga"]
+[ext_resource type="Script" path="res://scripts/ui/panels/storePanel.gd" id="7_6geg6"]
+[ext_resource type="Script" path="res://scripts/ui/numericTextEdit.gd" id="7_vvrtq"]
+[ext_resource type="Script" path="res://scripts/ui/panels/walletsPanel.gd" id="8_ksu4n"]
+[ext_resource type="Script" path="res://scripts/ui/panels/userProfilePanel.gd" id="8_ytqjx"]
+[ext_resource type="Script" path="res://scripts/ui/panels/loadingPanel.gd" id="12_2en8n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0r8x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vme43"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tmjd1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6d2l1"]
+bg_color = Color(0, 0, 0, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2ycs"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dv61p"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sytnb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qow0p"]
+bg_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p0w5k"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_31mbv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panels" type="AspectRatioContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 0.5647
+
+[node name="SignInPanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("2_b4tw2")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/SignInPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -87.5
+offset_right = 95.0
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vme43")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/SignInPanel/PanelContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="ButtonSignIn" type="Button" parent="CanvasLayer/Panels/SignInPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "SignIn"
+
+[node name="ButtonGuestSignIn" type="Button" parent="CanvasLayer/Panels/SignInPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Guest SignIn"
+
+[node name="HomePanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("3_3nyi7")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/HomePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/HomePanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HomeLabel" type="Label" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Home"
+horizontal_alignment = 1
+
+[node name="UserNameLabel" type="Label" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Name: #NAME"
+horizontal_alignment = 1
+
+[node name="ButtonCurrency" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Currency"
+
+[node name="ButtonInventory" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Inventory"
+
+[node name="ButtonAchievements" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Achievements"
+
+[node name="ButtonStore" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Store"
+
+[node name="ButtonWallets" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Wallets"
+
+[node name="ButtonUserProfile" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "User Profile"
+
+[node name="ButtonSignOut" type="Button" parent="CanvasLayer/Panels/HomePanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "SignOut"
+
+[node name="CurrencyPanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("4_wugno")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/CurrencyPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/CurrencyPanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/CurrencyPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="ButtonGetUserCurrencies" type="Button" parent="CanvasLayer/Panels/CurrencyPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Get User Currencies"
+
+[node name="ButtonBack" type="Button" parent="CanvasLayer/Panels/CurrencyPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="InventoryPanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("5_e6ndd")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/InventoryPanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/InventoryPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="ButtonAddToInventory" type="Button" parent="CanvasLayer/Panels/InventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Add To Inventory"
+
+[node name="ButtonGetUserInventory" type="Button" parent="CanvasLayer/Panels/InventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Get User Inventory"
+
+[node name="ButtonBack" type="Button" parent="CanvasLayer/Panels/InventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="AddItemToInventoryPanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("5_qmryo")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/AddItemToInventoryPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="UserIdInputContainer" type="HSplitContainer" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UserIdLabel" type="Label" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer/UserIdInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "UserId"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UserIdTextEdit" type="TextEdit" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer/UserIdInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+placeholder_text = "UserId"
+
+[node name="ItemIdInputContainer" type="HSplitContainer" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemIdLabel" type="Label" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer/ItemIdInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ItemId"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemIdTextEdit" type="TextEdit" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer/ItemIdInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "dBw1sGMHrXs69ppjJ9Ne"
+placeholder_text = "ItemId"
+
+[node name="QuantityInputContainer" type="HSplitContainer" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuantityLabel" type="Label" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer/QuantityInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Quantity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuantityTextEdit" type="TextEdit" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer/QuantityInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "1"
+placeholder_text = "Quantity"
+script = ExtResource("7_vvrtq")
+
+[node name="ButtonAdd" type="Button" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Add"
+
+[node name="ButtonCancel" type="Button" parent="CanvasLayer/Panels/AddItemToInventoryPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Cancel"
+
+[node name="AchievementsPanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("6_lumga")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/AchievementsPanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/AchievementsPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="ButtonGetUserAchievements" type="Button" parent="CanvasLayer/Panels/AchievementsPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Get User Achievements"
+
+[node name="ButtonBack" type="Button" parent="CanvasLayer/Panels/AchievementsPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="StorePanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("7_6geg6")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/StorePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/StorePanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/StorePanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="ItemIdInputContainer" type="HSplitContainer" parent="CanvasLayer/Panels/StorePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemIdLabel" type="Label" parent="CanvasLayer/Panels/StorePanel/PanelContainer/VBoxContainer/VBoxContainer/ItemIdInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ItemId"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemIdTextEdit" type="TextEdit" parent="CanvasLayer/Panels/StorePanel/PanelContainer/VBoxContainer/VBoxContainer/ItemIdInputContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "dBw1sGMHrXs69ppjJ9Ne"
+placeholder_text = "ItemId"
+
+[node name="ButtonBuy" type="Button" parent="CanvasLayer/Panels/StorePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Buy"
+
+[node name="ButtonBack" type="Button" parent="CanvasLayer/Panels/StorePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="UserProfilePanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("8_ytqjx")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/UserProfilePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/UserProfilePanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/UserProfilePanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="UserNameChangeContainer" type="HSplitContainer" parent="CanvasLayer/Panels/UserProfilePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UserNameTextEdit" type="TextEdit" parent="CanvasLayer/Panels/UserProfilePanel/PanelContainer/VBoxContainer/VBoxContainer/UserNameChangeContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+placeholder_text = "UserName"
+
+[node name="ButtonApply" type="Button" parent="CanvasLayer/Panels/UserProfilePanel/PanelContainer/VBoxContainer/VBoxContainer/UserNameChangeContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Apply"
+
+[node name="ButtonBack" type="Button" parent="CanvasLayer/Panels/UserProfilePanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="WalletsPanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0r8x")
+script = ExtResource("8_ksu4n")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/WalletsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -40.0
+offset_right = 62.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tmjd1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/WalletsPanel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/WalletsPanel/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="ButtonCreateWallet" type="Button" parent="CanvasLayer/Panels/WalletsPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Create Wallet"
+
+[node name="ButtonBack" type="Button" parent="CanvasLayer/Panels/WalletsPanel/PanelContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="MessagePanel" type="Panel" parent="CanvasLayer/Panels"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6d2l1")
+script = ExtResource("4_7kijh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/MessagePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -123.5
+offset_right = 175.0
+offset_bottom = 123.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer"]
+custom_minimum_size = Vector2(425, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_r2ycs")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Label"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MessageRichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Message"
+fit_content = true
+scroll_active = false
+
+[node name="ButtonBackContainer" type="Control" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ButtonOk" type="Button" parent="CanvasLayer/Panels/MessagePanel/VBoxContainer/ButtonBackContainer"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_right = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_dv61p")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sytnb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qow0p")
+theme_override_styles/focus = SubResource("StyleBoxFlat_p0w5k")
+text = "Ok"
+
+[node name="LoadingPanel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_2en8n")
+
+[node name="SpinnerImage" type="TextureRect" parent="CanvasLayer/LoadingPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(40, 40)
+texture = ExtResource("1_r76pc")
+script = ExtResource("2_amm8p")
