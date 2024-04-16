@@ -111,12 +111,19 @@ namespace RGN {
     }
 
     bool HttpRequestImpl::processRequest() {
-        godot::String host = godot::String(HttpUtility::GetUrlHost(url).c_str());
-        godot::Error err = httpClient->connect_to_host(host, 443, httpTLS);
-        if (err != godot::OK && this->callback) {
+        std::string host = HttpUtility::GetUrlHost(url);
+        int32_t port = 443;
+        int32_t port_start_in_host = host.find_last_of(":");
+        if (port_start_in_host > 8) {
+            port = std::stoi(host.substr(port_start_in_host + 1));
+            host = host.substr(0, host.find_last_of(":"));
+        }
+        godot::String gHost = godot::String(host.c_str());
+        godot::Error gErr = httpClient->connect_to_host(gHost, port, httpTLS);
+        if (gErr != godot::OK && this->callback) {
             this->callback(HttpResponse("Http connect error", 0));
         }
-        return err == godot::OK;
+        return gErr == godot::OK;
     }
 
     bool HttpRequestImpl::update() {
