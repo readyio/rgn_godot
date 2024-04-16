@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import SCons.Script
-import os
 import platform
 
 # Define the GlobRecursive function
@@ -16,7 +15,8 @@ def GlobRecursive(pattern, node='.'):
 env = SConscript("godot-cpp/SConstruct")
 
 # Add bigobj flag
-env.Append(CCFLAGS="/bigobj")
+if ("platform" not in env and platform.system() == "Windows") or env.get("platform", "").lower() == "windows":
+    env.Append(CCFLAGS="/bigobj")
 
 # Add include directories to the environment
 env.Append(CPPPATH=["include"])
