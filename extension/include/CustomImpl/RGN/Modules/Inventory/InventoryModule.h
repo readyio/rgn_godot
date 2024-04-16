@@ -27,16 +27,18 @@ namespace RGN { namespace Modules { namespace Inventory {
             std::string virtualItemId,
             int32_t quantity,
             RGN::Modules::VirtualItems::Properties properties) {
-                RGN::Modules::Inventory::InventoryItemData inventoryItemData;
-                inventoryItemData.virtualItemId = virtualItemId;
-                inventoryItemData.appIds = { RGNCore::GetAppId() };
-                inventoryItemData.quantity = quantity;
-                inventoryItemData.properties = { properties };
-                AddToInventoryAsync(
+                nlohmann::json bodyJson;
+                bodyJson["appId"] = RGNCore::GetAppId();
+                bodyJson["virtualItemId"] = virtualItemId;
+                bodyJson["appIds"] = { RGNCore::GetAppId() };
+                bodyJson["quantity"] = quantity;
+                bodyJson["properties"] = { properties };
+                RGNCore::CallAPI<nlohmann::json, RGN::Modules::Inventory::AddToInventoryResponseData>(
+                    "inventoryV2-addToInventory",
+                    bodyJson,
                     success,
                     fail,
-                    userId,
-                    inventoryItemData);
+                    false);
             };
         static void AddToInventoryAsync(
             const function<void(RGN::Modules::Inventory::AddToInventoryResponseData result)>& success,
