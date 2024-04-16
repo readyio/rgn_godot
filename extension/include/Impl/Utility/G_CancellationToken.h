@@ -9,7 +9,7 @@
 class G_CancellationToken : public godot::Object
 {
 	GDCLASS(G_CancellationToken, godot::Object);
-	const bool* phandle = false;
+	const bool* phandle;
 protected:
 	static void _bind_methods() {
         godot::ClassDB::bind_method(godot::D_METHOD("isCancellationRequested"), &G_CancellationToken::isCancellationRequested);

@@ -13,7 +13,7 @@ class G_RGNCore : public godot::Object
 {
 	GDCLASS(G_RGNCore, godot::Object);
 	static G_RGNCore *singleton;
-	std::vector<godot::Callable> G_RGNCore::_authCallbacks;
+	std::vector<godot::Callable> _authCallbacks;
 	godot::Node* _node;
 protected:
 	static void _bind_methods();
@@ -28,13 +28,13 @@ public:
 	void startTimer(double delay, std::function<void()> callback);
 	void initialize(godot::Node* node, godot::Dictionary p_configure_data);
 	void update();
-	void G_RGNCore::bindAuthChangeCallback(godot::Callable p_callback);
-	void G_RGNCore::unbindAuthChangeCallback(godot::Callable p_callback);
-	void G_RGNCore::signIn(godot::Callable p_callback);
-	void G_RGNCore::signInAnonymously(godot::Callable p_callback);
-	void G_RGNCore::signOut();
-	void G_RGNCore::createWallet(godot::Callable p_callback);
-	bool G_RGNCore::isLoggedIn();
-	godot::String G_RGNCore::getUserId();
-	godot::String G_RGNCore::getIdToken();
+	void bindAuthChangeCallback(godot::Callable p_callback);
+	void unbindAuthChangeCallback(godot::Callable p_callback);
+	void signIn(godot::Callable p_callback);
+	void signInAnonymously(godot::Callable p_callback);
+	void signOut();
+	void createWallet(godot::Callable p_callback);
+	bool isLoggedIn();
+	godot::String getUserId();
+	godot::String getIdToken();
 };
