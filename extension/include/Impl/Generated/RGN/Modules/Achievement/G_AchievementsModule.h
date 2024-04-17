@@ -55,7 +55,7 @@ protected:
         godot::ClassDB::bind_method(godot::D_METHOD("claimByIdAsync", "achievementId", "onSuccess", "onFail"), &G_AchievementsModule::claimByIdAsync, godot::Callable(), godot::Callable());
         godot::ClassDB::bind_method(godot::D_METHOD("claimByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::claimByRequestNameAsync, godot::Callable(), godot::Callable());
         godot::ClassDB::bind_method(godot::D_METHOD("getProjectAchievementsAsync", "onSuccess", "onFail"), &G_AchievementsModule::getProjectAchievementsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserAchievementsAsync", "userId", "withHistory", "startAfter", "limit", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementsAsync, DEFVAL(""), DEFVAL(false), DEFVAL(9223372036854775807), DEFVAL(2147483647), godot::Callable(), godot::Callable());
+        godot::ClassDB::bind_method(godot::D_METHOD("getUserAchievementsAsync", "userId", "withHistory", "startAfter", "limit", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementsAsync, DEFVAL(""), DEFVAL(false), DEFVAL((int64_t)9223372036854775807), DEFVAL(2147483647), godot::Callable(), godot::Callable());
         godot::ClassDB::bind_method(godot::D_METHOD("getUserAchievementByIdAsync", "achievementId", "userId", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementByIdAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
     }
 public:
