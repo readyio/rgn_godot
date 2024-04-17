@@ -14,6 +14,7 @@ G_RGNCore *G_RGNCore::singleton = nullptr;
 void G_RGNCore::_bind_methods() {
 	godot::ClassDB::bind_method(godot::D_METHOD("on_focus"), &G_RGNCore::_onFocus);
 	godot::ClassDB::bind_method(godot::D_METHOD("on_unfocus"), &G_RGNCore::_onUnfocus);
+	godot::ClassDB::bind_method(godot::D_METHOD("on_signIn"), &G_RGNCore::_onSignIn);
 	godot::ClassDB::bind_method(godot::D_METHOD("initialize", "node", "configure_data"), &G_RGNCore::initialize);
 	godot::ClassDB::bind_method(godot::D_METHOD("update"), &G_RGNCore::update);
 	godot::ClassDB::bind_method(godot::D_METHOD("bindAuthChangeCallback", "callback"), &G_RGNCore::bindAuthChangeCallback, godot::Callable());
@@ -53,6 +54,14 @@ void G_RGNCore::_onFocus() {
 
 void G_RGNCore::_onUnfocus() {
 	onUnfocusEvent.raise();
+}
+
+void G_RGNCore::_onSignIn(godot::Callable callback, bool success) {
+	if (callback.is_valid()) {
+		godot::Array args;
+		args.push_back(success);
+		callback.callv(args);
+	}
 }
 
 void G_RGNCore::initialize(godot::Node* node, godot::Dictionary configure_data) {
@@ -102,12 +111,8 @@ void G_RGNCore::unbindAuthChangeCallback(godot::Callable callback) {
 }
 
 void G_RGNCore::signIn(godot::Callable callback) {
-    RGN::RGNAuth::SignIn([callback](bool isLoggedIn) {
-		if (callback.is_valid()) {
-			godot::Array args;
-			args.push_back(isLoggedIn);
-			callback.callv(args);
-		}
+    RGN::RGNAuth::SignIn([&, callback](bool isLoggedIn) {
+		call_deferred("on_signIn", callback, isLoggedIn);
     });
 }
 
@@ -126,7 +131,7 @@ void G_RGNCore::signOut() {
 }
 
 void G_RGNCore::createWallet(godot::Callable callback) {
-	RGN::RGNAuth::CreateWallet([callback](bool canceled) {
+	RGN::RGNAuth::CreateWallet([&, callback](bool canceled) {
 		if (callback.is_valid()) {
 			godot::Array args;
 			args.push_back(canceled);

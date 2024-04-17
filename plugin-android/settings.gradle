@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "rgn.iac"
+rootProject.name = "READYgg"
 include ':app'

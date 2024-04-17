@@ -1,30 +1,28 @@
-package io.getready.rgn.iac;
+package io.getready.android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import org.godotengine.godot.Godot;
 import org.godotengine.godot.plugin.GodotPlugin;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
+public class READYgg extends GodotPlugin {
 
-public class RGNPlugin extends GodotPlugin {
+    private static READYgg readyGG;
 
-    public RGNPlugin(Godot godot) {
+    public READYgg(Godot godot) {
         super(godot);
+        readyGG = this;
 
         String arch = System.getProperty("os.arch");
         if (arch == null) {
             return;
         }
 
-        String libraryName = "";
+        String libraryName;
         if (arch.contains("aarch64")) {
             libraryName = "rgn.android.template_release.arm64";
         } else if (arch.contains("x86")) {
@@ -38,15 +36,12 @@ public class RGNPlugin extends GodotPlugin {
         }
 
         System.loadLibrary(libraryName);
-
-        isGodotReady = true;
-        releaseInvocations();
     }
 
     @NonNull
     @Override
     public String getPluginName() {
-        return "rgn-iac";
+        return "readygg";
     }
 
     private static boolean isDebuggable(Context context) {
@@ -56,21 +51,10 @@ public class RGNPlugin extends GodotPlugin {
         return ((context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
     }
 
-    // Invocation part
-    private static boolean isGodotReady;
-    private static final Queue<String> invocationBuffer = new ArrayDeque<>();
-    public static void processInvocation(String payload) {
-        if (isGodotReady) {
-            onInvocation(payload);
-        } else {
-            invocationBuffer.add(payload);
+    public static Activity getGodotActivity() {
+        if (readyGG != null) {
+            return readyGG.getActivity();
         }
+        return null;
     }
-    private static void releaseInvocations() {
-        while (!invocationBuffer.isEmpty()) {
-            String payload = invocationBuffer.poll();
-            onInvocation(payload);
-        }
-    }
-    private static native void onInvocation(String payload);
 }

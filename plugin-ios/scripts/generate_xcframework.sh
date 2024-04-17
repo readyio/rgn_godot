@@ -3,7 +3,7 @@ set -e
 
 # Compile static libraries
 
-plugin="rgn-iac"
+plugin="readygg"
 
 # ARM64 Device
 scons target=$1 arch=arm64 version=$2

@@ -12,7 +12,8 @@ func _onSignInButtonPressed():
 	RGNCore.signIn(_onSignIn)
 
 func _onGuestSignInButtonPressed():
-	pass
+	_getLoadingPanelNode().show_panel()
+	RGNCore.signInAnonymously(_onSignIn)
 
 func _onSignIn(isLoggedIn: bool):
 	_getLoadingPanelNode().hide_panel()

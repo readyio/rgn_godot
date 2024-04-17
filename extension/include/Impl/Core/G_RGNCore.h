@@ -19,6 +19,7 @@ protected:
 	static void _bind_methods();
 	void _onFocus();
 	void _onUnfocus();
+	void _onSignIn(godot::Callable callback, bool success);
 public:
 	static G_RGNCore *get_singleton();
 	G_RGNCore();

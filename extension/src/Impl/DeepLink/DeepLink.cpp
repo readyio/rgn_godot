@@ -39,14 +39,3 @@ namespace RGN {
         _deepLinkOpenEvent.raise_and_unbind(canceled, url);
     }
 }
-
-#if ANDROID_ENABLED
-#include <jni.h>
-extern "C" {
-    JNIEXPORT void JNICALL Java_io_getready_rgn_iac_RGNPlugin_onInvocation(JNIEnv* env, jobject instance, jstring Url) {
-        const char* urlChars = env->GetStringUTFChars(Url, nullptr);
-        std::string urlString = std::string(urlChars);
-        RGN::DeepLink::OnDeepLink(false, urlString);
-    }
-}
-#endif

@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.getready.rgn.iac">
+    package="io.getready.android">
 
     <application>
-        <activity android:name="io.getready.rgn.iac.RGNActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:launchMode="singleTop"
-            android:exported="true"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="rgngodot" />
-            </intent-filter>
-        </activity>
-
-    <meta-data
-        android:name="org.godotengine.plugin.v1.RGNPlugin"
-        android:value="io.getready.rgn.iac.RGNPlugin" />
+        <activity
+            android:name=".WebformActivity"
+            android:exported="false" />
+        <meta-data
+            android:name="org.godotengine.plugin.v1.READYgg"
+            android:value="io.getready.android.READYgg" />
     </application>
 
 </manifest>
