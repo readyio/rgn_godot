@@ -1,4 +1,5 @@
 #import <WebKit/WebKit.h>
+#import "WebForm/WebForm.h"
 
 static NSString *URLScheme = @"urlscheme_set_from_c_sharp";
 extern "C" void READYggWebview_SetURLScheme(const char *urlScheme) {
@@ -58,14 +59,14 @@ extern "C" void READYggWebview_SetBackButtonText(const char *backButtonText) {
     NSString *urlToOpenString = [URLScheme stringByAppendingString:@"/cancelled"];
     NSURL *urlToOpen = [NSURL URLWithString:urlToOpenString];
     const char* urlToOpenChars = [[urlToOpen absoluteString] UTF8String];
-    WebForm::OnWebFormRedirect(true, urlToOpenChars);
+    RGN::WebForm::OnWebFormRedirect(true, urlToOpenChars);
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSURL *url = navigationAction.request.URL;
     if ([url.scheme isEqualToString:URLScheme]) {
         const char* urlChars = [[url absoluteString] UTF8String];
-        WebForm::OnWebFormRedirect(false, urlChars);
+        RGN::WebForm::OnWebFormRedirect(false, urlChars);
         self.webView.hidden = YES;
         self.closeButton.hidden = YES;
         decisionHandler(WKNavigationActionPolicyCancel);

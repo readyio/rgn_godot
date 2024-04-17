@@ -160,10 +160,10 @@ else:
         'godot/platform/ios',
     ])
 
-# Adding rgn-core deeplink header file
+# Adding rgn-core webform header file
 env.Append(CPPPATH=[
     'include/',
-    '../extension/include/DeepLink'
+    '../extension/include/'
 ])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
@@ -173,7 +173,7 @@ sources.append(Glob('src/*.m'))
 
 # lib<plugin>.<arch>-<simulator|ios>.<release|debug|release_debug>.a
 library_platform = env["arch"] + "-" + ("simulator" if env["simulator"] else "ios")
-library_name = "rgn-iac" + "." + library_platform + "." + env["target"] + ".a"
+library_name = "readygg" + "." + library_platform + "." + env["target"] + ".a"
 library = env.StaticLibrary(target=env['target_path'] + library_name, source=sources)
 
 Default(library)

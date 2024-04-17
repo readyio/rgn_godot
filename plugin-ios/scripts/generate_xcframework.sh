@@ -20,7 +20,7 @@ lipo -create "./bin/lib$plugin.x86_64-simulator.$1.a" "./bin/lib$plugin.arm64-si
 lipo -create "./bin/lib$plugin.armv7-ios.$1.a" "./bin/lib$plugin.arm64-ios.$1.a" -output "./bin/$plugin-device.$1.a"
 
 # Delete previous xcframework
-rm -r "./bin/$plugin.$1.xcframework"
+rm -r -f "./bin/$plugin.$1.xcframework"
 
 # Creating a xcframework 
 xcodebuild -create-xcframework \
