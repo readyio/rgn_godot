@@ -3,6 +3,7 @@
 #include "Core/RGNCore.h"
 #include "Core/RGNAuth.h"
 #include "Core/RGNEnvironmentTarget.h"
+#include "WebForm/WebForm.h"
 #include "Utility/Logger.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/window.hpp>
@@ -14,7 +15,8 @@ G_RGNCore *G_RGNCore::singleton = nullptr;
 void G_RGNCore::_bind_methods() {
 	godot::ClassDB::bind_method(godot::D_METHOD("on_focus"), &G_RGNCore::_onFocus);
 	godot::ClassDB::bind_method(godot::D_METHOD("on_unfocus"), &G_RGNCore::_onUnfocus);
-	godot::ClassDB::bind_method(godot::D_METHOD("on_signIn"), &G_RGNCore::_onSignIn);
+	godot::ClassDB::bind_method(godot::D_METHOD("on_signin"), &G_RGNCore::_onSignIn);
+	godot::ClassDB::bind_method(godot::D_METHOD("on_webform_redirect", "url"), &G_RGNCore::_onWebFormRedirect);
 	godot::ClassDB::bind_method(godot::D_METHOD("initialize", "node", "configure_data"), &G_RGNCore::initialize);
 	godot::ClassDB::bind_method(godot::D_METHOD("update"), &G_RGNCore::update);
 	godot::ClassDB::bind_method(godot::D_METHOD("bindAuthChangeCallback", "callback"), &G_RGNCore::bindAuthChangeCallback, godot::Callable());
@@ -62,6 +64,12 @@ void G_RGNCore::_onSignIn(godot::Callable callback, bool success) {
 		args.push_back(success);
 		callback.callv(args);
 	}
+}
+
+void G_RGNCore::_onWebFormRedirect(godot::String url) {
+	bool cancelled = url.contains("cancelled");
+	std::string urlString = cancelled ? "" : std::string(url.utf8().get_data());
+	RGN::WebForm::OnWebFormRedirect(cancelled, urlString);
 }
 
 void G_RGNCore::initialize(godot::Node* node, godot::Dictionary configure_data) {
@@ -112,7 +120,7 @@ void G_RGNCore::unbindAuthChangeCallback(godot::Callable callback) {
 
 void G_RGNCore::signIn(godot::Callable callback) {
     RGN::RGNAuth::SignIn([&, callback](bool isLoggedIn) {
-		call_deferred("on_signIn", callback, isLoggedIn);
+		call_deferred("on_signin", callback, isLoggedIn);
     });
 }
 
@@ -132,11 +140,7 @@ void G_RGNCore::signOut() {
 
 void G_RGNCore::createWallet(godot::Callable callback) {
 	RGN::RGNAuth::CreateWallet([&, callback](bool canceled) {
-		if (callback.is_valid()) {
-			godot::Array args;
-			args.push_back(canceled);
-			callback.callv(args);
-		}
+		call_deferred("on_signin", callback, canceled);
     });
 }
 

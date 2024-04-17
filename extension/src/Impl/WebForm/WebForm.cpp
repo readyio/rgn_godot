@@ -8,9 +8,13 @@
 #include "Utility/Logger.h"
 #include <vector>
 #include <unordered_map>
+#include <godot_cpp/classes/engine.hpp>
 
 #if ANDROID_ENABLED
 #include <jni.h>
+#endif
+
+#if ANDROID_ENABLED
 static JavaVM *jvm = NULL;
 
 extern "C" {
@@ -62,7 +66,11 @@ namespace RGN {
 
 #if IOS_ENABLED
     void OpenWebFormIOS(std::string url, std::string redirectScheme) {
-
+        godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
+        if (webview != nullptr) {
+            webview->call("setUrlScheme", godot::String(redirectScheme.c_str()));
+            webview->call("openUrl", godot::String(url.c_str()));
+        }
     }
 #endif
 

@@ -65,11 +65,11 @@
 			<key>profile</key>
 			<dict>
 				<key>UUID</key>
-				<string>c13d2a32-55aa-4849-ac8b-8ac2c038fa06</string>
+				<string>698a9819-fcc6-417f-a4a0-51962ffdd6d7</string>
 				<key>dateExpires</key>
-				<string>01.11.2024</string>
+				<string>07.12.2024</string>
 				<key>name</key>
-				<string>iOS Team Provisioning Profile: *</string>
+				<string>iOS Team Provisioning Profile: io.getready.rgntest</string>
 			</dict>
 			<key>team</key>
 			<dict>

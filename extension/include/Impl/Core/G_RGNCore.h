@@ -20,6 +20,7 @@ protected:
 	void _onFocus();
 	void _onUnfocus();
 	void _onSignIn(godot::Callable callback, bool success);
+	void _onWebFormRedirect(godot::String url);
 public:
 	static G_RGNCore *get_singleton();
 	G_RGNCore();
