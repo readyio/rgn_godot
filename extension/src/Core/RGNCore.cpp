@@ -133,12 +133,14 @@ namespace RGN {
 
     std::string RGNCore::GetApiProjectId() {
         switch (_environmentTarget) {
-        case RGNEnvironmentTarget::DEVELOPMENT:
-            return "readymaster-development";
-        case RGNEnvironmentTarget::STAGING:
-            return "readysandbox";
-        case RGNEnvironmentTarget::PRODUCTION:
-            return "readymaster-2b268";
+            case RGNEnvironmentTarget::NONE:
+                return "";
+            case RGNEnvironmentTarget::DEVELOPMENT:
+                return "readymaster-development";
+            case RGNEnvironmentTarget::STAGING:
+                return "readysandbox";
+            case RGNEnvironmentTarget::PRODUCTION:
+                return "readymaster-2b268";
         }
         return "";
     }
@@ -152,25 +154,29 @@ namespace RGN {
 
     std::string RGNCore::GetOAuthUrl() {
         switch (_environmentTarget) {
-        case RGNEnvironmentTarget::DEVELOPMENT:
-            return "https://development-oauth.ready.gg/?url_redirect=";
-        case RGNEnvironmentTarget::STAGING:
-            return "https://staging-oauth.ready.gg/?url_redirect=";
-        case RGNEnvironmentTarget::PRODUCTION:
-            return "https://oauth.ready.gg/?url_redirect=";
-        }
+            case RGNEnvironmentTarget::NONE:
+                return "";
+            case RGNEnvironmentTarget::DEVELOPMENT:
+                return "https://development-oauth.ready.gg/?url_redirect=";
+            case RGNEnvironmentTarget::STAGING:
+                return "https://staging-oauth.ready.gg/?url_redirect=";
+            case RGNEnvironmentTarget::PRODUCTION:
+                return "https://oauth.ready.gg/?url_redirect=";
+            }
         return "";
     }
 
     std::string RGNCore::GetStorageBucket() {
         switch (_environmentTarget) {
-        case RGNEnvironmentTarget::DEVELOPMENT:
-            return "readymaster-development";
-        case RGNEnvironmentTarget::STAGING:
-            return "readysandbox";
-        case RGNEnvironmentTarget::PRODUCTION:
-            return "readymaster-2b268";
-        }
+            case RGNEnvironmentTarget::NONE:
+                return "";
+            case RGNEnvironmentTarget::DEVELOPMENT:
+                return "readymaster-development";
+            case RGNEnvironmentTarget::STAGING:
+                return "readysandbox";
+            case RGNEnvironmentTarget::PRODUCTION:
+                return "readymaster-2b268";
+            }
         return "";
     }
 
