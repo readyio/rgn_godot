@@ -10,69 +10,9 @@
 #include <unordered_map>
 #include <godot_cpp/classes/engine.hpp>
 
-#if ANDROID_ENABLED
-#include <jni.h>
-#endif
-
-#if ANDROID_ENABLED
-static JavaVM *jvm = NULL;
-
-extern "C" {
-    JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-        JNIEnv *env;
-        if (vm->GetEnv((void **)&env, JNI_VERSION_1_6) != JNI_OK) {
-            return JNI_ERR;
-        }
-        jvm = vm;
-        return JNI_VERSION_1_6;
-    }
-
-    JNIEXPORT void JNICALL Java_io_getready_android_WebformPlugin_onWebformRedirect(JNIEnv* env, jobject instance, jstring Url) {
-        const char* urlChars = env->GetStringUTFChars(Url, nullptr);
-        std::string urlString = std::string(urlChars);
-        if (urlString.find("canceled") != std::string::npos) {
-            RGN::WebForm::OnWebFormRedirect(true, "");
-        } else {
-            RGN::WebForm::OnWebFormRedirect(false, urlString);
-        }
-    }
-}
-#endif
-
 namespace RGN {
     Utility::FunctionEvent<void(bool, std::string)> WebForm::_redirectEvent;
     int32_t _editorCurrBoundedPort = 0;
-
-#if ANDROID_ENABLED
-    void OpenWebFormAndroid(std::string url, std::string redirectScheme) {
-        JNIEnv *env;
-        jint result = jvm->GetEnv((void **)&env, JNI_VERSION_1_6);
-        if (result != JNI_OK) {
-            return;
-        }
-        jclass clazz = env->FindClass("io/getready/android/WebformPlugin");
-        if (clazz != NULL) {
-            jmethodID methodID = env->GetStaticMethodID(clazz, "launch", "(Ljava/lang/String;Ljava/lang/String;)V");
-            if (methodID != NULL) {
-                jstring jurl = env->NewStringUTF(url.c_str());
-                jstring jredirectScheme = env->NewStringUTF(redirectScheme.c_str());
-                env->CallStaticVoidMethod(clazz, methodID, jurl, jredirectScheme);
-                env->DeleteLocalRef(jurl);
-                env->DeleteLocalRef(jredirectScheme);
-            }
-        }
-    }
-#endif
-
-#if IOS_ENABLED
-    void OpenWebFormIOS(std::string url, std::string redirectScheme) {
-        godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
-        if (webview != nullptr) {
-            webview->call("setUrlScheme", godot::String(redirectScheme.c_str()));
-            webview->call("openUrl", godot::String(url.c_str()));
-        }
-    }
-#endif
 
     void CancelRedirectWaitDelay() {
         G_RGNCore::get_singleton()->startTimer(2.5, [](){
@@ -109,10 +49,15 @@ namespace RGN {
         if (!view.empty()) {
             url = url + "&view=" + view;
         }
+    #if defined(ANDROID_ENABLED) || defined(IOS_ENABLED)
+        godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
+        if (webview != nullptr) {
     #if defined(ANDROID_ENABLED)
-        OpenWebFormAndroid(url, redirectUrl);
-    #elif defined(IOS_ENABLED)
-        OpenWebFormIOS(url, redirectUrl);
+            webview->call("setInstanceId", G_RGNCore::get_singleton()->get_instance_id());
+    #endif
+            webview->call("setUrlScheme", godot::String(redirectUrl.c_str()));
+            webview->call("openUrl", godot::String(url.c_str()));
+        }
     #else
         Os::OpenURL(url);
     #endif

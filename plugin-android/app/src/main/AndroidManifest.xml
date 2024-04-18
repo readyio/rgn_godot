@@ -4,11 +4,11 @@
 
     <application>
         <activity
-            android:name=".WebformActivity"
+            android:name=".READYggWebview"
             android:exported="false" />
         <meta-data
-            android:name="org.godotengine.plugin.v1.READYgg"
-            android:value="io.getready.android.READYgg" />
+            android:name="org.godotengine.plugin.v1.READYggPlugin"
+            android:value="io.getready.android.READYggPlugin" />
     </application>
 
 </manifest>
