@@ -17,7 +17,7 @@ void G_RGNCore::_bind_methods() {
 	godot::ClassDB::bind_method(godot::D_METHOD("on_unfocus"), &G_RGNCore::_onUnfocus);
 	godot::ClassDB::bind_method(godot::D_METHOD("on_signin"), &G_RGNCore::_onSignIn);
 	godot::ClassDB::bind_method(godot::D_METHOD("on_webform_redirect", "url"), &G_RGNCore::_onWebFormRedirect);
-	godot::ClassDB::bind_method(godot::D_METHOD("initialize", "node", "configure_data"), &G_RGNCore::initialize);
+	godot::ClassDB::bind_method(godot::D_METHOD("initialize", "node", "configure_data", "on_initialize"), &G_RGNCore::initialize, nullptr, godot::Callable());
 	godot::ClassDB::bind_method(godot::D_METHOD("update"), &G_RGNCore::update);
 	godot::ClassDB::bind_method(godot::D_METHOD("bindAuthChangeCallback", "callback"), &G_RGNCore::bindAuthChangeCallback, godot::Callable());
 	godot::ClassDB::bind_method(godot::D_METHOD("unbindAuthChangeCallback", "callback"), &G_RGNCore::unbindAuthChangeCallback, godot::Callable());
@@ -72,7 +72,7 @@ void G_RGNCore::_onWebFormRedirect(godot::String url) {
 	RGN::WebForm::OnWebFormRedirect(cancelled, urlString);
 }
 
-void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_data) {
+void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_data, godot::Callable on_initialize) {
 	RGN::RGNConfigureData configureData;
 	if (configure_data) {
 		configureData.appId = std::string(configure_data->getAppId().utf8().get_data());
@@ -92,6 +92,17 @@ void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_
         }
     });
 	RGN::RGNCore::Initialize(configureData);
+	if (configure_data->getAutoGuestLogin() && !isLoggedIn()) {
+        RGN::RGNAuth::SignInAnonymously([on_initialize](bool isLoggedIn) {
+			if (on_initialize.is_valid()) {
+				on_initialize.callv(godot::Array());
+			}
+        });
+    } else {
+		if (on_initialize.is_valid()) {
+			on_initialize.callv(godot::Array());
+		}
+    }
 	// Observer events when the app is focused/unfocused to properly handle cancel of webform process
 	_node = node;
 	godot::Window* gwin = _node->get_window();

@@ -13,17 +13,22 @@ extends Node
 @onready var walletsPanel: Panel = $"CanvasLayer/Panels/WalletsPanel"
 
 func _ready():
+	_hideAllPanels()
 	_initReady()
-	_showNextPanel()
 
 func _process(_delta):
 	RGNCore.update()
 
 func _initReady():
+	loadingPanel.show()
+	# Initialize READYgg SDK
 	var configure_data = G_RGNConfigurationData.new()
 	configure_data.setAppId("io.getready.rgntest")
 	configure_data.setEnvironmentTarget(G_RGNEnvironmentTarget.DEVELOPMENT)
-	RGNCore.initialize(self, configure_data)
+	configure_data.setAutoGuestLogin(true)
+	RGNCore.initialize(self, configure_data, func():
+		_showNextPanel()
+	)
 	RGNCore.bindAuthChangeCallback(_onAuthChange)
 
 func _onAuthChange(isLoggedIn:):

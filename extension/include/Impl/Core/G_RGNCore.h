@@ -29,7 +29,7 @@ public:
 	RGN::Utility::FunctionEvent<void()> onFocusEvent;
 	RGN::Utility::FunctionEvent<void()> onUnfocusEvent;
 	void startTimer(double delay, std::function<void()> callback);
-	void initialize(godot::Node* node, G_RGNConfigurationData* configure_data);
+	void initialize(godot::Node* node, G_RGNConfigurationData* configure_data, godot::Callable on_initialize);
 	void update();
 	void bindAuthChangeCallback(godot::Callable callback);
 	void unbindAuthChangeCallback(godot::Callable callback);
