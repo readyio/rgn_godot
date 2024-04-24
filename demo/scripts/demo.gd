@@ -20,11 +20,9 @@ func _process(_delta):
 	RGNCore.update()
 
 func _initReady():
-	var configure_data = {
-		appId = "io.getready.rgntest",
-		environmentTarget = RGNEnvironmentTarget.DEVELOPMENT(),
-		# useFunctionsEmulator = true
-	}
+	var configure_data = G_RGNConfigurationData.new()
+	configure_data.setAppId("io.getready.rgntest")
+	configure_data.setEnvironmentTarget(G_RGNEnvironmentTarget.DEVELOPMENT)
 	RGNCore.initialize(self, configure_data)
 	RGNCore.bindAuthChangeCallback(_onAuthChange)
 

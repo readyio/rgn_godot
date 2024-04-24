@@ -29,7 +29,7 @@ namespace RGN {
         DeepLink::Start();
         WebForm::Initialize();
 
-        Utility::Logger::Debug("READYgg SDK initialized. AppId: " + _appId);
+        Utility::Logger::Debug("READYgg SDK initialized. AppId: " + _appId + ", Environment: " + GetEnvironmentTargetName(_environmentTarget));
     }
 
     void RGNCore::SetEmulator(bool useEmulator, std::string endpoint) {

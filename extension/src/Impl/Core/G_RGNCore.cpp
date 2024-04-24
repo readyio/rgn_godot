@@ -72,20 +72,16 @@ void G_RGNCore::_onWebFormRedirect(godot::String url) {
 	RGN::WebForm::OnWebFormRedirect(cancelled, urlString);
 }
 
-void G_RGNCore::initialize(godot::Node* node, godot::Dictionary configure_data) {
+void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_data) {
 	RGN::RGNConfigureData configureData;
-    configureData.appId = configure_data.has("appId") ?
-		((godot::String)configure_data["appId"]).utf8().get_data() : "";
-    configureData.apiKey = configure_data.has("apiKey") ?
-		((godot::String)configure_data["apiKey"]).utf8().get_data() : "";
-    configureData.environmentTarget = configure_data.has("environmentTarget") ?
-		static_cast<RGN::RGNEnvironmentTarget>((uint32_t)configure_data["environmentTarget"]) : RGN::RGNEnvironmentTarget::STAGING;
-    configureData.useFunctionsEmulator = configure_data.has("useFunctionsEmulator") ?
-		(bool)configure_data["useFunctionsEmulator"] : false;
-    configureData.emulatorHost = configure_data.has("emulatorHost") ?
-		((godot::String)configure_data["emulatorHost"]).utf8().get_data() : "127.0.0.1";
-    configureData.emulatorPort = configure_data.has("emulatorPort") ?
-		((godot::String)configure_data["emulatorPort"]).utf8().get_data() : "5001";
+	if (configure_data) {
+		configureData.appId = std::string(configure_data->getAppId().utf8().get_data());
+		configureData.apiKey = std::string(configure_data->getApiKey().utf8().get_data());
+		configureData.environmentTarget = static_cast<RGN::RGNEnvironmentTarget>(configure_data->getEnvironmentTarget());
+		configureData.useFunctionsEmulator = configure_data->getUseFunctionsEmulator();
+		configureData.emulatorHost = std::string(configure_data->getEmulatorHost().utf8().get_data());
+		configureData.emulatorPort = std::string(configure_data->getEmulatorPort().utf8().get_data());
+	}
 	RGN::RGNAuth::BindAuthChangeCallback([&](bool isLoggedIn) {
         for (auto callback : _authCallbacks) {
 			if (callback.is_valid()) {

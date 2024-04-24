@@ -1,24 +1,25 @@
 #pragma once
 
 #include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/core/class_db.hpp>
 
 class G_RGNEnvironmentTarget : public godot::Object
 {
 	GDCLASS(G_RGNEnvironmentTarget, godot::Object);
-
-	static G_RGNEnvironmentTarget *singleton;
-
-protected:
-	static void _bind_methods();
-
 public:
-	static G_RGNEnvironmentTarget *get_singleton();
-
-	G_RGNEnvironmentTarget();
-	~G_RGNEnvironmentTarget();
-
-	uint32_t NONE();
-	uint32_t DEVELOPMENT();
-	uint32_t STAGING();
-	uint32_t PRODUCTION();
+    enum Enumeration {
+        NONE = 0,
+        DEVELOPMENT = 1,
+        STAGING = 2,
+        PRODUCTION = 3
+    };
+protected:
+	static void _bind_methods() {
+		BIND_ENUM_CONSTANT(NONE);
+        BIND_ENUM_CONSTANT(DEVELOPMENT);
+        BIND_ENUM_CONSTANT(STAGING);
+        BIND_ENUM_CONSTANT(PRODUCTION);
+	}
 };
+
+VARIANT_ENUM_CAST(G_RGNEnvironmentTarget::Enumeration)

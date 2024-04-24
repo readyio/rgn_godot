@@ -2,6 +2,9 @@
 // Core deps
 #include "Impl/Core/G_RGNCore.h"
 #include "Impl/Core/G_RGNEnvironmentTarget.h"
+#include "Impl/Core/G_RGNConfigurationData.h"
+#include "Impl/Utility/G_CancellationToken.h"
+#include "Impl/Utility/G_CancellationTokenSource.h"
 #include "Impl/Core/G_Timer.h"
 // Module deps
 #include "Impl/Generated/RGN/Modules/Achievement/G_AchievementsModule.h"
@@ -33,7 +36,6 @@
 
 // Core singletons
 static G_RGNCore* _g_rgnCore;
-static G_RGNEnvironmentTarget* _g_rgnEnvironmentTarget;
 // Module singletons
 static G_AchievementsModule * _g_achievementsModule;
 static G_AchievementsModule_Admin * _g_achievementsModuleAdmin;
@@ -60,22 +62,21 @@ void register_core() {
 	// Register core classes
 	godot::ClassDB::register_class<G_RGNCore>();
 	godot::ClassDB::register_class<G_RGNEnvironmentTarget>();
+	godot::ClassDB::register_class<G_RGNConfigurationData>();
+	godot::ClassDB::register_class<G_CancellationToken>();
+	godot::ClassDB::register_class<G_CancellationTokenSource>();
 	godot::ClassDB::register_class<G_Timer>();
 	// Instantiate core singletones
 	_g_rgnCore = memnew(G_RGNCore);
-	_g_rgnEnvironmentTarget = memnew(G_RGNEnvironmentTarget);
 	// Register core singletons
 	godot::Engine::get_singleton()->register_singleton("RGNCore", G_RGNCore::get_singleton());
-	godot::Engine::get_singleton()->register_singleton("RGNEnvironmentTarget", G_RGNEnvironmentTarget::get_singleton());
 }
 
 void unregister_core() {
 	// Unregister singletons
 	godot::Engine::get_singleton()->unregister_singleton("RGNCore");
-	godot::Engine::get_singleton()->unregister_singleton("RGNEnvironmentTarget");
 	// Free singletone instances
 	memdelete(_g_rgnCore);
-	memdelete(_g_rgnEnvironmentTarget);
 }
 
 void register_modules() {
