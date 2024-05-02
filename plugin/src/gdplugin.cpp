@@ -74,11 +74,11 @@ extern "C" void GDN_EXPORT rgn_nativescript_init(void *handle) {
 	register_modules();
 }
 #else
-#include "Impl/Core/G_RGNEnvironmentTarget.h"
+#include "Impl/Core/G_RGNCore.h"
 #include "Impl/Core/G_RGNConfigurationData.h"
+#include "Impl/Core/G_Timer.h"
 #include "Impl/Utility/G_CancellationToken.h"
 #include "Impl/Utility/G_CancellationTokenSource.h"
-#include "Impl/Core/G_Timer.h"
 // Module deps
 #include "Impl/Generated/RGN/Modules/Achievement/G_AchievementsModule.h"
 #include "Impl/Generated/RGN/Modules/Achievement/G_AchievementsModule_Admin.h"
@@ -134,7 +134,6 @@ static G_WalletsModule * _g_walletsModule;
 void register_core() {
 	// Register core classes
 	godot::ClassDB::register_class<G_RGNCore>();
-	godot::ClassDB::register_class<G_RGNEnvironmentTarget>();
 	godot::ClassDB::register_class<G_RGNConfigurationData>();
 	godot::ClassDB::register_class<G_CancellationToken>();
 	godot::ClassDB::register_class<G_CancellationTokenSource>();
