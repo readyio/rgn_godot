@@ -26,6 +26,6 @@ android {
 }
 
 dependencies {
-    compileOnly fileTree(dir: "libs", includes: ["godot-lib.4.2.2.stable.template_release.aar"])
+    compileOnly fileTree(dir: "libs", includes: ["godot-lib.3.5.3.stable.release.aar"])
     implementation 'androidx.appcompat:appcompat:1.6.1'
 }
