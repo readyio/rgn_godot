@@ -4,7 +4,7 @@
 *.o
 *.d
 /.vscode
-/extension/bin/*
-/extension/vc140.pdb
+/plugin/bin/*
+/plugin/vc140.pdb
 /plugin-ios/bin/**/*.a
 /plugin-ios/bin/**/*.plist
