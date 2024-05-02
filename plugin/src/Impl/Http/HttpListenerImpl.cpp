@@ -132,7 +132,11 @@ namespace RGN {
 		const int min_port = 5000;
 		const int max_port = 65535;
 		for (int port = min_port; port <= max_port; ++port) {
+#ifdef GODOT3
 			godot::Ref<GodotTCPServer> server = GodotTCPServer::_new();
+#else
+			godot::Ref<GodotTCPServer> server = godot::Ref<GodotTCPServer>(memnew(GodotTCPServer));
+#endif
 			if (server->listen(port) == godot::Error::OK) {
 				server->stop();
 				return port;
