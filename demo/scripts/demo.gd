@@ -24,7 +24,7 @@ func _initReady():
 	# Initialize READYgg SDK
 	var configure_data = G_RGNConfigurationData.new()
 	configure_data.setAppId("io.getready.rgntest")
-	configure_data.setEnvironmentTarget(G_RGNEnvironmentTarget.DEVELOPMENT)
+	configure_data.setDevelopmentEnvironment()
 	configure_data.setAutoGuestLogin(true)
 	RGNCore.initialize(self, configure_data, func():
 		_showNextPanel()
