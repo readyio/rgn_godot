@@ -9,12 +9,12 @@
 
 READYggWebviewPlugin *plugin;
 
-void godot_plugin_init() {
+void rgn_plugin_init() {
     plugin = memnew(READYggWebviewPlugin);
 	Engine::get_singleton()->add_singleton(Engine::Singleton("READYggWebview", plugin));
 }
 
-void godot_plugin_deinit() {
+void rgn_plugin_deinit() {
     if (plugin) {
 		memdelete(plugin);
 	}

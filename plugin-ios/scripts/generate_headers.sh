@@ -4,10 +4,10 @@ then
     if [[ "$2" == "debug" ]];
     then
         cd ./godot && \
-            ./../scripts/timeout scons platform=iphone target=template_debug
+            ./../scripts/timeout scons platform=iphone target=debug
     else
         cd ./godot && \
-            ./../scripts/timeout scons platform=iphone target=template_release
+            ./../scripts/timeout scons platform=iphone target=release
     fi
 else
     if [[ "$2" == "debug" ]];

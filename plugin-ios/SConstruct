@@ -173,7 +173,7 @@ sources.append(Glob('src/*.m'))
 
 # lib<plugin>.<arch>-<simulator|ios>.<release|debug|release_debug>.a
 library_platform = env["arch"] + "-" + ("simulator" if env["simulator"] else "ios")
-library_name = "readygg" + "." + library_platform + "." + env["target"] + ".a"
+library_name = "rgn" + "." + library_platform + "." + env["target"] + ".a"
 library = env.StaticLibrary(target=env['target_path'] + library_name, source=sources)
 
 Default(library)

@@ -1,2 +1,2 @@
-void godot_plugin_init();
-void godot_plugin_deinit();
+void rgn_plugin_init();
+void rgn_plugin_deinit();
