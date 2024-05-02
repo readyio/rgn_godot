@@ -5,7 +5,11 @@
 #include "Http/HttpResponse.h"
 #include <string>
 #include <functional>
+#ifdef GODOT3
+#include <HTTPClient.hpp>
+#else
 #include <godot_cpp/classes/http_client.hpp>
+#endif
 
 namespace RGN {
     class HttpRequestImpl {
@@ -15,7 +19,9 @@ namespace RGN {
         HttpHeaders headers;
         std::string body;
         std::function<void(HttpResponse)> callback;
+#ifdef GODOT4
         godot::Ref<godot::TLSOptions> httpTLS;
+#endif
         godot::HTTPClient* httpClient;
         static godot::HTTPClient::Method GetGodotRequestMethod(HttpMethod method);
     public:

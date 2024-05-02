@@ -9,10 +9,7 @@
 #include "G_PriceInfo.h"
 #include "../../../../../Generated/RGN/Modules/VirtualItems/BlockchainInfo.h"
 #include "G_BlockchainInfo.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

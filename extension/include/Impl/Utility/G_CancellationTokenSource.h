@@ -1,23 +1,19 @@
 #pragma once
 
+#include "Impl/G_Defs.h"
 #include "Utility/CancellationToken.h"
-#include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/callable.hpp>
 #include <functional>
 #include <vector>
 
 class G_CancellationTokenSource : public godot::Object
 {
-	GDCLASS(G_CancellationTokenSource, godot::Object);
+	REG_GCLASS(G_CancellationTokenSource, godot::Object);
 	bool _isCancellationRequested = false;
-protected:
-	static void _bind_methods() {
-		godot::ClassDB::bind_method(godot::D_METHOD("cancel"), &G_CancellationTokenSource::cancel);
-		godot::ClassDB::bind_method(godot::D_METHOD("isCancellationRequested"), &G_CancellationTokenSource::isCancellationRequested);
-	}
 public:
+	REG_GCLASS_METHODS_HEADER() {
+		BIND_GCLASS_METHOD(G_CancellationTokenSource::cancel, GCLASS_METHOD_SIGNATURE("cancel"));
+		BIND_GCLASS_METHOD(G_CancellationTokenSource::isCancellationRequested, GCLASS_METHOD_SIGNATURE("isCancellationRequested"));
+	}
 	void cancel() {
 		_isCancellationRequested = true;
 	}

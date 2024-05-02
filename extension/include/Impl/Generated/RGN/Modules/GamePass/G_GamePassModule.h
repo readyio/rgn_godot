@@ -11,10 +11,7 @@
 #include "G_GetGamePassUserDataResponseData.h"
 #include "../../../../../Generated/RGN/Modules/GamePass/GamePassUserData.h"
 #include "G_GamePassUserData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -23,16 +20,14 @@
 using namespace std;
 
 class G_GamePassModule : public godot::Object {
-    GDCLASS(G_GamePassModule, godot::Object);
-    static inline G_GamePassModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getAsync", "id", "requestName", "onSuccess", "onFail"), &G_GamePassModule::getAsync, DEFVAL(""), DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getForCurrentAppAsync", "onSuccess", "onFail"), &G_GamePassModule::getForCurrentAppAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getForUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), &G_GamePassModule::getForUserAsync, DEFVAL(""), DEFVAL(""), DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getAllForUserAsync", "userId", "onSuccess", "onFail"), &G_GamePassModule::getAllForUserAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_GamePassModule, godot::Object);
+#ifdef GODOT4
+    static G_GamePassModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_GamePassModule *get_singleton() {
         return singleton;
     }
@@ -44,11 +39,18 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getAsync, GCLASS_METHOD_SIGNATURE("getAsync", "id", "requestName", "onSuccess", "onFail"), &G_GamePassModule::getAsync, DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "onSuccess", "onFail"), &G_GamePassModule::getForCurrentAppAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getForUserAsync, GCLASS_METHOD_SIGNATURE("getForUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), &G_GamePassModule::getForUserAsync, DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getAllForUserAsync, GCLASS_METHOD_SIGNATURE("getAllForUserAsync", "userId", "onSuccess", "onFail"), &G_GamePassModule::getAllForUserAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void getAsync(
         godot::String id,
         godot::String requestName,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_id;
             string cpp_requestName;
             godot::String g_id = id;
@@ -62,21 +64,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_GamePassData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_id,
                 cpp_requestName
             );
     }
     void getForCurrentAppAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::GamePass::GamePassModule::GetForCurrentAppAsync(
                 [onSuccess](vector<RGN::Modules::GamePass::GamePassData> response) {
                     godot::Array gArgs;
@@ -90,21 +92,21 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getForUserAsync(
         godot::String id,
         godot::String requestName,
         godot::String userId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_id;
             string cpp_requestName;
             string cpp_userId;
@@ -127,13 +129,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_id,
                 cpp_requestName,
@@ -142,8 +144,8 @@ public:
     }
     void getAllForUserAsync(
         godot::String userId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             godot::String g_userId = userId;
             cpp_userId = std::string(g_userId.utf8().get_data());
@@ -160,13 +162,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId
             );

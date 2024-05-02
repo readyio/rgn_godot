@@ -11,10 +11,7 @@
 #include "G_GetMatchResponseData.h"
 #include "../../../../../Generated/RGN/Modules/Matchmaking/StartMatchResponseData.h"
 #include "G_StartMatchResponseData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -23,22 +20,14 @@
 using namespace std;
 
 class G_MatchmakingModule : public godot::Object {
-    GDCLASS(G_MatchmakingModule, godot::Object);
-    static inline G_MatchmakingModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getJoinOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getJoinOpenMatchesAsync, DEFVAL(""), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getVoteOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getVoteOpenMatchesAsync, DEFVAL(""), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getFinishedMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getFinishedMatchesAsync, DEFVAL(""), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getFinishedMatchByIdAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getFinishedMatchByIdAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("createMatchAsync", "matchConfig", "participatePayload", "participateInOnCreate", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::createMatchAsync, DEFVAL(godot::Dictionary()), DEFVAL(true), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("participateInMatchAsync", "matchId", "participantPayload", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::participateInMatchAsync, DEFVAL(godot::Dictionary()), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("startMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::startMatchAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("voteForMatchAsync", "matchId", "participantId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::voteForMatchAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("submitMatchScoreAsync", "matchId", "score", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::submitMatchScoreAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("finishMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::finishMatchAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_MatchmakingModule, godot::Object);
+#ifdef GODOT4
+    static G_MatchmakingModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_MatchmakingModule *get_singleton() {
         return singleton;
     }
@@ -50,12 +39,25 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getJoinOpenMatchesAsync, GCLASS_METHOD_SIGNATURE("getJoinOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getJoinOpenMatchesAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getVoteOpenMatchesAsync, GCLASS_METHOD_SIGNATURE("getVoteOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getVoteOpenMatchesAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getFinishedMatchesAsync, GCLASS_METHOD_SIGNATURE("getFinishedMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getFinishedMatchesAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getFinishedMatchByIdAsync, GCLASS_METHOD_SIGNATURE("getFinishedMatchByIdAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getFinishedMatchByIdAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::createMatchAsync, GCLASS_METHOD_SIGNATURE("createMatchAsync", "matchConfig", "participatePayload", "participateInOnCreate", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::createMatchAsync, DEFVAL(godot::Dictionary()), DEFVAL(true), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::participateInMatchAsync, GCLASS_METHOD_SIGNATURE("participateInMatchAsync", "matchId", "participantPayload", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::participateInMatchAsync, DEFVAL(godot::Dictionary()), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::startMatchAsync, GCLASS_METHOD_SIGNATURE("startMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::startMatchAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::voteForMatchAsync, GCLASS_METHOD_SIGNATURE("voteForMatchAsync", "matchId", "participantId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::voteForMatchAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::submitMatchScoreAsync, GCLASS_METHOD_SIGNATURE("submitMatchScoreAsync", "matchId", "score", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::submitMatchScoreAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::finishMatchAsync, GCLASS_METHOD_SIGNATURE("finishMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::finishMatchAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void getJoinOpenMatchesAsync(
         int32_t limit,
         godot::String startAfter,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             RGN::CancellationToken cpp_cancellationToken;
@@ -77,13 +79,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter,
@@ -94,8 +96,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             RGN::CancellationToken cpp_cancellationToken;
@@ -117,13 +119,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter,
@@ -134,8 +136,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             RGN::CancellationToken cpp_cancellationToken;
@@ -157,13 +159,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter,
@@ -173,8 +175,8 @@ public:
     void getFinishedMatchByIdAsync(
         godot::String matchId,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_matchId;
             RGN::CancellationToken cpp_cancellationToken;
             godot::String g_matchId = matchId;
@@ -187,13 +189,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_MatchmakingData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchId,
                 cpp_cancellationToken
@@ -204,8 +206,8 @@ public:
         godot::Dictionary participatePayload,
         bool participateInOnCreate,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Matchmaking::MatchmakingData cpp_matchConfig;
             std::unordered_map<string, string> cpp_participatePayload;
             bool cpp_participateInOnCreate;
@@ -234,13 +236,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_MatchmakingData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchConfig,
                 cpp_participatePayload,
@@ -252,8 +254,8 @@ public:
         godot::String matchId,
         godot::Dictionary participantPayload,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_matchId;
             std::unordered_map<string, string> cpp_participantPayload;
             RGN::CancellationToken cpp_cancellationToken;
@@ -279,13 +281,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchId,
                 cpp_participantPayload,
@@ -295,8 +297,8 @@ public:
     void startMatchAsync(
         godot::String matchId,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_matchId;
             RGN::CancellationToken cpp_cancellationToken;
             godot::String g_matchId = matchId;
@@ -308,13 +310,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchId,
                 cpp_cancellationToken
@@ -324,8 +326,8 @@ public:
         godot::String matchId,
         godot::String participantId,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_matchId;
             string cpp_participantId;
             RGN::CancellationToken cpp_cancellationToken;
@@ -340,13 +342,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchId,
                 cpp_participantId,
@@ -357,8 +359,8 @@ public:
         godot::String matchId,
         int64_t score,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_matchId;
             int64_t cpp_score;
             RGN::CancellationToken cpp_cancellationToken;
@@ -373,13 +375,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchId,
                 cpp_score,
@@ -389,8 +391,8 @@ public:
     void finishMatchAsync(
         godot::String matchId,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_matchId;
             RGN::CancellationToken cpp_cancellationToken;
             godot::String g_matchId = matchId;
@@ -402,13 +404,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_matchId,
                 cpp_cancellationToken

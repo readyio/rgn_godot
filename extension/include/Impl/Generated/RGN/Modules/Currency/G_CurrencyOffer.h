@@ -1,10 +1,7 @@
 #pragma once
 // This file is generated: please don't modify. Go to Unity code generator if you need changes.
 #include "../../../../../Generated/RGN/Modules/Currency/CurrencyOffer.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -23,7 +20,7 @@ struct G_CurrencyOffer {
         target.productId = std::string(g_source_productId.utf8().get_data());
         godot::String g_source_offeredProductId = source["offeredProductId"];
         target.offeredProductId = std::string(g_source_offeredProductId.utf8().get_data());
-        double g_source_remainingTime = source["remainingTime"];
+        int64_t g_source_remainingTime = source["remainingTime"];
         target.remainingTime = g_source_remainingTime;
         float g_source_offeringPrice = source["offeringPrice"];
         target.offeringPrice = g_source_offeringPrice;

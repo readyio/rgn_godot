@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Leaderboard/GetLeaderboardResetResponseData.h"
 #include "../../../../../Generated/RGN/Modules/Leaderboard/LeaderboardReset.h"
 #include "G_LeaderboardReset.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

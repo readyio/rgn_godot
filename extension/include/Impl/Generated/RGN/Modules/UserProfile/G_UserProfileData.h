@@ -5,10 +5,7 @@
 #include "../Currency/G_Currency.h"
 #include "../../../../../Generated/RGN/Modules/UserProfile/UserData.h"
 #include "G_UserData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

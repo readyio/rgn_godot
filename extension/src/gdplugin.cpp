@@ -1,6 +1,79 @@
-#include "register_types.h"
 // Core deps
 #include "Impl/Core/G_RGNCore.h"
+#include "Impl/Core/G_RGNConfigurationData.h"
+#include "Impl/Core/G_Timer.h"
+#include "Impl/Utility/G_CancellationToken.h"
+#include "Impl/Utility/G_CancellationTokenSource.h"
+// Module deps
+#include "Impl/Generated/RGN/Modules/Achievement/G_AchievementsModule.h"
+#include "Impl/Generated/RGN/Modules/Achievement/G_AchievementsModule_Admin.h"
+#include "Impl/Generated/RGN/Modules/Analytics/G_AnalyticsModule.h"
+#include "Impl/Generated/RGN/Modules/Creator/G_CreatorModule.h"
+#include "Impl/Generated/RGN/Modules/Currency/G_CurrencyModule.h"
+#include "Impl/Generated/RGN/Modules/GamePass/G_GamePassModule.h"
+#include "Impl/Generated/RGN/Modules/GamePass/G_GamePassModule_Admin.h"
+#include "Impl/Generated/RGN/Modules/GameProgress/G_GameProgressModule.h"
+#include "Impl/Generated/RGN/Modules/Inventory/G_InventoryModule.h"
+#include "Impl/Generated/RGN/Modules/Leaderboard/G_LeaderboardModule.h"
+#include "Impl/Generated/RGN/Modules/Leaderboard/G_LeaderboardModule_Admin.h"
+#include "Impl/Generated/RGN/Modules/Matchmaking/G_MatchmakingModule.h"
+#include "Impl/Generated/RGN/Modules/Matchmaking/G_MatchmakingModule_Admin.h"
+#include "Impl/Generated/RGN/Modules/Messaging/G_MessagingModule.h"
+#include "Impl/Generated/RGN/Modules/Store/G_StoreModule.h"
+#include "Impl/Generated/RGN/Modules/Store/G_StoreModule_Admin.h"
+#include "Impl/Generated/RGN/Modules/UserProfile/G_UserProfileModule.h"
+#include "Impl/Generated/RGN/Modules/VirtualItems/G_VirtualItemsModule.h"
+#include "Impl/Generated/RGN/Modules/VirtualItems/G_VirtualItemsModule_Admin.h"
+#include "Impl/Generated/RGN/Modules/Wallets/G_WalletsModule.h"
+
+#ifdef GODOT3
+#include <Godot.hpp>
+
+void register_core() {
+	godot::register_class<G_RGNCore>();
+	godot::register_class<G_RGNConfigurationData>();
+	godot::register_class<G_Timer>();
+	godot::register_class<G_CancellationToken>();
+	godot::register_class<G_CancellationTokenSource>();
+}
+
+void register_modules() {
+	godot::register_class<G_AchievementsModule>();
+	godot::register_class<G_AchievementsModule_Admin>();
+	godot::register_class<G_AnalyticsModule>();
+	godot::register_class<G_CreatorModule>();
+	godot::register_class<G_CurrencyModule>();
+	godot::register_class<G_GamePassModule>();
+	godot::register_class<G_GamePassModule_Admin>();
+	godot::register_class<G_GameProgressModule>();
+	godot::register_class<G_InventoryModule>();
+	godot::register_class<G_LeaderboardModule>();
+	godot::register_class<G_LeaderboardModule_Admin>();
+	godot::register_class<G_MatchmakingModule>();
+	godot::register_class<G_MatchmakingModule_Admin>();
+	godot::register_class<G_MessagingModule>();
+	godot::register_class<G_StoreModule>();
+	godot::register_class<G_StoreModule_Admin>();
+	godot::register_class<G_UserProfileModule>();
+	godot::register_class<G_VirtualItemsModule>();
+	godot::register_class<G_VirtualItemsModule_Admin>();
+	godot::register_class<G_WalletsModule>();
+}
+
+extern "C" void GDN_EXPORT rgn_gdnative_init(godot_gdnative_init_options *o) {
+	godot::Godot::gdnative_init(o);
+}
+
+extern "C" void GDN_EXPORT rgn_gdnative_terminate(godot_gdnative_terminate_options *o) {
+	godot::Godot::gdnative_terminate(o);
+}
+
+extern "C" void GDN_EXPORT rgn_nativescript_init(void *handle) {
+	godot::Godot::nativescript_init(handle);
+	register_core();
+	register_modules();
+}
+#else
 #include "Impl/Core/G_RGNEnvironmentTarget.h"
 #include "Impl/Core/G_RGNConfigurationData.h"
 #include "Impl/Utility/G_CancellationToken.h"
@@ -219,3 +292,4 @@ extern "C" {
 		return init_obj.init();
 	}
 }
+#endif

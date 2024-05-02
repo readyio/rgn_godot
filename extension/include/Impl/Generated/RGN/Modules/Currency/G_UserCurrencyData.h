@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Currency/UserCurrencyData.h"
 #include "../../../../../Generated/RGN/Modules/Currency/Currency.h"
 #include "G_Currency.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

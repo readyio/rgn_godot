@@ -1,10 +1,7 @@
 #pragma once
 // This file is generated: please don't modify. Go to Unity code generator if you need changes.
 #include "../../../../../Generated/RGN/Modules/UserProfile/UserCustomClaims.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -12,11 +9,11 @@
 struct G_UserCustomClaims {
 	static void ConvertToGodotModel(const RGN::Modules::UserProfile::UserCustomClaims& source, godot::Dictionary& target) {
         godot::Dictionary g_target_claims;
-        for (const auto& [source_claims_key, source_claims_value] : source.claims) {
+        for (const auto& source_claims_kv : source.claims) {
             godot::String g_source_claims_key;
-            g_source_claims_key = godot::String(source_claims_key.c_str());
+            g_source_claims_key = godot::String(source_claims_kv.first.c_str());
             godot::String g_source_claims_value;
-            g_source_claims_value = godot::String(source_claims_value.c_str());
+            g_source_claims_value = godot::String(source_claims_kv.second.c_str());
             g_target_claims[g_source_claims_key] = g_source_claims_value;
         }
         target["claims"] = g_target_claims;

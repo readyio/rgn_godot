@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Messaging/MessagingModule.h"
 #include "../../../../../Generated/RGN/Modules/Messaging/IMessageReceiver.h"
 #include "G_IMessageReceiver.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -15,15 +12,14 @@
 using namespace std;
 
 class G_MessagingModule : public godot::Object {
-    GDCLASS(G_MessagingModule, godot::Object);
-    static inline G_MessagingModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("subscribe", "topic", "messageReceiver", "onSuccess", "onFail"), &G_MessagingModule::subscribe, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("unsubscribe", "topic", "messageReceiver", "onSuccess", "onFail"), &G_MessagingModule::unsubscribe, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("sendMessageByUserId", "appId", "userId", "payload", "title", "text", "onSuccess", "onFail"), &G_MessagingModule::sendMessageByUserId, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_MessagingModule, godot::Object);
+#ifdef GODOT4
+    static G_MessagingModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_MessagingModule *get_singleton() {
         return singleton;
     }
@@ -35,11 +31,17 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::subscribe, GCLASS_METHOD_SIGNATURE("subscribe", "topic", "messageReceiver", "onSuccess", "onFail"), &G_MessagingModule::subscribe, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::unsubscribe, GCLASS_METHOD_SIGNATURE("unsubscribe", "topic", "messageReceiver", "onSuccess", "onFail"), &G_MessagingModule::unsubscribe, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::sendMessageByUserId, GCLASS_METHOD_SIGNATURE("sendMessageByUserId", "appId", "userId", "payload", "title", "text", "onSuccess", "onFail"), &G_MessagingModule::sendMessageByUserId, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void subscribe(
         godot::String topic,
         godot::Dictionary messageReceiver,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_topic;
             RGN::Modules::Messaging::IMessageReceiver cpp_messageReceiver;
             godot::String g_topic = topic;
@@ -53,8 +55,8 @@ public:
     void unsubscribe(
         godot::String topic,
         godot::Dictionary messageReceiver,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_topic;
             RGN::Modules::Messaging::IMessageReceiver cpp_messageReceiver;
             godot::String g_topic = topic;
@@ -71,8 +73,8 @@ public:
         godot::String payload,
         godot::String title,
         godot::String text,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_appId;
             string cpp_userId;
             string cpp_payload;
@@ -90,13 +92,13 @@ public:
             cpp_text = std::string(g_text.utf8().get_data());
             RGN::Modules::Messaging::MessagingModule::SendMessageByUserId(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appId,
                 cpp_userId,

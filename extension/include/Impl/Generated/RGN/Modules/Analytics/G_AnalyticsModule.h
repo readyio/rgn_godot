@@ -3,10 +3,7 @@
 #include "../../../../Utility/G_CancellationToken.h"
 #include "../../../../../Utility/CancellationToken.h"
 #include "../../../../../Generated/RGN/Modules/Analytics/AnalyticsModule.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -15,13 +12,14 @@
 using namespace std;
 
 class G_AnalyticsModule : public godot::Object {
-    GDCLASS(G_AnalyticsModule, godot::Object);
-    static inline G_AnalyticsModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("logEventAsync", "eventName", "eventParameters", "cancellationToken", "onSuccess", "onFail"), &G_AnalyticsModule::logEventAsync, DEFVAL(""), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_AnalyticsModule, godot::Object);
+#ifdef GODOT4
+    static G_AnalyticsModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_AnalyticsModule *get_singleton() {
         return singleton;
     }
@@ -33,12 +31,16 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_AnalyticsModule::logEventAsync, GCLASS_METHOD_SIGNATURE("logEventAsync", "eventName", "eventParameters", "cancellationToken", "onSuccess", "onFail"), &G_AnalyticsModule::logEventAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void logEventAsync(
         godot::String eventName,
         godot::String eventParameters,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_eventName;
             string cpp_eventParameters;
             RGN::CancellationToken cpp_cancellationToken;
@@ -49,13 +51,13 @@ public:
             G_CancellationToken::ConvertToCoreModel(cancellationToken, cpp_cancellationToken);
             RGN::Modules::Analytics::AnalyticsModule::LogEventAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_eventName,
                 cpp_eventParameters,

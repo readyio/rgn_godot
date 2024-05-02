@@ -7,10 +7,7 @@
 #include "G_PlayerProgressAchievements.h"
 #include "../../../../../Generated/RGN/Modules/Achievement/PurchaseAchievements.h"
 #include "G_PurchaseAchievements.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

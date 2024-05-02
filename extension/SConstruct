@@ -2,17 +2,31 @@
 import SCons.Script
 import platform
 
+# Define the version of godot used to compile
+version = 3
+
 # Define the GlobRecursive function
-def GlobRecursive(pattern, node='.'):
+def GlobRecursive(pattern, node="."):
     results = []
-    for f in Glob(str(node) + '/*', source=True):
+    for f in Glob(str(node) + "/*", source=True):
         if type(f) is SCons.Node.FS.Dir:
             results += GlobRecursive(pattern, f)
-    results += Glob(str(node) + '/' + pattern, source=True)
+    results += Glob(str(node) + "/" + pattern, source=True)
     return results
 
 # Import SCons and create the base environment
 env = SConscript("godot-cpp/SConstruct")
+
+# Pass the version
+if version == 3:
+    env.Append(CPPDEFINES=[("GODOT3", 1)])
+elif version == 4:
+    env.Append(CPPDEFINES=[("GODOT4", 1)])
+
+# Define platform-specific macro
+if "platform" in env:
+    platform_macro = "PLATFORM_{}".format(env["platform"].upper())
+    env.Append(CPPDEFINES=[(platform_macro, 1)])
 
 # Add bigobj flag
 if ("platform" not in env and platform.system() == "Windows") or env.get("platform", "").lower() == "windows":
@@ -22,19 +36,20 @@ if ("platform" not in env and platform.system() == "Windows") or env.get("platfo
 env.Append(CPPPATH=["include"])
 
 # Glob all source files recursively in the src folder
-sources = GlobRecursive('*.cpp', node='src')
+sources = GlobRecursive("*.cpp", node="src")
 
 # Create shared library
-output_name = "rgn{}{}".format(env["suffix"], env["SHLIBSUFFIX"])
+output_name = "rgn.{}.{}.{}{}".format(env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"])
 if env["platform"] == "android":
-    output_name = "lib" + output_name  # Append 'lib' for Android platform
+    output_name = "lib" + output_name  # Append "lib" for Android platform
 library = env.SharedLibrary(
     "bin/" + output_name,
     source=sources,
 )
 
 # Install the built library
-install_targets = env.Install(env.Dir("../demo/addons/rgn/bin"), library)
+shlib_only = [x for x in library if x.name.endswith(env["SHLIBSUFFIX"])]
+install_targets = env.Install(env.Dir("../demo/addons/rgn/bin"), shlib_only)
 
 # Set default targets
 Default(install_targets)

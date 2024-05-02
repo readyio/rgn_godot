@@ -11,10 +11,7 @@
 #include "../../Model/G_RequirementData.h"
 #include "../../../../../Generated/RGN/Modules/VirtualItems/VirtualItem.h"
 #include "../VirtualItems/G_VirtualItem.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

@@ -1,40 +1,45 @@
 #pragma once
 
-#include "Impl/Core/G_RGNEnvironmentTarget.h"
-#include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/variant/string.hpp>
+#include "Impl/G_Defs.h"
+#include "Core/RGNEnvironmentTarget.h"
 #include <functional>
 #include <vector>
 
 class G_RGNConfigurationData : public godot::Object
 {
 private:
-    GDCLASS(G_RGNConfigurationData, godot::Object);
+	REG_GCLASS(G_RGNConfigurationData, godot::Object);
     godot::String appId = "";
     godot::String apiKey = "";
-    G_RGNEnvironmentTarget::Enumeration environmentTarget = G_RGNEnvironmentTarget::Enumeration::STAGING;
+    RGN::RGNEnvironmentTarget environmentTarget = RGN::RGNEnvironmentTarget::STAGING;
     bool autoGuestLogin = true;
     bool useFunctionsEmulator = false;
     godot::String emulatorHost = "127.0.0.1";
     godot::String emulatorPort = "5001";
-protected:
-	static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getAppId"), &G_RGNConfigurationData::getAppId);
-        godot::ClassDB::bind_method(godot::D_METHOD("setAppId", "appId"), &G_RGNConfigurationData::setAppId);
-        godot::ClassDB::bind_method(godot::D_METHOD("getApiKey"), &G_RGNConfigurationData::getApiKey);
-        godot::ClassDB::bind_method(godot::D_METHOD("setApiKey", "apiKey"), &G_RGNConfigurationData::setApiKey);
-        godot::ClassDB::bind_method(godot::D_METHOD("getEnvironmentTarget"), &G_RGNConfigurationData::getEnvironmentTarget);
-        godot::ClassDB::bind_method(godot::D_METHOD("setEnvironmentTarget", "environmentTarget"), &G_RGNConfigurationData::setEnvironmentTarget);
-        godot::ClassDB::bind_method(godot::D_METHOD("getAutoGuestLogin"), &G_RGNConfigurationData::getAutoGuestLogin);
-        godot::ClassDB::bind_method(godot::D_METHOD("setAutoGuestLogin", "autoGuestLogin"), &G_RGNConfigurationData::setAutoGuestLogin);
-        godot::ClassDB::bind_method(godot::D_METHOD("getUseFunctionsEmulator"), &G_RGNConfigurationData::getUseFunctionsEmulator);
-        godot::ClassDB::bind_method(godot::D_METHOD("setUseFunctionsEmulator", "useFunctionsEmulator"), &G_RGNConfigurationData::setUseFunctionsEmulator);
-        godot::ClassDB::bind_method(godot::D_METHOD("getEmulatorHost"), &G_RGNConfigurationData::getEmulatorHost);
-        godot::ClassDB::bind_method(godot::D_METHOD("setEmulatorHost", "host"), &G_RGNConfigurationData::setEmulatorHost);
-        godot::ClassDB::bind_method(godot::D_METHOD("getEmulatorPort"), &G_RGNConfigurationData::getEmulatorPort);
-        godot::ClassDB::bind_method(godot::D_METHOD("setEmulatorPort", "port"), &G_RGNConfigurationData::setEmulatorPort);
-	}
 public:
+	REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getAppId, GCLASS_METHOD_SIGNATURE("getAppId"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setAppId, GCLASS_METHOD_SIGNATURE("setAppId", "appId"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getApiKey, GCLASS_METHOD_SIGNATURE("getApiKey"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setApiKey, GCLASS_METHOD_SIGNATURE("setApiKey", "apiKey"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getEnvironmentTarget, GCLASS_METHOD_SIGNATURE("getEnvironmentTarget"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setDevelopmentEnvironment, GCLASS_METHOD_SIGNATURE("setDevelopmentEnvironment"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setStagingEnvironment, GCLASS_METHOD_SIGNATURE("setStagingEnvironment"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setProductionEnvironment, GCLASS_METHOD_SIGNATURE("setProductionEnvironment"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getAutoGuestLogin, GCLASS_METHOD_SIGNATURE("getAutoGuestLogin"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setAutoGuestLogin, GCLASS_METHOD_SIGNATURE("setAutoGuestLogin", "autoGuestLogin"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getUseFunctionsEmulator, GCLASS_METHOD_SIGNATURE("getUseFunctionsEmulator"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setUseFunctionsEmulator, GCLASS_METHOD_SIGNATURE("setUseFunctionsEmulator", "useFunctionsEmulator"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getEmulatorHost, GCLASS_METHOD_SIGNATURE("getEmulatorHost"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setEmulatorHost, GCLASS_METHOD_SIGNATURE("setEmulatorHost", "host"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::getEmulatorPort, GCLASS_METHOD_SIGNATURE("getEmulatorPort"));
+        BIND_GCLASS_METHOD(G_RGNConfigurationData::setEmulatorPort, GCLASS_METHOD_SIGNATURE("setEmulatorPort", "port"));
+	}
+
+#ifdef GODOT3
+	void _init() {}
+#endif
+
     godot::String getAppId() {
         return appId;
     }
@@ -49,11 +54,19 @@ public:
         this->apiKey = apiKey;
         return this;
     }
-    G_RGNEnvironmentTarget::Enumeration getEnvironmentTarget() {
-        return environmentTarget;
+    int32_t getEnvironmentTarget() {
+        return static_cast<int32_t>(environmentTarget);
     }
-    G_RGNConfigurationData* setEnvironmentTarget(G_RGNEnvironmentTarget::Enumeration environmentTarget) {
-        this->environmentTarget = environmentTarget;
+    G_RGNConfigurationData* setDevelopmentEnvironment() {
+        this->environmentTarget = RGN::RGNEnvironmentTarget::DEVELOPMENT;
+        return this;
+    }
+    G_RGNConfigurationData* setStagingEnvironment() {
+        this->environmentTarget = RGN::RGNEnvironmentTarget::STAGING;
+        return this;
+    }
+    G_RGNConfigurationData* setProductionEnvironment() {
+        this->environmentTarget = RGN::RGNEnvironmentTarget::PRODUCTION;
         return this;
     }
     bool getAutoGuestLogin() {

@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Store/ImportStoreOffersFromCSVResponse.h"
 #include "../../../../../Generated/RGN/Modules/Store/StoreOffer.h"
 #include "G_StoreOffer.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

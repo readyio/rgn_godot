@@ -5,10 +5,7 @@
 #include "G_Vote.h"
 #include "../../../../../Generated/RGN/Model/ParticipationFee.h"
 #include "../../Model/G_ParticipationFee.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -48,20 +45,20 @@ struct G_MatchmakingData {
         }
         target["votes"] = g_target_votes;
         godot::Dictionary g_target_participantsScore;
-        for (const auto& [source_participantsScore_key, source_participantsScore_value] : source.participantsScore) {
+        for (const auto& source_participantsScore_kv : source.participantsScore) {
             godot::String g_source_participantsScore_key;
-            g_source_participantsScore_key = godot::String(source_participantsScore_key.c_str());
+            g_source_participantsScore_key = godot::String(source_participantsScore_kv.first.c_str());
             int64_t g_source_participantsScore_value;
-            g_source_participantsScore_value = source_participantsScore_value;
+            g_source_participantsScore_value = source_participantsScore_kv.second;
             g_target_participantsScore[g_source_participantsScore_key] = g_source_participantsScore_value;
         }
         target["participantsScore"] = g_target_participantsScore;
         godot::Dictionary g_target_participantsPayload;
-        for (const auto& [source_participantsPayload_key, source_participantsPayload_value] : source.participantsPayload) {
+        for (const auto& source_participantsPayload_kv : source.participantsPayload) {
             godot::String g_source_participantsPayload_key;
-            g_source_participantsPayload_key = godot::String(source_participantsPayload_key.c_str());
+            g_source_participantsPayload_key = godot::String(source_participantsPayload_kv.first.c_str());
             godot::String g_source_participantsPayload_value;
-            g_source_participantsPayload_value = godot::String(source_participantsPayload_value.c_str());
+            g_source_participantsPayload_value = godot::String(source_participantsPayload_kv.second.c_str());
             g_target_participantsPayload[g_source_participantsPayload_key] = g_source_participantsPayload_value;
         }
         target["participantsPayload"] = g_target_participantsPayload;

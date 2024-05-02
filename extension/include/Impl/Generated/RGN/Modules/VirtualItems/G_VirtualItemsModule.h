@@ -21,10 +21,7 @@
 #include "G_GetVirtualItemsByIdsRequestData.h"
 #include "../../../../../Generated/RGN/Modules/VirtualItems/GetVirtualItemTagsResponse.h"
 #include "G_GetVirtualItemTagsResponse.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -33,28 +30,14 @@
 using namespace std;
 
 class G_VirtualItemsModule : public godot::Object {
-    GDCLASS(G_VirtualItemsModule, godot::Object);
-    static inline G_VirtualItemsModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("addVirtualItemAsync", "virtualItem", "onSuccess", "onFail"), &G_VirtualItemsModule::addVirtualItemAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("addFromCSVAsync", "virtualItemName", "csvContent", "csvDelimiter", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::addFromCSVAsync, DEFVAL(","), DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("updateVirtualItemAsync", "itemId", "virtualItem", "onSuccess", "onFail"), &G_VirtualItemsModule::updateVirtualItemAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("deleteVirtualItemAsync", "itemId", "onSuccess", "onFail"), &G_VirtualItemsModule::deleteVirtualItemAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getVirtualItemsAsync", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getVirtualItemsAsync_Limit_StartAfter", "limit", "startAfter", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsAsync_Limit_StartAfter, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getVirtualItemsByIdsAsync", "virtualItemsIds", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsByIdsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule::getByTagsAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getTagsAsync", "virtualItemId", "onSuccess", "onFail"), &G_VirtualItemsModule::getTagsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setTagsAsync", "virtualItemId", "tags", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule::setTagsAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setNameAsync", "virtualItemId", "name", "onSuccess", "onFail"), &G_VirtualItemsModule::setNameAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setDescriptionAsync", "virtualItemId", "description", "onSuccess", "onFail"), &G_VirtualItemsModule::setDescriptionAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getPropertiesAsync", "virtualItemId", "onSuccess", "onFail"), &G_VirtualItemsModule::getPropertiesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setPropertiesAsync", "virtualItemId", "json", "onSuccess", "onFail"), &G_VirtualItemsModule::setPropertiesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("uploadImageAsync", "virtualItemId", "thumbnailTextureBytes", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::uploadImageAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("downloadImageAsync", "virtualItemId", "size", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::downloadImageAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_VirtualItemsModule, godot::Object);
+#ifdef GODOT4
+    static G_VirtualItemsModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_VirtualItemsModule *get_singleton() {
         return singleton;
     }
@@ -66,10 +49,29 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::addVirtualItemAsync, GCLASS_METHOD_SIGNATURE("addVirtualItemAsync", "virtualItem", "onSuccess", "onFail"), &G_VirtualItemsModule::addVirtualItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::addFromCSVAsync, GCLASS_METHOD_SIGNATURE("addFromCSVAsync", "virtualItemName", "csvContent", "csvDelimiter", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::addFromCSVAsync, DEFVAL(","), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::updateVirtualItemAsync, GCLASS_METHOD_SIGNATURE("updateVirtualItemAsync", "itemId", "virtualItem", "onSuccess", "onFail"), &G_VirtualItemsModule::updateVirtualItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::deleteVirtualItemAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemAsync", "itemId", "onSuccess", "onFail"), &G_VirtualItemsModule::deleteVirtualItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsAsync, GCLASS_METHOD_SIGNATURE("getVirtualItemsAsync", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsAsync_Limit_StartAfter, GCLASS_METHOD_SIGNATURE("getVirtualItemsAsync_Limit_StartAfter", "limit", "startAfter", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsAsync_Limit_StartAfter, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsByIdsAsync, GCLASS_METHOD_SIGNATURE("getVirtualItemsByIdsAsync", "virtualItemsIds", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule::getByTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "virtualItemId", "onSuccess", "onFail"), &G_VirtualItemsModule::getTagsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "virtualItemId", "tags", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule::setTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setNameAsync, GCLASS_METHOD_SIGNATURE("setNameAsync", "virtualItemId", "name", "onSuccess", "onFail"), &G_VirtualItemsModule::setNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setDescriptionAsync, GCLASS_METHOD_SIGNATURE("setDescriptionAsync", "virtualItemId", "description", "onSuccess", "onFail"), &G_VirtualItemsModule::setDescriptionAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "virtualItemId", "onSuccess", "onFail"), &G_VirtualItemsModule::getPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "virtualItemId", "json", "onSuccess", "onFail"), &G_VirtualItemsModule::setPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::uploadImageAsync, GCLASS_METHOD_SIGNATURE("uploadImageAsync", "virtualItemId", "thumbnailTextureBytes", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::uploadImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::downloadImageAsync, GCLASS_METHOD_SIGNATURE("downloadImageAsync", "virtualItemId", "size", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::downloadImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void addVirtualItemAsync(
         godot::Dictionary virtualItem,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::VirtualItems::VirtualItem cpp_virtualItem;
             G_VirtualItem::ConvertToCoreModel(virtualItem, cpp_virtualItem);
             RGN::Modules::VirtualItems::VirtualItemsModule::AddVirtualItemAsync(
@@ -79,13 +81,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_VirtualItem::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItem
             );
@@ -95,8 +97,8 @@ public:
         godot::String csvContent,
         godot::String csvDelimiter,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemName;
             string cpp_csvContent;
             string cpp_csvDelimiter;
@@ -120,13 +122,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemName,
                 cpp_csvContent,
@@ -137,8 +139,8 @@ public:
     void updateVirtualItemAsync(
         godot::String itemId,
         godot::Dictionary virtualItem,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_itemId;
             RGN::Modules::VirtualItems::VirtualItem cpp_virtualItem;
             godot::String g_itemId = itemId;
@@ -151,13 +153,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_VirtualItem::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_itemId,
                 cpp_virtualItem
@@ -165,27 +167,27 @@ public:
     }
     void deleteVirtualItemAsync(
         godot::String itemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_itemId;
             godot::String g_itemId = itemId;
             cpp_itemId = std::string(g_itemId.utf8().get_data());
             RGN::Modules::VirtualItems::VirtualItemsModule::DeleteVirtualItemAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_itemId
             );
     }
     void getVirtualItemsAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::VirtualItems::VirtualItemsModule::GetVirtualItemsAsync(
                 [onSuccess](vector<RGN::Modules::VirtualItems::VirtualItem> response) {
                     godot::Array gArgs;
@@ -199,20 +201,20 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getVirtualItemsAsync_Limit_StartAfter(
         int32_t limit,
         godot::String startAfter,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             int32_t g_limit = limit;
@@ -232,13 +234,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter
@@ -246,8 +248,8 @@ public:
     }
     void getVirtualItemsByIdsAsync(
         godot::Array virtualItemsIds,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_virtualItemsIds;
             godot::Array g_cpp_virtualItemsIds = virtualItemsIds;
             for (int i = 0; i < g_cpp_virtualItemsIds.size(); ++i) {
@@ -270,13 +272,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemsIds
             );
@@ -284,8 +286,8 @@ public:
     void getByTagsAsync(
         godot::Array tags,
         godot::String appId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_tags;
             string cpp_appId;
             godot::Array g_cpp_tags = tags;
@@ -311,13 +313,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_tags,
                 cpp_appId
@@ -325,8 +327,8 @@ public:
     }
     void getTagsAsync(
         godot::String virtualItemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             godot::String g_virtualItemId = virtualItemId;
             cpp_virtualItemId = std::string(g_virtualItemId.utf8().get_data());
@@ -342,13 +344,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId
             );
@@ -357,8 +359,8 @@ public:
         godot::String virtualItemId,
         godot::Array tags,
         godot::String appId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             vector<string> cpp_tags;
             string cpp_appId;
@@ -376,13 +378,13 @@ public:
             cpp_appId = std::string(g_appId.utf8().get_data());
             RGN::Modules::VirtualItems::VirtualItemsModule::SetTagsAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_tags,
@@ -392,8 +394,8 @@ public:
     void setNameAsync(
         godot::String virtualItemId,
         godot::String name,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             string cpp_name;
             godot::String g_virtualItemId = virtualItemId;
@@ -402,13 +404,13 @@ public:
             cpp_name = std::string(g_name.utf8().get_data());
             RGN::Modules::VirtualItems::VirtualItemsModule::SetNameAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_name
@@ -417,8 +419,8 @@ public:
     void setDescriptionAsync(
         godot::String virtualItemId,
         godot::String description,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             string cpp_description;
             godot::String g_virtualItemId = virtualItemId;
@@ -427,13 +429,13 @@ public:
             cpp_description = std::string(g_description.utf8().get_data());
             RGN::Modules::VirtualItems::VirtualItemsModule::SetDescriptionAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_description
@@ -441,8 +443,8 @@ public:
     }
     void getPropertiesAsync(
         godot::String virtualItemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             godot::String g_virtualItemId = virtualItemId;
             cpp_virtualItemId = std::string(g_virtualItemId.utf8().get_data());
@@ -452,13 +454,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId
             );
@@ -466,8 +468,8 @@ public:
     void setPropertiesAsync(
         godot::String virtualItemId,
         godot::String json,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             string cpp_json;
             godot::String g_virtualItemId = virtualItemId;
@@ -480,13 +482,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_json
@@ -496,8 +498,8 @@ public:
         godot::String virtualItemId,
         godot::Array thumbnailTextureBytes,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             vector<uint8_t> cpp_thumbnailTextureBytes;
             RGN::CancellationToken cpp_cancellationToken;
@@ -518,13 +520,13 @@ public:
                     bool gResponse;
                     gResponse = response;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_thumbnailTextureBytes,
@@ -535,8 +537,8 @@ public:
         godot::String virtualItemId,
         int32_t size,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             RGN::Model::ImageSize cpp_size;
             RGN::CancellationToken cpp_cancellationToken;
@@ -557,13 +559,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_size,

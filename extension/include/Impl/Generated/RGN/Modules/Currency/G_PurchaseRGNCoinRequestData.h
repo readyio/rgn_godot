@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Currency/PurchaseRGNCoinRequestData.h"
 #include "../../../../../Generated/RGN/Model/Request/BaseRequestData.h"
 #include "../../Model/Request/G_BaseRequestData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

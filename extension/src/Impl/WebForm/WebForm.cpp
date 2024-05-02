@@ -8,7 +8,11 @@
 #include "Utility/Logger.h"
 #include <vector>
 #include <unordered_map>
+#ifdef GODOT3
+#include <ClassDB.hpp>
+#else
 #include <godot_cpp/classes/engine.hpp>
+#endif
 
 namespace RGN {
     Utility::FunctionEvent<void(bool, std::string)> WebForm::_redirectEvent;
@@ -31,7 +35,7 @@ namespace RGN {
     void WebForm::OpenWebForm(std::string idToken, std::string view, std::function<void(bool, std::string)> callback) {
         _redirectEvent.bind(callback);
         std::string redirectUrl;
-    #if defined(LINUXBSD_ENABLED) || defined(WINDOWS_ENABLED) || defined(MACOS_ENABLED)
+    #if defined(PLATFORM_WINDOWS) || defined(PLATFORM_MACOS)
         Http::WaitForInRequest(0, [](std::string url) {
             OnWebFormRedirect(false, url);
         }, _editorCurrBoundedPort);
@@ -49,10 +53,14 @@ namespace RGN {
         if (!view.empty()) {
             url = url + "&view=" + view;
         }
-    #if defined(ANDROID_ENABLED) || defined(IOS_ENABLED)
+    #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
+    #if GODOT3
+        godot::Object* webview = godot::ClassDB::get_singleton()->instance("READYggWebview");
+    #else
         godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
+    #endif
         if (webview != nullptr) {
-    #if defined(ANDROID_ENABLED)
+    #if defined(PLATFORM_ANDROID)
             webview->call("setInstanceId", G_RGNCore::get_singleton()->get_instance_id());
     #endif
             webview->call("setUrlScheme", godot::String(redirectUrl.c_str()));
@@ -83,9 +91,9 @@ namespace RGN {
     }
 
     void WebForm::Initialize() {
+        G_RGNCore::get_singleton()->onFocusEvent.bind(CancelRedirectWaitDelay);
     }
 
     void WebForm::Update() {
-        G_RGNCore::get_singleton()->onFocusEvent.bind(CancelRedirectWaitDelay);
     }
 }

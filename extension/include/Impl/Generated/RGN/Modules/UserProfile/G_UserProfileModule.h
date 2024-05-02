@@ -25,10 +25,7 @@
 #include "G_GetUserStatusResponseData.h"
 #include "../../../../../Generated/RGN/Modules/UserProfile/GetUserStatusRequestData.h"
 #include "G_GetUserStatusRequestData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -37,33 +34,14 @@
 using namespace std;
 
 class G_UserProfileModule : public godot::Object {
-    GDCLASS(G_UserProfileModule, godot::Object);
-    static inline G_UserProfileModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getProfileAsync", "onSuccess", "onFail"), &G_UserProfileModule::getProfileAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getProfileAsync_UserId", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getProfileAsync_UserId, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getFullUserProfileAsync", "onSuccess", "onFail"), &G_UserProfileModule::getFullUserProfileAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getFullUserProfileAsync_UserId", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getFullUserProfileAsync_UserId, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("searchUsersAsync", "nicknameQuery", "onSuccess", "onFail"), &G_UserProfileModule::searchUsersAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserCurrenciesAsync", "onSuccess", "onFail"), &G_UserProfileModule::getUserCurrenciesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserIdByShortUIDAsync", "shortUID", "onSuccess", "onFail"), &G_UserProfileModule::getUserIdByShortUIDAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setDisplayNameAsync", "displayName", "onSuccess", "onFail"), &G_UserProfileModule::setDisplayNameAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setBioAsync", "bio", "onSuccess", "onFail"), &G_UserProfileModule::setBioAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setDisplayNameAndBioAsync", "displayName", "bio", "onSuccess", "onFail"), &G_UserProfileModule::setDisplayNameAndBioAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("uploadAvatarImageAsync", "bytes", "cancellationToken", "onSuccess", "onFail"), &G_UserProfileModule::uploadAvatarImageAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("downloadAvatarImageAsync", "userId", "size", "cancellationToken", "onSuccess", "onFail"), &G_UserProfileModule::downloadAvatarImageAsync, DEFVAL(nullptr), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("changeAdminStatusByEmailAsync", "email", "isAdmin", "accessLevel", "onSuccess", "onFail"), &G_UserProfileModule::changeAdminStatusByEmailAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("changeAdminStatusByUserIdAsync", "userId", "isAdmin", "accessLevel", "onSuccess", "onFail"), &G_UserProfileModule::changeAdminStatusByUserIdAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserCustomClaimsByUserIdAsync", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getUserCustomClaimsByUserIdAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserCustomClaimsByEmailAsync", "email", "onSuccess", "onFail"), &G_UserProfileModule::getUserCustomClaimsByEmailAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setInvisibleStatusAsync", "invisibleStatus", "onSuccess", "onFail"), &G_UserProfileModule::setInvisibleStatusAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("pingAsync", "onSuccess", "onFail"), &G_UserProfileModule::pingAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("suspendAsync", "onSuccess", "onFail"), &G_UserProfileModule::suspendAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserStateAsync", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getUserStateAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("deleteUser", "onSuccess", "onFail"), &G_UserProfileModule::deleteUser, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_UserProfileModule, godot::Object);
+#ifdef GODOT4
+    static G_UserProfileModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_UserProfileModule *get_singleton() {
         return singleton;
     }
@@ -75,9 +53,33 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getProfileAsync, GCLASS_METHOD_SIGNATURE("getProfileAsync", "onSuccess", "onFail"), &G_UserProfileModule::getProfileAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getProfileAsync_UserId, GCLASS_METHOD_SIGNATURE("getProfileAsync_UserId", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getProfileAsync_UserId, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getFullUserProfileAsync, GCLASS_METHOD_SIGNATURE("getFullUserProfileAsync", "onSuccess", "onFail"), &G_UserProfileModule::getFullUserProfileAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getFullUserProfileAsync_UserId, GCLASS_METHOD_SIGNATURE("getFullUserProfileAsync_UserId", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getFullUserProfileAsync_UserId, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::searchUsersAsync, GCLASS_METHOD_SIGNATURE("searchUsersAsync", "nicknameQuery", "onSuccess", "onFail"), &G_UserProfileModule::searchUsersAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("getUserCurrenciesAsync", "onSuccess", "onFail"), &G_UserProfileModule::getUserCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserIdByShortUIDAsync, GCLASS_METHOD_SIGNATURE("getUserIdByShortUIDAsync", "shortUID", "onSuccess", "onFail"), &G_UserProfileModule::getUserIdByShortUIDAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setDisplayNameAsync, GCLASS_METHOD_SIGNATURE("setDisplayNameAsync", "displayName", "onSuccess", "onFail"), &G_UserProfileModule::setDisplayNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setBioAsync, GCLASS_METHOD_SIGNATURE("setBioAsync", "bio", "onSuccess", "onFail"), &G_UserProfileModule::setBioAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setDisplayNameAndBioAsync, GCLASS_METHOD_SIGNATURE("setDisplayNameAndBioAsync", "displayName", "bio", "onSuccess", "onFail"), &G_UserProfileModule::setDisplayNameAndBioAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::uploadAvatarImageAsync, GCLASS_METHOD_SIGNATURE("uploadAvatarImageAsync", "bytes", "cancellationToken", "onSuccess", "onFail"), &G_UserProfileModule::uploadAvatarImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::downloadAvatarImageAsync, GCLASS_METHOD_SIGNATURE("downloadAvatarImageAsync", "userId", "size", "cancellationToken", "onSuccess", "onFail"), &G_UserProfileModule::downloadAvatarImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::changeAdminStatusByEmailAsync, GCLASS_METHOD_SIGNATURE("changeAdminStatusByEmailAsync", "email", "isAdmin", "accessLevel", "onSuccess", "onFail"), &G_UserProfileModule::changeAdminStatusByEmailAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::changeAdminStatusByUserIdAsync, GCLASS_METHOD_SIGNATURE("changeAdminStatusByUserIdAsync", "userId", "isAdmin", "accessLevel", "onSuccess", "onFail"), &G_UserProfileModule::changeAdminStatusByUserIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCustomClaimsByUserIdAsync, GCLASS_METHOD_SIGNATURE("getUserCustomClaimsByUserIdAsync", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getUserCustomClaimsByUserIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCustomClaimsByEmailAsync, GCLASS_METHOD_SIGNATURE("getUserCustomClaimsByEmailAsync", "email", "onSuccess", "onFail"), &G_UserProfileModule::getUserCustomClaimsByEmailAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setInvisibleStatusAsync, GCLASS_METHOD_SIGNATURE("setInvisibleStatusAsync", "invisibleStatus", "onSuccess", "onFail"), &G_UserProfileModule::setInvisibleStatusAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::pingAsync, GCLASS_METHOD_SIGNATURE("pingAsync", "onSuccess", "onFail"), &G_UserProfileModule::pingAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::suspendAsync, GCLASS_METHOD_SIGNATURE("suspendAsync", "onSuccess", "onFail"), &G_UserProfileModule::suspendAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserStateAsync, GCLASS_METHOD_SIGNATURE("getUserStateAsync", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getUserStateAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::deleteUser, GCLASS_METHOD_SIGNATURE("deleteUser", "onSuccess", "onFail"), &G_UserProfileModule::deleteUser, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void getProfileAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::UserProfile::UserProfileModule::GetProfileAsync(
                 [onSuccess](RGN::Modules::UserProfile::UserData response) {
                     godot::Array gArgs;
@@ -85,19 +87,19 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getProfileAsync_UserId(
         godot::String userId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             godot::String g_userId = userId;
             cpp_userId = std::string(g_userId.utf8().get_data());
@@ -108,39 +110,39 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId
             );
     }
     void getFullUserProfileAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::UserProfile::UserProfileModule::GetFullUserProfileAsync(
                 [onSuccess](string response) {
                     godot::Array gArgs;
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getFullUserProfileAsync_UserId(
         godot::String userId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             godot::String g_userId = userId;
             cpp_userId = std::string(g_userId.utf8().get_data());
@@ -150,21 +152,21 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId
             );
     }
     void searchUsersAsync(
         godot::String nicknameQuery,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_nicknameQuery;
             godot::String g_nicknameQuery = nicknameQuery;
             cpp_nicknameQuery = std::string(g_nicknameQuery.utf8().get_data());
@@ -181,20 +183,20 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_nicknameQuery
             );
     }
     void getUserCurrenciesAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::UserProfile::UserProfileModule::GetUserCurrenciesAsync(
                 [onSuccess](vector<RGN::Modules::Currency::Currency> response) {
                     godot::Array gArgs;
@@ -208,19 +210,19 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getUserIdByShortUIDAsync(
         godot::String shortUID,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_shortUID;
             godot::String g_shortUID = shortUID;
             cpp_shortUID = std::string(g_shortUID.utf8().get_data());
@@ -230,21 +232,21 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_shortUID
             );
     }
     void setDisplayNameAsync(
         godot::String displayName,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_displayName;
             godot::String g_displayName = displayName;
             cpp_displayName = std::string(g_displayName.utf8().get_data());
@@ -254,21 +256,21 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_displayName
             );
     }
     void setBioAsync(
         godot::String bio,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_bio;
             godot::String g_bio = bio;
             cpp_bio = std::string(g_bio.utf8().get_data());
@@ -278,13 +280,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_bio
             );
@@ -292,8 +294,8 @@ public:
     void setDisplayNameAndBioAsync(
         godot::String displayName,
         godot::String bio,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_displayName;
             string cpp_bio;
             godot::String g_displayName = displayName;
@@ -306,13 +308,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_displayName,
                 cpp_bio
@@ -321,8 +323,8 @@ public:
     void uploadAvatarImageAsync(
         godot::Array bytes,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<uint8_t> cpp_bytes;
             RGN::CancellationToken cpp_cancellationToken;
             godot::Array g_cpp_bytes = bytes;
@@ -340,13 +342,13 @@ public:
                     bool gResponse;
                     gResponse = response;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_bytes,
                 cpp_cancellationToken
@@ -356,8 +358,8 @@ public:
         godot::String userId,
         int32_t size,
         godot::Object* cancellationToken,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             RGN::Model::ImageSize cpp_size;
             RGN::CancellationToken cpp_cancellationToken;
@@ -378,13 +380,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_size,
@@ -395,8 +397,8 @@ public:
         godot::String email,
         bool isAdmin,
         int32_t accessLevel,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_email;
             bool cpp_isAdmin;
             int32_t cpp_accessLevel;
@@ -413,13 +415,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_email,
                 cpp_isAdmin,
@@ -430,8 +432,8 @@ public:
         godot::String userId,
         bool isAdmin,
         int32_t accessLevel,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             bool cpp_isAdmin;
             int32_t cpp_accessLevel;
@@ -448,13 +450,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_isAdmin,
@@ -463,8 +465,8 @@ public:
     }
     void getUserCustomClaimsByUserIdAsync(
         godot::String userId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             godot::String g_userId = userId;
             cpp_userId = std::string(g_userId.utf8().get_data());
@@ -475,21 +477,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId
             );
     }
     void getUserCustomClaimsByEmailAsync(
         godot::String email,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_email;
             godot::String g_email = email;
             cpp_email = std::string(g_email.utf8().get_data());
@@ -500,69 +502,69 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_email
             );
     }
     void setInvisibleStatusAsync(
         bool invisibleStatus,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             bool cpp_invisibleStatus;
             bool g_invisibleStatus = invisibleStatus;
             cpp_invisibleStatus = g_invisibleStatus;
             RGN::Modules::UserProfile::UserProfileModule::SetInvisibleStatusAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_invisibleStatus
             );
     }
     void pingAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::UserProfile::UserProfileModule::PingAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void suspendAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::UserProfile::UserProfileModule::SuspendAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getUserStateAsync(
         godot::String userId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             godot::String g_userId = userId;
             cpp_userId = std::string(g_userId.utf8().get_data());
@@ -573,29 +575,29 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_GetUserStatusResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId
             );
     }
     void deleteUser(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::UserProfile::UserProfileModule::DeleteUser(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
 };

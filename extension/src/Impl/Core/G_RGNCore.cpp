@@ -1,3 +1,4 @@
+#include "Impl/G_Defs.h"
 #include "Impl/Core/G_RGNCore.h"
 #include "Impl/Core/G_Timer.h"
 #include "Core/RGNCore.h"
@@ -5,30 +6,23 @@
 #include "Core/RGNEnvironmentTarget.h"
 #include "WebForm/WebForm.h"
 #include "Utility/Logger.h"
-#include <godot_cpp/core/class_db.hpp>
+#ifdef GODOT3
+#include "OS.hpp"
+#else
 #include <godot_cpp/classes/window.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/classes/object.hpp>
+#endif
+
+void G_RGNCore::startTimer(double delay, std::function<void()> callback) {
+#ifdef GODOT3
+	G_Timer* timer = G_Timer::_new();
+#else
+	G_Timer* timer = memnew(G_Timer());
+#endif
+	add_child(timer);
+	timer->start(delay, callback);
+}
 
 G_RGNCore *G_RGNCore::singleton = nullptr;
-
-void G_RGNCore::_bind_methods() {
-	godot::ClassDB::bind_method(godot::D_METHOD("on_focus"), &G_RGNCore::_onFocus);
-	godot::ClassDB::bind_method(godot::D_METHOD("on_unfocus"), &G_RGNCore::_onUnfocus);
-	godot::ClassDB::bind_method(godot::D_METHOD("on_signin"), &G_RGNCore::_onSignIn);
-	godot::ClassDB::bind_method(godot::D_METHOD("on_webform_redirect", "url"), &G_RGNCore::_onWebFormRedirect);
-	godot::ClassDB::bind_method(godot::D_METHOD("initialize", "node", "configure_data", "on_initialize"), &G_RGNCore::initialize, nullptr, godot::Callable());
-	godot::ClassDB::bind_method(godot::D_METHOD("update"), &G_RGNCore::update);
-	godot::ClassDB::bind_method(godot::D_METHOD("bindAuthChangeCallback", "callback"), &G_RGNCore::bindAuthChangeCallback, godot::Callable());
-	godot::ClassDB::bind_method(godot::D_METHOD("unbindAuthChangeCallback", "callback"), &G_RGNCore::unbindAuthChangeCallback, godot::Callable());
-	godot::ClassDB::bind_method(godot::D_METHOD("signIn", "callback"), &G_RGNCore::signIn);
-	godot::ClassDB::bind_method(godot::D_METHOD("signInAnonymously", "callback"), &G_RGNCore::signInAnonymously, godot::Callable());
-	godot::ClassDB::bind_method(godot::D_METHOD("signOut"), &G_RGNCore::signOut);
-	godot::ClassDB::bind_method(godot::D_METHOD("createWallet", "callback"), &G_RGNCore::createWallet, godot::Callable());
-	godot::ClassDB::bind_method(godot::D_METHOD("isLoggedIn"), &G_RGNCore::isLoggedIn);
-	godot::ClassDB::bind_method(godot::D_METHOD("getUserId"), &G_RGNCore::getUserId);
-	godot::ClassDB::bind_method(godot::D_METHOD("getIdToken"), &G_RGNCore::getIdToken);
-}
 
 G_RGNCore *G_RGNCore::get_singleton() {
 	return singleton;
@@ -44,10 +38,22 @@ G_RGNCore::~G_RGNCore() {
 	singleton = nullptr;
 }
 
-void G_RGNCore::startTimer(double delay, std::function<void()> callback) {
-	G_Timer* timer = memnew(G_Timer());
-	_node->add_child(timer);
-	timer->start(delay, callback);
+REG_GCLASS_METHODS_SOURCE(G_RGNCore) {
+	BIND_GCLASS_METHOD(G_RGNCore::_onFocus, GCLASS_METHOD_SIGNATURE("on_focus"));
+	BIND_GCLASS_METHOD(G_RGNCore::_onUnfocus, GCLASS_METHOD_SIGNATURE("on_unfocus"));
+	BIND_GCLASS_METHOD(G_RGNCore::_onSignIn, GCLASS_METHOD_SIGNATURE("on_signin"));
+	BIND_GCLASS_METHOD(G_RGNCore::_onWebFormRedirect, GCLASS_METHOD_SIGNATURE("on_webform_redirect", "url"));
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::initialize, GCLASS_METHOD_SIGNATURE("initialize", "node", "configure_data", "on_initialize"), nullptr, GCALLBACK_DEFVAL);
+	BIND_GCLASS_METHOD(G_RGNCore::update, GCLASS_METHOD_SIGNATURE("update", "node"));
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::bindAuthChangeCallback, GCLASS_METHOD_SIGNATURE("bindAuthChangeCallback", "callback"), GCALLBACK_DEFVAL);
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::unbindAuthChangeCallback, GCLASS_METHOD_SIGNATURE("unbindAuthChangeCallback", "callback"), GCALLBACK_DEFVAL);
+	BIND_GCLASS_METHOD(G_RGNCore::signIn, GCLASS_METHOD_SIGNATURE("signIn", "callback"));
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::signInAnonymously, GCLASS_METHOD_SIGNATURE("signInAnonymously", "callback"), GCALLBACK_DEFVAL);
+	BIND_GCLASS_METHOD(G_RGNCore::signOut, GCLASS_METHOD_SIGNATURE("signOut"));
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::createWallet, GCLASS_METHOD_SIGNATURE("createWallet", "callback"), GCALLBACK_DEFVAL);
+	BIND_GCLASS_METHOD(G_RGNCore::isLoggedIn, GCLASS_METHOD_SIGNATURE("isLoggedIn"));
+	BIND_GCLASS_METHOD(G_RGNCore::getUserId, GCLASS_METHOD_SIGNATURE("getUserId"));
+	BIND_GCLASS_METHOD(G_RGNCore::getIdToken, GCLASS_METHOD_SIGNATURE("getIdToken"));
 }
 
 void G_RGNCore::_onFocus() {
@@ -58,21 +64,21 @@ void G_RGNCore::_onUnfocus() {
 	onUnfocusEvent.raise();
 }
 
-void G_RGNCore::_onSignIn(godot::Callable callback, bool success) {
+void G_RGNCore::_onSignIn(GCALLBACK callback, bool success) {
 	if (callback.is_valid()) {
 		godot::Array args;
 		args.push_back(success);
-		callback.callv(args);
+		EXECUTE_GCALLBACK_DEFVAL(callback, args);
 	}
 }
 
 void G_RGNCore::_onWebFormRedirect(godot::String url) {
-	bool cancelled = url.contains("cancelled");
+	bool cancelled = url.begins_with("cancelled");
 	std::string urlString = cancelled ? "" : std::string(url.utf8().get_data());
 	RGN::WebForm::OnWebFormRedirect(cancelled, urlString);
 }
 
-void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_data, godot::Callable on_initialize) {
+void G_RGNCore::initialize(G_RGNConfigurationData* configure_data, GCALLBACK on_initialize) {
 	RGN::RGNConfigureData configureData;
 	if (configure_data) {
 		configureData.appId = std::string(configure_data->getAppId().utf8().get_data());
@@ -83,11 +89,11 @@ void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_
 		configureData.emulatorPort = std::string(configure_data->getEmulatorPort().utf8().get_data());
 	}
 	RGN::RGNAuth::BindAuthChangeCallback([&](bool isLoggedIn) {
-        for (auto callback : _authCallbacks) {
+        for (auto callback : G_RGNCore::_authCallbacks) {
 			if (callback.is_valid()) {
 				godot::Array args;
 				args.push_back(isLoggedIn);
-				callback.callv(args);
+				EXECUTE_GCALLBACK_DEFVAL(callback, args);
 			}
         }
     });
@@ -95,48 +101,58 @@ void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_
 	if (configure_data->getAutoGuestLogin() && !isLoggedIn()) {
         RGN::RGNAuth::SignInAnonymously([on_initialize](bool isLoggedIn) {
 			if (on_initialize.is_valid()) {
-				on_initialize.callv(godot::Array());
+				EXECUTE_GCALLBACK_DEFVAL(on_initialize, godot::Array());
 			}
         });
     } else {
 		if (on_initialize.is_valid()) {
-			on_initialize.callv(godot::Array());
+			EXECUTE_GCALLBACK_DEFVAL(on_initialize, godot::Array());
 		}
     }
+#ifdef GODOT4
 	// Observer events when the app is focused/unfocused to properly handle cancel of webform process
-	_node = node;
-	godot::Window* gwin = _node->get_window();
+	godot::Window* gwin = get_window();
 	gwin->connect("focus_entered", godot::Callable(this, "on_focus"));
 	gwin->connect("focus_exited", godot::Callable(this, "on_unfocus"));
+#endif
 }
 
 void G_RGNCore::update() {
 	RGN::RGNCore::Update();
+#ifdef GODOT3
+	if (_hasAppFocus && !godot::OS::get_singleton()->is_window_focused()) {
+		onUnfocusEvent.raise();
+		RGN::Utility::Logger::Debug("App unfocused");
+	} else if (!_hasAppFocus && godot::OS::get_singleton()->is_window_focused()) {
+		onFocusEvent.raise();
+	}
+	_hasAppFocus = godot::OS::get_singleton()->is_window_focused();
+#endif
 }
 
-void G_RGNCore::bindAuthChangeCallback(godot::Callable callback) {
+void G_RGNCore::bindAuthChangeCallback(GCALLBACK callback) {
 	_authCallbacks.push_back(callback);
 }
 
-void G_RGNCore::unbindAuthChangeCallback(godot::Callable callback) {
+void G_RGNCore::unbindAuthChangeCallback(GCALLBACK callback) {
     auto it = std::find(_authCallbacks.begin(), _authCallbacks.end(), callback);
     if (it != _authCallbacks.end()) {
         _authCallbacks.erase(it);
     }
 }
 
-void G_RGNCore::signIn(godot::Callable callback) {
+void G_RGNCore::signIn(GCALLBACK callback) {
     RGN::RGNAuth::SignIn([&, callback](bool isLoggedIn) {
 		call_deferred("on_signin", callback, isLoggedIn);
     });
 }
 
-void G_RGNCore::signInAnonymously(godot::Callable callback) {
+void G_RGNCore::signInAnonymously(GCALLBACK callback) {
     RGN::RGNAuth::SignInAnonymously([callback](bool isLoggedIn) {
 		if (callback.is_valid()) {
 			godot::Array args;
 			args.push_back(isLoggedIn);
-			callback.callv(args);
+			EXECUTE_GCALLBACK_DEFVAL(callback, args);
 		}
     });
 }
@@ -145,7 +161,7 @@ void G_RGNCore::signOut() {
     RGN::RGNAuth::SignOut();
 }
 
-void G_RGNCore::createWallet(godot::Callable callback) {
+void G_RGNCore::createWallet(GCALLBACK callback) {
 	RGN::RGNAuth::CreateWallet([&, callback](bool canceled) {
 		call_deferred("on_signin", callback, canceled);
     });

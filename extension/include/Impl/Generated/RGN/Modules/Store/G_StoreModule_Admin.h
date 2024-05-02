@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Store/StoreModule_Admin.h"
 #include "../../../../../Generated/RGN/Modules/VirtualItems/PriceInfo.h"
 #include "../VirtualItems/G_PriceInfo.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -15,15 +12,14 @@
 using namespace std;
 
 class G_StoreModule_Admin : public godot::Object {
-    GDCLASS(G_StoreModule_Admin, godot::Object);
-    static inline G_StoreModule_Admin* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("createLootBoxAsync", "lootBoxName", "virtualItemTags", "prices", "onSuccess", "onFail"), &G_StoreModule_Admin::createLootBoxAsync, DEFVAL(godot::Array()), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("deleteLootBoxAsync", "lootBoxId", "onSuccess", "onFail"), &G_StoreModule_Admin::deleteLootBoxAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("deleteStoreOfferAsync", "offerId", "onSuccess", "onFail"), &G_StoreModule_Admin::deleteStoreOfferAsync, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_StoreModule_Admin, godot::Object);
+#ifdef GODOT4
+    static G_StoreModule_Admin* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_StoreModule_Admin *get_singleton() {
         return singleton;
     }
@@ -35,12 +31,18 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::createLootBoxAsync, GCLASS_METHOD_SIGNATURE("createLootBoxAsync", "lootBoxName", "virtualItemTags", "prices", "onSuccess", "onFail"), &G_StoreModule_Admin::createLootBoxAsync, DEFVAL(godot::Array()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::deleteLootBoxAsync, GCLASS_METHOD_SIGNATURE("deleteLootBoxAsync", "lootBoxId", "onSuccess", "onFail"), &G_StoreModule_Admin::deleteLootBoxAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::deleteStoreOfferAsync, GCLASS_METHOD_SIGNATURE("deleteStoreOfferAsync", "offerId", "onSuccess", "onFail"), &G_StoreModule_Admin::deleteStoreOfferAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void createLootBoxAsync(
         godot::String lootBoxName,
         godot::Array virtualItemTags,
         godot::Array prices,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_lootBoxName;
             vector<string> cpp_virtualItemTags;
             vector<RGN::Modules::VirtualItems::PriceInfo> cpp_prices;
@@ -67,13 +69,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_lootBoxName,
                 cpp_virtualItemTags,
@@ -82,8 +84,8 @@ public:
     }
     void deleteLootBoxAsync(
         godot::String lootBoxId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_lootBoxId;
             godot::String g_lootBoxId = lootBoxId;
             cpp_lootBoxId = std::string(g_lootBoxId.utf8().get_data());
@@ -93,33 +95,33 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_lootBoxId
             );
     }
     void deleteStoreOfferAsync(
         godot::String offerId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_offerId;
             godot::String g_offerId = offerId;
             cpp_offerId = std::string(g_offerId.utf8().get_data());
             RGN::Modules::Store::StoreModule_Admin::DeleteStoreOfferAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_offerId
             );

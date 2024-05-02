@@ -19,10 +19,7 @@
 #include "G_AddUserCurrenciesResponseData.h"
 #include "../../../../../Generated/RGN/Modules/Currency/GetUserCurrenciesResponseData.h"
 #include "G_GetUserCurrenciesResponseData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -31,18 +28,14 @@
 using namespace std;
 
 class G_CurrencyModule : public godot::Object {
-    GDCLASS(G_CurrencyModule, godot::Object);
-    static inline G_CurrencyModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getRGNCoinEconomyAsync", "onSuccess", "onFail"), &G_CurrencyModule::getRGNCoinEconomyAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("purchaseRGNCoinAsync", "iapUUID", "iapTransactionId", "iapReceipt", "onSuccess", "onFail"), &G_CurrencyModule::purchaseRGNCoinAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getInAppPurchaseCurrencyDataAsync", "onSuccess", "onFail"), &G_CurrencyModule::getInAppPurchaseCurrencyDataAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("purchaseCurrencyProductAsync", "productId", "onSuccess", "onFail"), &G_CurrencyModule::purchaseCurrencyProductAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("addUserCurrenciesAsync", "currencies", "onSuccess", "onFail"), &G_CurrencyModule::addUserCurrenciesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserCurrenciesAsync", "onSuccess", "onFail"), &G_CurrencyModule::getUserCurrenciesAsync, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_CurrencyModule, godot::Object);
+#ifdef GODOT4
+    static G_CurrencyModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_CurrencyModule *get_singleton() {
         return singleton;
     }
@@ -54,9 +47,18 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getRGNCoinEconomyAsync, GCLASS_METHOD_SIGNATURE("getRGNCoinEconomyAsync", "onSuccess", "onFail"), &G_CurrencyModule::getRGNCoinEconomyAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::purchaseRGNCoinAsync, GCLASS_METHOD_SIGNATURE("purchaseRGNCoinAsync", "iapUUID", "iapTransactionId", "iapReceipt", "onSuccess", "onFail"), &G_CurrencyModule::purchaseRGNCoinAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getInAppPurchaseCurrencyDataAsync, GCLASS_METHOD_SIGNATURE("getInAppPurchaseCurrencyDataAsync", "onSuccess", "onFail"), &G_CurrencyModule::getInAppPurchaseCurrencyDataAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::purchaseCurrencyProductAsync, GCLASS_METHOD_SIGNATURE("purchaseCurrencyProductAsync", "productId", "onSuccess", "onFail"), &G_CurrencyModule::purchaseCurrencyProductAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::addUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("addUserCurrenciesAsync", "currencies", "onSuccess", "onFail"), &G_CurrencyModule::addUserCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("getUserCurrenciesAsync", "onSuccess", "onFail"), &G_CurrencyModule::getUserCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void getRGNCoinEconomyAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Currency::CurrencyModule::GetRGNCoinEconomyAsync(
                 [onSuccess](RGN::Modules::Currency::RGNCoinEconomy response) {
                     godot::Array gArgs;
@@ -64,21 +66,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_RGNCoinEconomy::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void purchaseRGNCoinAsync(
         godot::String iapUUID,
         godot::String iapTransactionId,
         godot::String iapReceipt,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_iapUUID;
             string cpp_iapTransactionId;
             string cpp_iapReceipt;
@@ -101,13 +103,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_iapUUID,
                 cpp_iapTransactionId,
@@ -115,8 +117,8 @@ public:
             );
     }
     void getInAppPurchaseCurrencyDataAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Currency::CurrencyModule::GetInAppPurchaseCurrencyDataAsync(
                 [onSuccess](RGN::Modules::Currency::CurrencyProductsData response) {
                     godot::Array gArgs;
@@ -124,19 +126,19 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_CurrencyProductsData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void purchaseCurrencyProductAsync(
         godot::String productId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_productId;
             godot::String g_productId = productId;
             cpp_productId = std::string(g_productId.utf8().get_data());
@@ -153,21 +155,21 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_productId
             );
     }
     void addUserCurrenciesAsync(
         godot::Array currencies,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<RGN::Modules::Currency::Currency> cpp_currencies;
             godot::Array g_cpp_currencies = currencies;
             for (int i = 0; i < g_cpp_currencies.size(); ++i) {
@@ -189,20 +191,20 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_currencies
             );
     }
     void getUserCurrenciesAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Currency::CurrencyModule::GetUserCurrenciesAsync(
                 [onSuccess](vector<RGN::Modules::Currency::Currency> response) {
                     godot::Array gArgs;
@@ -216,13 +218,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
 };

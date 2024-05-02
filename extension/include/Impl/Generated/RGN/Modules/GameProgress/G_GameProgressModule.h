@@ -19,10 +19,7 @@
 #include "G_UpdateUserLevelRequestData.h"
 #include "../../../../../Generated/RGN/Modules/GameProgress/GetPlayerLevelResponseData.h"
 #include "G_GetPlayerLevelResponseData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -31,17 +28,14 @@
 using namespace std;
 
 class G_GameProgressModule : public godot::Object {
-    GDCLASS(G_GameProgressModule, godot::Object);
-    static inline G_GameProgressModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("onGameCompleteAsync", "reward", "onSuccess", "onFail"), &G_GameProgressModule::onGameCompleteAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getGameProgressAsync", "onSuccess", "onFail"), &G_GameProgressModule::getGameProgressAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("addUserProgressAsync", "userProgressJson", "onSuccess", "onFail"), &G_GameProgressModule::addUserProgressAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("updateUserProgressAsync", "userProgressJson", "reward", "onSuccess", "onFail"), &G_GameProgressModule::updateUserProgressAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserProgressAsync", "onSuccess", "onFail"), &G_GameProgressModule::getUserProgressAsync, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_GameProgressModule, godot::Object);
+#ifdef GODOT4
+    static G_GameProgressModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_GameProgressModule *get_singleton() {
         return singleton;
     }
@@ -53,10 +47,18 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::onGameCompleteAsync, GCLASS_METHOD_SIGNATURE("onGameCompleteAsync", "reward", "onSuccess", "onFail"), &G_GameProgressModule::onGameCompleteAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::getGameProgressAsync, GCLASS_METHOD_SIGNATURE("getGameProgressAsync", "onSuccess", "onFail"), &G_GameProgressModule::getGameProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::addUserProgressAsync, GCLASS_METHOD_SIGNATURE("addUserProgressAsync", "userProgressJson", "onSuccess", "onFail"), &G_GameProgressModule::addUserProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::updateUserProgressAsync, GCLASS_METHOD_SIGNATURE("updateUserProgressAsync", "userProgressJson", "reward", "onSuccess", "onFail"), &G_GameProgressModule::updateUserProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::getUserProgressAsync, GCLASS_METHOD_SIGNATURE("getUserProgressAsync", "onSuccess", "onFail"), &G_GameProgressModule::getUserProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void onGameCompleteAsync(
         godot::Array reward,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<RGN::Modules::Currency::Currency> cpp_reward;
             godot::Array g_cpp_reward = reward;
             for (int i = 0; i < g_cpp_reward.size(); ++i) {
@@ -72,20 +74,20 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_OnGameCompleteResult::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_reward
             );
     }
     void getGameProgressAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::GameProgress::GameProgressModule::GetGameProgressAsync(
                 [onSuccess](RGN::Modules::GameProgress::GameProgress response) {
                     godot::Array gArgs;
@@ -93,19 +95,19 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_GameProgress::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void addUserProgressAsync(
         godot::String userProgressJson,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userProgressJson;
             godot::String g_userProgressJson = userProgressJson;
             cpp_userProgressJson = std::string(g_userProgressJson.utf8().get_data());
@@ -115,13 +117,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userProgressJson
             );
@@ -129,8 +131,8 @@ public:
     void updateUserProgressAsync(
         godot::String userProgressJson,
         godot::Array reward,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userProgressJson;
             vector<RGN::Modules::Currency::Currency> cpp_reward;
             godot::String g_userProgressJson = userProgressJson;
@@ -148,34 +150,34 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userProgressJson,
                 cpp_reward
             );
     }
     void getUserProgressAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::GameProgress::GameProgressModule::GetUserProgressAsync(
                 [onSuccess](string response) {
                     godot::Array gArgs;
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
 };

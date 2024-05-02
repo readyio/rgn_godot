@@ -25,10 +25,7 @@
 #include "G_GetUserAchievementsResponse.h"
 #include "../../../../../Generated/RGN/Modules/Achievement/UserAchievement.h"
 #include "G_UserAchievement.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -37,28 +34,14 @@
 using namespace std;
 
 class G_AchievementsModule : public godot::Object {
-    GDCLASS(G_AchievementsModule, godot::Object);
-    static inline G_AchievementsModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getByIdsAsync", "ids", "onSuccess", "onFail"), &G_AchievementsModule::getByIdsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByAppIdsAsync", "appIds", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getByAppIdsAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByTagsAsync", "tags", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getByTagsAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getForCurrentAppAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getForCurrentAppAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByAppIdsWithUserDataAsync", "appIds", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getByAppIdsWithUserDataAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByTagsWithUserDataAsync", "tags", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getByTagsWithUserDataAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getForCurrentAppWithUserDataAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getForCurrentAppWithUserDataAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::getByRequestNameAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), &G_AchievementsModule::getByRequestNamesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("triggerByIdAsync", "id", "progress", "onSuccess", "onFail"), &G_AchievementsModule::triggerByIdAsync, DEFVAL(1), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("triggerByRequestNameAsync", "requestName", "progress", "onSuccess", "onFail"), &G_AchievementsModule::triggerByRequestNameAsync, DEFVAL(1), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("claimByIdAsync", "achievementId", "onSuccess", "onFail"), &G_AchievementsModule::claimByIdAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("claimByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::claimByRequestNameAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getProjectAchievementsAsync", "onSuccess", "onFail"), &G_AchievementsModule::getProjectAchievementsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserAchievementsAsync", "userId", "withHistory", "startAfter", "limit", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementsAsync, DEFVAL(""), DEFVAL(false), DEFVAL((int64_t)9223372036854775807), DEFVAL(2147483647), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserAchievementByIdAsync", "achievementId", "userId", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementByIdAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_AchievementsModule, godot::Object);
+#ifdef GODOT4
+    static G_AchievementsModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_AchievementsModule *get_singleton() {
         return singleton;
     }
@@ -70,10 +53,29 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ids", "onSuccess", "onFail"), &G_AchievementsModule::getByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getByAppIdsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getByTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getForCurrentAppAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByAppIdsWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsWithUserDataAsync", "appIds", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getByAppIdsWithUserDataAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByTagsWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getByTagsWithUserDataAsync", "tags", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getByTagsWithUserDataAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getForCurrentAppWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppWithUserDataAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getForCurrentAppWithUserDataAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByRequestNameAsync, GCLASS_METHOD_SIGNATURE("getByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::getByRequestNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByRequestNamesAsync, GCLASS_METHOD_SIGNATURE("getByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), &G_AchievementsModule::getByRequestNamesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::triggerByIdAsync, GCLASS_METHOD_SIGNATURE("triggerByIdAsync", "id", "progress", "onSuccess", "onFail"), &G_AchievementsModule::triggerByIdAsync, DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::triggerByRequestNameAsync, GCLASS_METHOD_SIGNATURE("triggerByRequestNameAsync", "requestName", "progress", "onSuccess", "onFail"), &G_AchievementsModule::triggerByRequestNameAsync, DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::claimByIdAsync, GCLASS_METHOD_SIGNATURE("claimByIdAsync", "achievementId", "onSuccess", "onFail"), &G_AchievementsModule::claimByIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::claimByRequestNameAsync, GCLASS_METHOD_SIGNATURE("claimByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::claimByRequestNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getProjectAchievementsAsync, GCLASS_METHOD_SIGNATURE("getProjectAchievementsAsync", "onSuccess", "onFail"), &G_AchievementsModule::getProjectAchievementsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getUserAchievementsAsync, GCLASS_METHOD_SIGNATURE("getUserAchievementsAsync", "userId", "withHistory", "startAfter", "limit", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementsAsync, DEFVAL(""), DEFVAL(false), DEFVAL((int64_t)9223372036854775807), DEFVAL(2147483647), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getUserAchievementByIdAsync, GCLASS_METHOD_SIGNATURE("getUserAchievementByIdAsync", "achievementId", "userId", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementByIdAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void getByIdsAsync(
         godot::Array ids,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_ids;
             godot::Array g_cpp_ids = ids;
             for (int i = 0; i < g_cpp_ids.size(); ++i) {
@@ -96,13 +98,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ids
             );
@@ -111,8 +113,8 @@ public:
         godot::Array appIds,
         int32_t limit,
         godot::String startAfter,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_appIds;
             int32_t cpp_limit;
             string cpp_startAfter;
@@ -141,13 +143,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appIds,
                 cpp_limit,
@@ -158,8 +160,8 @@ public:
         godot::Array tags,
         int32_t limit,
         godot::String startAfter,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_tags;
             int32_t cpp_limit;
             string cpp_startAfter;
@@ -188,13 +190,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_tags,
                 cpp_limit,
@@ -204,8 +206,8 @@ public:
     void getForCurrentAppAsync(
         int32_t limit,
         godot::String startAfter,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             int32_t g_limit = limit;
@@ -225,13 +227,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter
@@ -242,8 +244,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         bool withHistory,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_appIds;
             int32_t cpp_limit;
             string cpp_startAfter;
@@ -275,13 +277,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appIds,
                 cpp_limit,
@@ -294,8 +296,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         bool withHistory,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_tags;
             int32_t cpp_limit;
             string cpp_startAfter;
@@ -327,13 +329,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_tags,
                 cpp_limit,
@@ -344,8 +346,8 @@ public:
     void getForCurrentAppWithUserDataAsync(
         int32_t limit,
         godot::String startAfter,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             int32_t g_limit = limit;
@@ -365,13 +367,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter
@@ -379,8 +381,8 @@ public:
     }
     void getByRequestNameAsync(
         godot::String requestName,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_requestName;
             godot::String g_requestName = requestName;
             cpp_requestName = std::string(g_requestName.utf8().get_data());
@@ -391,21 +393,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_AchievementData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_requestName
             );
     }
     void getByRequestNamesAsync(
         godot::Array requestNames,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_requestNames;
             godot::Array g_cpp_requestNames = requestNames;
             for (int i = 0; i < g_cpp_requestNames.size(); ++i) {
@@ -428,13 +430,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_requestNames
             );
@@ -442,8 +444,8 @@ public:
     void triggerByIdAsync(
         godot::String id,
         int32_t progress,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_id;
             int32_t cpp_progress;
             godot::String g_id = id;
@@ -457,13 +459,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_TriggerAndClaimResponse::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_id,
                 cpp_progress
@@ -472,8 +474,8 @@ public:
     void triggerByRequestNameAsync(
         godot::String requestName,
         int32_t progress,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_requestName;
             int32_t cpp_progress;
             godot::String g_requestName = requestName;
@@ -487,13 +489,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_TriggerAndClaimResponse::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_requestName,
                 cpp_progress
@@ -501,8 +503,8 @@ public:
     }
     void claimByIdAsync(
         godot::String achievementId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_achievementId;
             godot::String g_achievementId = achievementId;
             cpp_achievementId = std::string(g_achievementId.utf8().get_data());
@@ -513,21 +515,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_TriggerAndClaimResponse::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_achievementId
             );
     }
     void claimByRequestNameAsync(
         godot::String requestName,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_requestName;
             godot::String g_requestName = requestName;
             cpp_requestName = std::string(g_requestName.utf8().get_data());
@@ -538,20 +540,20 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_TriggerAndClaimResponse::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_requestName
             );
     }
     void getProjectAchievementsAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Achievement::AchievementsModule::GetProjectAchievementsAsync(
                 [onSuccess](RGN::Modules::Achievement::GetProjectAchievementsResponse response) {
                     godot::Array gArgs;
@@ -559,13 +561,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_GetProjectAchievementsResponse::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getUserAchievementsAsync(
@@ -573,8 +575,8 @@ public:
         bool withHistory,
         int64_t startAfter,
         int32_t limit,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             bool cpp_withHistory;
             int64_t cpp_startAfter;
@@ -600,13 +602,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_withHistory,
@@ -618,8 +620,8 @@ public:
         godot::String achievementId,
         godot::String userId,
         bool withHistory,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_achievementId;
             string cpp_userId;
             bool cpp_withHistory;
@@ -636,13 +638,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_UserAchievement::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_achievementId,
                 cpp_userId,

@@ -21,10 +21,7 @@
 #include "G_VirtualItemUpgrade.h"
 #include "../../../../../Generated/RGN/Modules/Inventory/InventoryItemsWithVirtualItemsData.h"
 #include "G_InventoryItemsWithVirtualItemsData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -33,33 +30,14 @@
 using namespace std;
 
 class G_InventoryModule : public godot::Object {
-    GDCLASS(G_InventoryModule, godot::Object);
-    static inline G_InventoryModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("addToInventoryAsync_VirtualItemId_Quantity_Properties", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_VirtualItemId_Quantity_Properties, DEFVAL(1), DEFVAL(godot::Dictionary()), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties", "userId", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties, DEFVAL(1), DEFVAL(godot::Dictionary()), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("addToInventoryAsync_UserId_InventoryData", "userId", "inventoryData", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_UserId_InventoryData, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("removeByVirtualItemIdAsync", "userId", "virtualItemId", "quantity", "onSuccess", "onFail"), &G_InventoryModule::removeByVirtualItemIdAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("removeByInventoryItemIdAsync", "userId", "ownedItemId", "quantity", "onSuccess", "onFail"), &G_InventoryModule::removeByInventoryItemIdAsync, DEFVAL(1), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getPropertiesAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getPropertiesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setPropertiesAsync", "ownedItemId", "json", "onSuccess", "onFail"), &G_InventoryModule::setPropertiesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUpgradesAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getUpgradesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("upgradeAsync", "ownedItemId", "newUpgradeLevel", "upgradePrice", "upgradeId", "onSuccess", "onFail"), &G_InventoryModule::upgradeAsync, DEFVAL(godot::Array()), DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByIdAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getByIdAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByIdsAsync", "ownedItemIds", "onSuccess", "onFail"), &G_InventoryModule::getByIdsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByVirtualItemIdsAsync", "virtualItemIds", "onSuccess", "onFail"), &G_InventoryModule::getByVirtualItemIdsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getAllForCurrentAppAsync", "onSuccess", "onFail"), &G_InventoryModule::getAllForCurrentAppAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByAppIdsAsync", "appIds", "onSuccess", "onFail"), &G_InventoryModule::getByAppIdsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getWithVirtualItemsDataForCurrentAppAsync", "startAfter", "limit", "onSuccess", "onFail"), &G_InventoryModule::getWithVirtualItemsDataForCurrentAppAsync, DEFVAL(""), DEFVAL(100), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getWithVirtualItemsDataByAppIdsAsync", "appIds", "startAfter", "limit", "onSuccess", "onFail"), &G_InventoryModule::getWithVirtualItemsDataByAppIdsAsync, DEFVAL(""), DEFVAL(100), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("parseInventoryItemData", "json", "onSuccess", "onFail"), &G_InventoryModule::parseInventoryItemData, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("parseInventoryItemsData", "json", "onSuccess", "onFail"), &G_InventoryModule::parseInventoryItemsData, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), &G_InventoryModule::getByTagsAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getTagsAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getTagsAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setTagsAsync", "ownedItemId", "tags", "appId", "onSuccess", "onFail"), &G_InventoryModule::setTagsAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_InventoryModule, godot::Object);
+#ifdef GODOT4
+    static G_InventoryModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_InventoryModule *get_singleton() {
         return singleton;
     }
@@ -71,12 +49,36 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_VirtualItemId_Quantity_Properties, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_VirtualItemId_Quantity_Properties", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_VirtualItemId_Quantity_Properties, DEFVAL(1), DEFVAL(godot::Dictionary()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties", "userId", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties, DEFVAL(1), DEFVAL(godot::Dictionary()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_UserId_InventoryData, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_UserId_InventoryData", "userId", "inventoryData", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_UserId_InventoryData, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::removeByVirtualItemIdAsync, GCLASS_METHOD_SIGNATURE("removeByVirtualItemIdAsync", "userId", "virtualItemId", "quantity", "onSuccess", "onFail"), &G_InventoryModule::removeByVirtualItemIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::removeByInventoryItemIdAsync, GCLASS_METHOD_SIGNATURE("removeByInventoryItemIdAsync", "userId", "ownedItemId", "quantity", "onSuccess", "onFail"), &G_InventoryModule::removeByInventoryItemIdAsync, DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "ownedItemId", "json", "onSuccess", "onFail"), &G_InventoryModule::setPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getUpgradesAsync, GCLASS_METHOD_SIGNATURE("getUpgradesAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getUpgradesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::upgradeAsync, GCLASS_METHOD_SIGNATURE("upgradeAsync", "ownedItemId", "newUpgradeLevel", "upgradePrice", "upgradeId", "onSuccess", "onFail"), &G_InventoryModule::upgradeAsync, DEFVAL(godot::Array()), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByIdAsync, GCLASS_METHOD_SIGNATURE("getByIdAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getByIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ownedItemIds", "onSuccess", "onFail"), &G_InventoryModule::getByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByVirtualItemIdsAsync, GCLASS_METHOD_SIGNATURE("getByVirtualItemIdsAsync", "virtualItemIds", "onSuccess", "onFail"), &G_InventoryModule::getByVirtualItemIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getAllForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getAllForCurrentAppAsync", "onSuccess", "onFail"), &G_InventoryModule::getAllForCurrentAppAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "onSuccess", "onFail"), &G_InventoryModule::getByAppIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getWithVirtualItemsDataForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataForCurrentAppAsync", "startAfter", "limit", "onSuccess", "onFail"), &G_InventoryModule::getWithVirtualItemsDataForCurrentAppAsync, DEFVAL(""), DEFVAL(100), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getWithVirtualItemsDataByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataByAppIdsAsync", "appIds", "startAfter", "limit", "onSuccess", "onFail"), &G_InventoryModule::getWithVirtualItemsDataByAppIdsAsync, DEFVAL(""), DEFVAL(100), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::parseInventoryItemData, GCLASS_METHOD_SIGNATURE("parseInventoryItemData", "json", "onSuccess", "onFail"), &G_InventoryModule::parseInventoryItemData, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::parseInventoryItemsData, GCLASS_METHOD_SIGNATURE("parseInventoryItemsData", "json", "onSuccess", "onFail"), &G_InventoryModule::parseInventoryItemsData, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), &G_InventoryModule::getByTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getTagsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "ownedItemId", "tags", "appId", "onSuccess", "onFail"), &G_InventoryModule::setTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void addToInventoryAsync_VirtualItemId_Quantity_Properties(
         godot::String virtualItemId,
         int32_t quantity,
         godot::Dictionary properties,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_virtualItemId;
             int32_t cpp_quantity;
             RGN::Modules::VirtualItems::Properties cpp_properties;
@@ -92,13 +94,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_AddToInventoryResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemId,
                 cpp_quantity,
@@ -110,8 +112,8 @@ public:
         godot::String virtualItemId,
         int32_t quantity,
         godot::Dictionary properties,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             string cpp_virtualItemId;
             int32_t cpp_quantity;
@@ -130,13 +132,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_AddToInventoryResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_virtualItemId,
@@ -147,8 +149,8 @@ public:
     void addToInventoryAsync_UserId_InventoryData(
         godot::String userId,
         godot::Dictionary inventoryData,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             RGN::Modules::Inventory::InventoryItemData cpp_inventoryData;
             godot::String g_userId = userId;
@@ -161,13 +163,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_AddToInventoryResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_inventoryData
@@ -177,8 +179,8 @@ public:
         godot::String userId,
         godot::String virtualItemId,
         int32_t quantity,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             string cpp_virtualItemId;
             int32_t cpp_quantity;
@@ -195,13 +197,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_RemoveByVirtualItemIdResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_virtualItemId,
@@ -212,8 +214,8 @@ public:
         godot::String userId,
         godot::String ownedItemId,
         int32_t quantity,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_userId;
             string cpp_ownedItemId;
             int32_t cpp_quantity;
@@ -230,13 +232,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_RemoveByOwnedIdResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_userId,
                 cpp_ownedItemId,
@@ -245,8 +247,8 @@ public:
     }
     void getPropertiesAsync(
         godot::String ownedItemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             godot::String g_ownedItemId = ownedItemId;
             cpp_ownedItemId = std::string(g_ownedItemId.utf8().get_data());
@@ -256,13 +258,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId
             );
@@ -270,8 +272,8 @@ public:
     void setPropertiesAsync(
         godot::String ownedItemId,
         godot::String json,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             string cpp_json;
             godot::String g_ownedItemId = ownedItemId;
@@ -284,13 +286,13 @@ public:
                     godot::String gResponse;
                     gResponse = godot::String(response.c_str());
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId,
                 cpp_json
@@ -298,8 +300,8 @@ public:
     }
     void getUpgradesAsync(
         godot::String ownedItemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             godot::String g_ownedItemId = ownedItemId;
             cpp_ownedItemId = std::string(g_ownedItemId.utf8().get_data());
@@ -316,13 +318,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId
             );
@@ -332,8 +334,8 @@ public:
         int32_t newUpgradeLevel,
         godot::Array upgradePrice,
         godot::String upgradeId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             int32_t cpp_newUpgradeLevel;
             vector<RGN::Modules::Currency::Currency> cpp_upgradePrice;
@@ -364,13 +366,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId,
                 cpp_newUpgradeLevel,
@@ -380,8 +382,8 @@ public:
     }
     void getByIdAsync(
         godot::String ownedItemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             godot::String g_ownedItemId = ownedItemId;
             cpp_ownedItemId = std::string(g_ownedItemId.utf8().get_data());
@@ -392,21 +394,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_InventoryItemData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId
             );
     }
     void getByIdsAsync(
         godot::Array ownedItemIds,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_ownedItemIds;
             godot::Array g_cpp_ownedItemIds = ownedItemIds;
             for (int i = 0; i < g_cpp_ownedItemIds.size(); ++i) {
@@ -429,21 +431,21 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemIds
             );
     }
     void getByVirtualItemIdsAsync(
         godot::Array virtualItemIds,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_virtualItemIds;
             godot::Array g_cpp_virtualItemIds = virtualItemIds;
             for (int i = 0; i < g_cpp_virtualItemIds.size(); ++i) {
@@ -466,20 +468,20 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_virtualItemIds
             );
     }
     void getAllForCurrentAppAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Inventory::InventoryModule::GetAllForCurrentAppAsync(
                 [onSuccess](vector<RGN::Modules::Inventory::InventoryItemData> response) {
                     godot::Array gArgs;
@@ -493,19 +495,19 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
     void getByAppIdsAsync(
         godot::Array appIds,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_appIds;
             godot::Array g_cpp_appIds = appIds;
             for (int i = 0; i < g_cpp_appIds.size(); ++i) {
@@ -528,13 +530,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appIds
             );
@@ -542,8 +544,8 @@ public:
     void getWithVirtualItemsDataForCurrentAppAsync(
         godot::String startAfter,
         int32_t limit,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_startAfter;
             int32_t cpp_limit;
             godot::String g_startAfter = startAfter;
@@ -563,13 +565,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_startAfter,
                 cpp_limit
@@ -579,8 +581,8 @@ public:
         godot::Array appIds,
         godot::String startAfter,
         int32_t limit,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_appIds;
             string cpp_startAfter;
             int32_t cpp_limit;
@@ -609,13 +611,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appIds,
                 cpp_startAfter,
@@ -624,8 +626,8 @@ public:
     }
     void parseInventoryItemData(
         godot::String json,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_json;
             godot::String g_json = json;
             cpp_json = std::string(g_json.utf8().get_data());
@@ -635,8 +637,8 @@ public:
     }
     void parseInventoryItemsData(
         godot::String json,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_json;
             godot::String g_json = json;
             cpp_json = std::string(g_json.utf8().get_data());
@@ -647,8 +649,8 @@ public:
     void getByTagsAsync(
         godot::Array tags,
         godot::String appId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_tags;
             string cpp_appId;
             godot::Array g_cpp_tags = tags;
@@ -674,13 +676,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_tags,
                 cpp_appId
@@ -688,8 +690,8 @@ public:
     }
     void getTagsAsync(
         godot::String ownedItemId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             godot::String g_ownedItemId = ownedItemId;
             cpp_ownedItemId = std::string(g_ownedItemId.utf8().get_data());
@@ -705,13 +707,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId
             );
@@ -720,8 +722,8 @@ public:
         godot::String ownedItemId,
         godot::Array tags,
         godot::String appId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_ownedItemId;
             vector<string> cpp_tags;
             string cpp_appId;
@@ -749,13 +751,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ownedItemId,
                 cpp_tags,

@@ -1,10 +1,7 @@
 #pragma once
 // This file is generated: please don't modify. Go to Unity code generator if you need changes.
 #include "../../../../../Generated/RGN/Modules/Matchmaking/MatchmakingModule_Admin.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -13,13 +10,14 @@
 using namespace std;
 
 class G_MatchmakingModule_Admin : public godot::Object {
-    GDCLASS(G_MatchmakingModule_Admin, godot::Object);
-    static inline G_MatchmakingModule_Admin* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("deleteMatchesByAppIdAsync", "appIdToRemoveTheMatchesFor", "onSuccess", "onFail"), &G_MatchmakingModule_Admin::deleteMatchesByAppIdAsync, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_MatchmakingModule_Admin, godot::Object);
+#ifdef GODOT4
+    static G_MatchmakingModule_Admin* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_MatchmakingModule_Admin *get_singleton() {
         return singleton;
     }
@@ -31,22 +29,26 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule_Admin::deleteMatchesByAppIdAsync, GCLASS_METHOD_SIGNATURE("deleteMatchesByAppIdAsync", "appIdToRemoveTheMatchesFor", "onSuccess", "onFail"), &G_MatchmakingModule_Admin::deleteMatchesByAppIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void deleteMatchesByAppIdAsync(
         godot::String appIdToRemoveTheMatchesFor,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_appIdToRemoveTheMatchesFor;
             godot::String g_appIdToRemoveTheMatchesFor = appIdToRemoveTheMatchesFor;
             cpp_appIdToRemoveTheMatchesFor = std::string(g_appIdToRemoveTheMatchesFor.utf8().get_data());
             RGN::Modules::Matchmaking::MatchmakingModule_Admin::DeleteMatchesByAppIdAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appIdToRemoveTheMatchesFor
             );

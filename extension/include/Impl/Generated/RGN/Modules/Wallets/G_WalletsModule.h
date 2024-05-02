@@ -3,10 +3,7 @@
 #include "../../../../../Generated/RGN/Modules/Wallets/WalletsModule.h"
 #include "../../../../../Generated/RGN/Modules/Wallets/IsUserHasBlockchainRequirementResponseData.h"
 #include "G_IsUserHasBlockchainRequirementResponseData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -15,13 +12,14 @@
 using namespace std;
 
 class G_WalletsModule : public godot::Object {
-    GDCLASS(G_WalletsModule, godot::Object);
-    static inline G_WalletsModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("isUserHasBlockchainRequirementAsync", "onSuccess", "onFail"), &G_WalletsModule::isUserHasBlockchainRequirementAsync, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_WalletsModule, godot::Object);
+#ifdef GODOT4
+    static G_WalletsModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_WalletsModule *get_singleton() {
         return singleton;
     }
@@ -33,22 +31,26 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_WalletsModule::isUserHasBlockchainRequirementAsync, GCLASS_METHOD_SIGNATURE("isUserHasBlockchainRequirementAsync", "onSuccess", "onFail"), &G_WalletsModule::isUserHasBlockchainRequirementAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void isUserHasBlockchainRequirementAsync(
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             RGN::Modules::Wallets::WalletsModule::IsUserHasBlockchainRequirementAsync(
                 [onSuccess](bool response) {
                     godot::Array gArgs;
                     bool gResponse;
                     gResponse = response;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 }            );
     }
 };

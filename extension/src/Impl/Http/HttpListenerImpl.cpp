@@ -1,7 +1,13 @@
 #include "Impl/Http/HttpListenerImpl.h"
 #include "Http/HttpUtility.h"
 #include "Utility/Logger.h"
+#ifdef GODOT3
+#include <PoolArrays.hpp>
+typedef godot::PoolByteArray GodotByteArray;
+#else
 #include <godot_cpp/variant/packed_byte_array.hpp>
+typedef godot::PackedByteArray GodotByteArray;
+#endif
 
 namespace RGN {
 	bool HttpListenerImpl::isListening() {
@@ -12,7 +18,7 @@ namespace RGN {
 		if (!isListening()) {
 			return 0;
 		}
-		return _tcp_server->get_local_port();
+		return _tcp_server_port;
 	}
 
 	bool HttpListenerImpl::startListen(int32_t port, const std::function<void(std::string)>& callback, int32_t& boundedToPort) {
@@ -32,8 +38,13 @@ namespace RGN {
 				return false;
 			}
 			boundedToPort = unusedPort;
+			_tcp_server_port = boundedToPort;
 		}
+#ifdef GODOT3
+		_tcp_server.instance();
+#else
 		_tcp_server.instantiate();
+#endif
 		if (_tcp_server->listen(boundedToPort) != godot::Error::OK) {
 			_tcp_server.unref();
 			return false;
@@ -68,12 +79,14 @@ namespace RGN {
 				return;
 			}
 		}
+#ifdef GODOT4
 		_tcp_peer->poll();
+#endif
 		int32_t available_bytes = _tcp_peer->get_available_bytes();
 		if (available_bytes == 0) {
 			return;
 		}
-		godot::PackedByteArray total_recv_data;
+		GodotByteArray total_recv_data;
 		do {
 			available_bytes = _tcp_peer->get_available_bytes();
 			godot::Array recv_data =_tcp_peer->get_data(available_bytes);
@@ -84,14 +97,28 @@ namespace RGN {
 			if (recv_data_err != godot::Error::OK) {
 				return;
 			}
-			godot::PackedByteArray recv_data_bytes = recv_data[1];
+			GodotByteArray recv_data_bytes = recv_data[1];
 			total_recv_data.append_array(recv_data_bytes);
 		} while (available_bytes > 0);
 		godot::String ok_response = "HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n";
+#ifdef GODOT3
+		const char* ok_response_ctr = ok_response.utf8().get_data();
+		godot::PoolByteArray ok_response_buffer = godot::PoolByteArray();
+		ok_response_buffer.resize(strlen(ok_response_ctr));
+		godot::PoolByteArray::Write ok_response_buffer_write = ok_response_buffer.write();
+		memcpy(ok_response_buffer_write.ptr(), ok_response_ctr, strlen(ok_response_ctr));
+		_tcp_peer->put_data(ok_response_buffer);
+#else
     	_tcp_peer->put_data(ok_response.to_utf8_buffer());
+#endif
 		_tcp_peer->disconnect_from_host();
 		_tcp_peer.unref();
+#ifdef GODOT3
+		godot::PoolByteArray::Read total_recv_data_read = total_recv_data.read();
+		godot::String recv_string = godot::String(reinterpret_cast<const char*>(total_recv_data_read.ptr()));
+#else
 		godot::String recv_string = total_recv_data.get_string_from_utf8();
+#endif
 		std::string url = HttpUtility::GetUrlFromRawHttp(std::string(recv_string.utf8().get_data()));
 		stopListen();
 		if (_callback) {
@@ -101,12 +128,13 @@ namespace RGN {
 	}
 
 	int32_t HttpListenerImpl::getRandomUnusedPort() {
-		godot::TCPServer server;
+		GodotTCPServer server;
 		const int min_port = 5000;
 		const int max_port = 65535;
 		for (int port = min_port; port <= max_port; ++port) {
-			if (server.listen(port) == godot::Error::OK) {
-				server.stop();
+			godot::Ref<GodotTCPServer> server = GodotTCPServer::_new();
+			if (server->listen(port) == godot::Error::OK) {
+				server->stop();
 				return port;
 			}
 		}

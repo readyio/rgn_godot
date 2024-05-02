@@ -25,10 +25,7 @@
 #include "G_LeaderboardReset.h"
 #include "../../../../../Generated/RGN/Modules/Leaderboard/GetLeaderboardResetResponseData.h"
 #include "G_GetLeaderboardResetResponseData.h"
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "Impl/G_Defs.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -37,29 +34,14 @@
 using namespace std;
 
 class G_LeaderboardModule : public godot::Object {
-    GDCLASS(G_LeaderboardModule, godot::Object);
-    static inline G_LeaderboardModule* singleton = nullptr;
-protected:
-    static void _bind_methods() {
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardByIdAsync", "id", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByIdAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByRequestNameAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByRequestNamesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByAppIdsAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardByTagsAsync", "tags", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByTagsAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardForCurrentAppAsync, DEFVAL(""), DEFVAL(false), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getLeaderboardIdsAsync", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardIdsAsync, DEFVAL(false), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("isLeaderboardAvailableAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isLeaderboardAvailableAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("isInPromoPeriodAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isInPromoPeriodAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("isInGracePeriodAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isInGracePeriodAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("setScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), &G_LeaderboardModule::setScoreAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("addScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), &G_LeaderboardModule::addScoreAsync, DEFVAL(""), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getUserEntryAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::getUserEntryAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getEntriesAsync", "leaderboardId", "quantityTop", "includeUser", "quantityAroundUser", "onSuccess", "onFail"), &G_LeaderboardModule::getEntriesAsync, godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getResetsAsync", "leaderboardId", "withEntries", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), &G_LeaderboardModule::getResetsAsync, DEFVAL(-1), DEFVAL(-1), DEFVAL("asc"), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("getResetAsync", "leaderboardId", "resetId", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), &G_LeaderboardModule::getResetAsync, DEFVAL(0), DEFVAL(0), DEFVAL("asc"), godot::Callable(), godot::Callable());
-        godot::ClassDB::bind_method(godot::D_METHOD("resetLeaderboardAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::resetLeaderboardAsync, godot::Callable(), godot::Callable());
-    }
+    REG_GCLASS(G_LeaderboardModule, godot::Object);
+#ifdef GODOT4
+    static G_LeaderboardModule* singleton;
+#endif
 public:
+#ifdef GODOT3
+    void _init() {}
+#else
     static G_LeaderboardModule *get_singleton() {
         return singleton;
     }
@@ -71,10 +53,30 @@ public:
         ERR_FAIL_COND(singleton != this);
         singleton = nullptr;
     }
+#endif
+    REG_GCLASS_METHODS_HEADER() {
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByIdAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByIdAsync", "id", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByRequestNameAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByRequestNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByRequestNamesAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByRequestNamesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByAppIdsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByTagsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByTagsAsync", "tags", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByTagsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardForCurrentAppAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardIdsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardIdsAsync", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardIdsAsync, DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isLeaderboardAvailableAsync, GCLASS_METHOD_SIGNATURE("isLeaderboardAvailableAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isLeaderboardAvailableAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isInPromoPeriodAsync, GCLASS_METHOD_SIGNATURE("isInPromoPeriodAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isInPromoPeriodAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isInGracePeriodAsync, GCLASS_METHOD_SIGNATURE("isInGracePeriodAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isInGracePeriodAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::setScoreAsync, GCLASS_METHOD_SIGNATURE("setScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), &G_LeaderboardModule::setScoreAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::addScoreAsync, GCLASS_METHOD_SIGNATURE("addScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), &G_LeaderboardModule::addScoreAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getUserEntryAsync, GCLASS_METHOD_SIGNATURE("getUserEntryAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::getUserEntryAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getEntriesAsync, GCLASS_METHOD_SIGNATURE("getEntriesAsync", "leaderboardId", "quantityTop", "includeUser", "quantityAroundUser", "onSuccess", "onFail"), &G_LeaderboardModule::getEntriesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getResetsAsync, GCLASS_METHOD_SIGNATURE("getResetsAsync", "leaderboardId", "withEntries", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), &G_LeaderboardModule::getResetsAsync, DEFVAL(-1), DEFVAL(-1), DEFVAL("asc"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getResetAsync, GCLASS_METHOD_SIGNATURE("getResetAsync", "leaderboardId", "resetId", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), &G_LeaderboardModule::getResetAsync, DEFVAL(0), DEFVAL(0), DEFVAL("asc"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::resetLeaderboardAsync, GCLASS_METHOD_SIGNATURE("resetLeaderboardAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::resetLeaderboardAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+    }
     void getLeaderboardByIdAsync(
         godot::String id,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_id;
             godot::String g_id = id;
             cpp_id = std::string(g_id.utf8().get_data());
@@ -85,21 +87,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_LeaderboardData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_id
             );
     }
     void getLeaderboardByRequestNameAsync(
         godot::String requestName,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_requestName;
             godot::String g_requestName = requestName;
             cpp_requestName = std::string(g_requestName.utf8().get_data());
@@ -110,21 +112,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_LeaderboardData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_requestName
             );
     }
     void getLeaderboardByRequestNamesAsync(
         godot::Array requestNames,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_requestNames;
             godot::Array g_cpp_requestNames = requestNames;
             for (int i = 0; i < g_cpp_requestNames.size(); ++i) {
@@ -147,13 +149,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_requestNames
             );
@@ -163,8 +165,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         bool ignoreTimestamp,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_appIds;
             int32_t cpp_limit;
             string cpp_startAfter;
@@ -196,13 +198,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_appIds,
                 cpp_limit,
@@ -215,8 +217,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         bool ignoreTimestamp,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             vector<string> cpp_tags;
             int32_t cpp_limit;
             string cpp_startAfter;
@@ -248,13 +250,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_tags,
                 cpp_limit,
@@ -266,8 +268,8 @@ public:
         int32_t limit,
         godot::String startAfter,
         bool ignoreTimestamp,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             int32_t cpp_limit;
             string cpp_startAfter;
             bool cpp_ignoreTimestamp;
@@ -290,13 +292,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_limit,
                 cpp_startAfter,
@@ -305,8 +307,8 @@ public:
     }
     void getLeaderboardIdsAsync(
         bool ignoreTimestamp,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             bool cpp_ignoreTimestamp;
             bool g_ignoreTimestamp = ignoreTimestamp;
             cpp_ignoreTimestamp = g_ignoreTimestamp;
@@ -322,21 +324,21 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_ignoreTimestamp
             );
     }
     void isLeaderboardAvailableAsync(
         godot::String leaderboardId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             godot::String g_leaderboardId = leaderboardId;
             cpp_leaderboardId = std::string(g_leaderboardId.utf8().get_data());
@@ -347,21 +349,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_IsLeaderboardAvailableResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId
             );
     }
     void isInPromoPeriodAsync(
         godot::String leaderboardId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             godot::String g_leaderboardId = leaderboardId;
             cpp_leaderboardId = std::string(g_leaderboardId.utf8().get_data());
@@ -372,21 +374,21 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_IsInPromoPeriodResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId
             );
     }
     void isInGracePeriodAsync(
         godot::String leaderboardId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             godot::String g_leaderboardId = leaderboardId;
             cpp_leaderboardId = std::string(g_leaderboardId.utf8().get_data());
@@ -397,13 +399,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_IsInGracePeriodResponseData::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId
             );
@@ -412,8 +414,8 @@ public:
         godot::String leaderboardId,
         int32_t score,
         godot::String extraData,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             int32_t cpp_score;
             string cpp_extraData;
@@ -429,13 +431,13 @@ public:
                     int32_t gResponse;
                     gResponse = response;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId,
                 cpp_score,
@@ -446,8 +448,8 @@ public:
         godot::String leaderboardId,
         int32_t score,
         godot::String extraData,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             int32_t cpp_score;
             string cpp_extraData;
@@ -463,13 +465,13 @@ public:
                     int32_t gResponse;
                     gResponse = response;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId,
                 cpp_score,
@@ -478,8 +480,8 @@ public:
     }
     void getUserEntryAsync(
         godot::String leaderboardId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             godot::String g_leaderboardId = leaderboardId;
             cpp_leaderboardId = std::string(g_leaderboardId.utf8().get_data());
@@ -490,13 +492,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_LeaderboardEntry::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId
             );
@@ -506,8 +508,8 @@ public:
         int32_t quantityTop,
         bool includeUser,
         int32_t quantityAroundUser,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             int32_t cpp_quantityTop;
             bool cpp_includeUser;
@@ -533,13 +535,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId,
                 cpp_quantityTop,
@@ -553,8 +555,8 @@ public:
         int64_t startAfter,
         int32_t limit,
         godot::String orderDirection,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             bool cpp_withEntries;
             int64_t cpp_startAfter;
@@ -583,13 +585,13 @@ public:
                     }
                     gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId,
                 cpp_withEntries,
@@ -604,8 +606,8 @@ public:
         int64_t startAfter,
         int32_t limit,
         godot::String orderDirection,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             string cpp_resetId;
             int64_t cpp_startAfter;
@@ -628,13 +630,13 @@ public:
                     godot::Dictionary g_gResponse = gResponse;
                     G_LeaderboardReset::ConvertToGodotModel(response, g_gResponse);
                     gArgs.push_back(gResponse);
-                    onSuccess.callv(gArgs);
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId,
                 cpp_resetId,
@@ -645,20 +647,20 @@ public:
     }
     void resetLeaderboardAsync(
         godot::String leaderboardId,
-        godot::Callable onSuccess,
-        godot::Callable onFail) {
+        GCALLBACK onSuccess,
+        GCALLBACK onFail) {
             string cpp_leaderboardId;
             godot::String g_leaderboardId = leaderboardId;
             cpp_leaderboardId = std::string(g_leaderboardId.utf8().get_data());
             RGN::Modules::Leaderboard::LeaderboardModule::ResetLeaderboardAsync(
                 [onSuccess]() {
-                    onSuccess.callv(godot::Array());
+                    EXECUTE_GCALLBACK_DEFVAL(onSuccess, godot::Array());
                 },
                 [onFail](int code, std::string message) {
                      godot::Array gArgs;
                      gArgs.push_back(code);
                      gArgs.push_back(godot::String(message.c_str()));
-                     onFail.callv(gArgs);
+                     EXECUTE_GCALLBACK_DEFVAL(onFail, gArgs);
                 },
                 cpp_leaderboardId
             );
