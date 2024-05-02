@@ -1,2 +1,6 @@
+demo/addons/rgn/bin/librgn.android.debug.arm64 filter=lfs diff=lfs merge=lfs -text
+demo/addons/rgn/bin/librgn.android.debug.armv7 filter=lfs diff=lfs merge=lfs -text
+demo/addons/rgn/bin/librgn.android.release.arm64 filter=lfs diff=lfs merge=lfs -text
+demo/addons/rgn/bin/librgn.android.release.armv7 filter=lfs diff=lfs merge=lfs -text
 demo/demo.xcframework/ios-arm64/libgodot.a filter=lfs diff=lfs merge=lfs -text
 demo/demo.xcframework/ios-arm64_x86_64-simulator/libgodot.a filter=lfs diff=lfs merge=lfs -text
