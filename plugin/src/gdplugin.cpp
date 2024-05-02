@@ -107,8 +107,6 @@ extern "C" void GDN_EXPORT rgn_nativescript_init(void *handle) {
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/engine.hpp>
 
-// Core singletons
-static G_RGNCore* _g_rgnCore;
 // Module singletons
 static G_AchievementsModule * _g_achievementsModule;
 static G_AchievementsModule_Admin * _g_achievementsModuleAdmin;
@@ -138,17 +136,9 @@ void register_core() {
 	godot::ClassDB::register_class<G_CancellationToken>();
 	godot::ClassDB::register_class<G_CancellationTokenSource>();
 	godot::ClassDB::register_class<G_Timer>();
-	// Instantiate core singletones
-	_g_rgnCore = memnew(G_RGNCore);
-	// Register core singletons
-	godot::Engine::get_singleton()->register_singleton("RGNCore", G_RGNCore::get_singleton());
 }
 
 void unregister_core() {
-	// Unregister singletons
-	godot::Engine::get_singleton()->unregister_singleton("RGNCore");
-	// Free singletone instances
-	memdelete(_g_rgnCore);
 }
 
 void register_modules() {
