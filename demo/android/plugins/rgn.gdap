@@ -1,8 +1,8 @@
 [config]
 
-name="readygg"
+name="rgn"
 binary_type="local"
-binary="readygg.aar"
+binary="rgn.aar"
 
 [dependencies]
 
