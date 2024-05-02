@@ -7,7 +7,7 @@
             android:name=".READYggWebview"
             android:exported="false" />
         <meta-data
-            android:name="org.godotengine.plugin.v1.READYggPlugin"
+            android:name="org.godotengine.plugin.v1.READYggWebview"
             android:value="io.getready.android.READYggPlugin" />
     </application>
 

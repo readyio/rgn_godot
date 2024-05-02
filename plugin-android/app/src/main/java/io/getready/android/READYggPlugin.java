@@ -2,6 +2,7 @@ package io.getready.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -10,12 +11,9 @@ import org.godotengine.godot.GodotLib;
 import org.godotengine.godot.plugin.GodotPlugin;
 import org.godotengine.godot.plugin.UsedByGodot;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class READYggPlugin extends GodotPlugin {
 
-    private static long webformInstanceId;
+    private static int webformInstanceId;
     private static String webformUrlScheme;
     private static String webformUrl;
 
@@ -29,18 +27,8 @@ public class READYggPlugin extends GodotPlugin {
         return "READYggWebview";
     }
 
-    @NonNull
-    @Override
-    public List<String> getPluginMethods() {
-        return Arrays.asList(
-            "setInstanceId",
-            "setUrlScheme",
-            "openUrl"
-        );
-    }
-
     @UsedByGodot
-    public void setInstanceId(long instanceId) {
+    public void setInstanceId(int instanceId) {
         webformInstanceId = instanceId;
     }
 
