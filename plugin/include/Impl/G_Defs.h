@@ -25,10 +25,11 @@
     #include <godot_cpp/variant/callable.hpp>
     #include <godot_cpp/core/class_db.hpp>
     #include <godot_cpp/classes/ref.hpp>
-    #define REG_GODOT_CLASS(CLASS_NAME, CLASS_TYPE) GDCLASS(CLASS_NAME, CLASS_TYPE)
-    #define REG_GCLASS_METHODS() static void _bind_methods()
+    #include <godot_cpp/classes/node.hpp>
+    #define REG_GCLASS(CLASS_NAME, CLASS_TYPE) GDCLASS(CLASS_NAME, CLASS_TYPE)
+    #define REG_GCLASS_METHODS_HEADER() static void _bind_methods()
     #define REG_GCLASS_METHODS_SOURCE(CLASS) void CLASS::_bind_methods()
-    #define GCLASS_METHOD_SIGNATURE(METHOD, ...) __VA_ARGS__
+    #define GCLASS_METHOD_SIGNATURE(METHOD, ...) METHOD, __VA_ARGS__
     #define BIND_GCLASS_METHOD(CLASS_METHOD, SIGNATURE) godot::ClassDB::bind_method(godot::D_METHOD(SIGNATURE), &CLASS_METHOD)
     #define BIND_GCLASS_METHOD_DEFVAL(CLASS_METHOD, SIGNATURE, ...) godot::ClassDB::bind_method(godot::D_METHOD(SIGNATURE), &CLASS_METHOD, __VA_ARGS__)
     #define GCALLBACK godot::Callable
