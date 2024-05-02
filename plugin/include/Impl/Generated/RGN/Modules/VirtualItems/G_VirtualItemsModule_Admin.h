@@ -14,7 +14,7 @@ using namespace std;
 class G_VirtualItemsModule_Admin : public godot::Object {
     REG_GCLASS(G_VirtualItemsModule_Admin, godot::Object);
 #ifdef GODOT4
-    static G_VirtualItemsModule_Admin* singleton;
+    static inline G_VirtualItemsModule_Admin* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -33,10 +33,10 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::deleteVirtualItemsByIdsAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemsByIdsAsync", "virtualItemIds", "onSuccess", "onFail"), &G_VirtualItemsModule_Admin::deleteVirtualItemsByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::deleteVirtualItemsByNameAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemsByNameAsync", "itemName", "onSuccess", "onFail"), &G_VirtualItemsModule_Admin::deleteVirtualItemsByNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::deleteVirtualItemByAppIdAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemByAppIdAsync", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule_Admin::deleteVirtualItemByAppIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::addFromCSVWithBlockchainStubAsync, GCLASS_METHOD_SIGNATURE("addFromCSVWithBlockchainStubAsync", "virtualItemName", "csvContent", "csvDelimiter", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule_Admin::addFromCSVWithBlockchainStubAsync, DEFVAL(","), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::deleteVirtualItemsByIdsAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemsByIdsAsync", "virtualItemIds", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::deleteVirtualItemsByNameAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemsByNameAsync", "itemName", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::deleteVirtualItemByAppIdAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemByAppIdAsync", "appId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule_Admin::addFromCSVWithBlockchainStubAsync, GCLASS_METHOD_SIGNATURE("addFromCSVWithBlockchainStubAsync", "virtualItemName", "csvContent", "csvDelimiter", "cancellationToken", "onSuccess", "onFail"), DEFVAL(","), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void deleteVirtualItemsByIdsAsync(
         godot::Array virtualItemIds,

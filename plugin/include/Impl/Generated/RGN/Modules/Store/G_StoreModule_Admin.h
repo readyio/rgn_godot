@@ -14,7 +14,7 @@ using namespace std;
 class G_StoreModule_Admin : public godot::Object {
     REG_GCLASS(G_StoreModule_Admin, godot::Object);
 #ifdef GODOT4
-    static G_StoreModule_Admin* singleton;
+    static inline G_StoreModule_Admin* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -33,9 +33,9 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::createLootBoxAsync, GCLASS_METHOD_SIGNATURE("createLootBoxAsync", "lootBoxName", "virtualItemTags", "prices", "onSuccess", "onFail"), &G_StoreModule_Admin::createLootBoxAsync, DEFVAL(godot::Array()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::deleteLootBoxAsync, GCLASS_METHOD_SIGNATURE("deleteLootBoxAsync", "lootBoxId", "onSuccess", "onFail"), &G_StoreModule_Admin::deleteLootBoxAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::deleteStoreOfferAsync, GCLASS_METHOD_SIGNATURE("deleteStoreOfferAsync", "offerId", "onSuccess", "onFail"), &G_StoreModule_Admin::deleteStoreOfferAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::createLootBoxAsync, GCLASS_METHOD_SIGNATURE("createLootBoxAsync", "lootBoxName", "virtualItemTags", "prices", "onSuccess", "onFail"), DEFVAL(godot::Array()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::deleteLootBoxAsync, GCLASS_METHOD_SIGNATURE("deleteLootBoxAsync", "lootBoxId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule_Admin::deleteStoreOfferAsync, GCLASS_METHOD_SIGNATURE("deleteStoreOfferAsync", "offerId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void createLootBoxAsync(
         godot::String lootBoxName,

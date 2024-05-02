@@ -14,7 +14,7 @@ using namespace std;
 class G_WalletsModule : public godot::Object {
     REG_GCLASS(G_WalletsModule, godot::Object);
 #ifdef GODOT4
-    static G_WalletsModule* singleton;
+    static inline G_WalletsModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -33,7 +33,7 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_WalletsModule::isUserHasBlockchainRequirementAsync, GCLASS_METHOD_SIGNATURE("isUserHasBlockchainRequirementAsync", "onSuccess", "onFail"), &G_WalletsModule::isUserHasBlockchainRequirementAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_WalletsModule::isUserHasBlockchainRequirementAsync, GCLASS_METHOD_SIGNATURE("isUserHasBlockchainRequirementAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void isUserHasBlockchainRequirementAsync(
         GCALLBACK onSuccess,

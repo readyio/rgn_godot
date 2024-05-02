@@ -22,7 +22,7 @@ using namespace std;
 class G_MatchmakingModule : public godot::Object {
     REG_GCLASS(G_MatchmakingModule, godot::Object);
 #ifdef GODOT4
-    static G_MatchmakingModule* singleton;
+    static inline G_MatchmakingModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -41,16 +41,16 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getJoinOpenMatchesAsync, GCLASS_METHOD_SIGNATURE("getJoinOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getJoinOpenMatchesAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getVoteOpenMatchesAsync, GCLASS_METHOD_SIGNATURE("getVoteOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getVoteOpenMatchesAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getFinishedMatchesAsync, GCLASS_METHOD_SIGNATURE("getFinishedMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getFinishedMatchesAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getFinishedMatchByIdAsync, GCLASS_METHOD_SIGNATURE("getFinishedMatchByIdAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::getFinishedMatchByIdAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::createMatchAsync, GCLASS_METHOD_SIGNATURE("createMatchAsync", "matchConfig", "participatePayload", "participateInOnCreate", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::createMatchAsync, DEFVAL(godot::Dictionary()), DEFVAL(true), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::participateInMatchAsync, GCLASS_METHOD_SIGNATURE("participateInMatchAsync", "matchId", "participantPayload", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::participateInMatchAsync, DEFVAL(godot::Dictionary()), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::startMatchAsync, GCLASS_METHOD_SIGNATURE("startMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::startMatchAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::voteForMatchAsync, GCLASS_METHOD_SIGNATURE("voteForMatchAsync", "matchId", "participantId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::voteForMatchAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::submitMatchScoreAsync, GCLASS_METHOD_SIGNATURE("submitMatchScoreAsync", "matchId", "score", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::submitMatchScoreAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::finishMatchAsync, GCLASS_METHOD_SIGNATURE("finishMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), &G_MatchmakingModule::finishMatchAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getJoinOpenMatchesAsync, GCLASS_METHOD_SIGNATURE("getJoinOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getVoteOpenMatchesAsync, GCLASS_METHOD_SIGNATURE("getVoteOpenMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getFinishedMatchesAsync, GCLASS_METHOD_SIGNATURE("getFinishedMatchesAsync", "limit", "startAfter", "cancellationToken", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::getFinishedMatchByIdAsync, GCLASS_METHOD_SIGNATURE("getFinishedMatchByIdAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::createMatchAsync, GCLASS_METHOD_SIGNATURE("createMatchAsync", "matchConfig", "participatePayload", "participateInOnCreate", "cancellationToken", "onSuccess", "onFail"), DEFVAL(godot::Dictionary()), DEFVAL(true), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::participateInMatchAsync, GCLASS_METHOD_SIGNATURE("participateInMatchAsync", "matchId", "participantPayload", "cancellationToken", "onSuccess", "onFail"), DEFVAL(godot::Dictionary()), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::startMatchAsync, GCLASS_METHOD_SIGNATURE("startMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::voteForMatchAsync, GCLASS_METHOD_SIGNATURE("voteForMatchAsync", "matchId", "participantId", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::submitMatchScoreAsync, GCLASS_METHOD_SIGNATURE("submitMatchScoreAsync", "matchId", "score", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule::finishMatchAsync, GCLASS_METHOD_SIGNATURE("finishMatchAsync", "matchId", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void getJoinOpenMatchesAsync(
         int32_t limit,

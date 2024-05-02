@@ -28,7 +28,7 @@ using namespace std;
 class G_CreatorModule : public godot::Object {
     REG_GCLASS(G_CreatorModule, godot::Object);
 #ifdef GODOT4
-    static G_CreatorModule* singleton;
+    static inline G_CreatorModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -47,10 +47,10 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::becomeACreatorAsync, GCLASS_METHOD_SIGNATURE("becomeACreatorAsync", "brandName", "onSuccess", "onFail"), &G_CreatorModule::becomeACreatorAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::submitItemAsync, GCLASS_METHOD_SIGNATURE("submitItemAsync", "customizedItem", "onSuccess", "onFail"), &G_CreatorModule::submitItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::getCreatorDataAsync, GCLASS_METHOD_SIGNATURE("getCreatorDataAsync", "onSuccess", "onFail"), &G_CreatorModule::getCreatorDataAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::claimCurrenciesAsync, GCLASS_METHOD_SIGNATURE("claimCurrenciesAsync", "onSuccess", "onFail"), &G_CreatorModule::claimCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::becomeACreatorAsync, GCLASS_METHOD_SIGNATURE("becomeACreatorAsync", "brandName", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::submitItemAsync, GCLASS_METHOD_SIGNATURE("submitItemAsync", "customizedItem", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::getCreatorDataAsync, GCLASS_METHOD_SIGNATURE("getCreatorDataAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CreatorModule::claimCurrenciesAsync, GCLASS_METHOD_SIGNATURE("claimCurrenciesAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void becomeACreatorAsync(
         godot::String brandName,

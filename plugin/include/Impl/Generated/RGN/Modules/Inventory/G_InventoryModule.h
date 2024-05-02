@@ -32,7 +32,7 @@ using namespace std;
 class G_InventoryModule : public godot::Object {
     REG_GCLASS(G_InventoryModule, godot::Object);
 #ifdef GODOT4
-    static G_InventoryModule* singleton;
+    static inline G_InventoryModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -51,27 +51,27 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_VirtualItemId_Quantity_Properties, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_VirtualItemId_Quantity_Properties", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_VirtualItemId_Quantity_Properties, DEFVAL(1), DEFVAL(godot::Dictionary()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties", "userId", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties, DEFVAL(1), DEFVAL(godot::Dictionary()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_UserId_InventoryData, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_UserId_InventoryData", "userId", "inventoryData", "onSuccess", "onFail"), &G_InventoryModule::addToInventoryAsync_UserId_InventoryData, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::removeByVirtualItemIdAsync, GCLASS_METHOD_SIGNATURE("removeByVirtualItemIdAsync", "userId", "virtualItemId", "quantity", "onSuccess", "onFail"), &G_InventoryModule::removeByVirtualItemIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::removeByInventoryItemIdAsync, GCLASS_METHOD_SIGNATURE("removeByInventoryItemIdAsync", "userId", "ownedItemId", "quantity", "onSuccess", "onFail"), &G_InventoryModule::removeByInventoryItemIdAsync, DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "ownedItemId", "json", "onSuccess", "onFail"), &G_InventoryModule::setPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getUpgradesAsync, GCLASS_METHOD_SIGNATURE("getUpgradesAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getUpgradesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::upgradeAsync, GCLASS_METHOD_SIGNATURE("upgradeAsync", "ownedItemId", "newUpgradeLevel", "upgradePrice", "upgradeId", "onSuccess", "onFail"), &G_InventoryModule::upgradeAsync, DEFVAL(godot::Array()), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByIdAsync, GCLASS_METHOD_SIGNATURE("getByIdAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getByIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ownedItemIds", "onSuccess", "onFail"), &G_InventoryModule::getByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByVirtualItemIdsAsync, GCLASS_METHOD_SIGNATURE("getByVirtualItemIdsAsync", "virtualItemIds", "onSuccess", "onFail"), &G_InventoryModule::getByVirtualItemIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getAllForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getAllForCurrentAppAsync", "onSuccess", "onFail"), &G_InventoryModule::getAllForCurrentAppAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "onSuccess", "onFail"), &G_InventoryModule::getByAppIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getWithVirtualItemsDataForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataForCurrentAppAsync", "startAfter", "limit", "onSuccess", "onFail"), &G_InventoryModule::getWithVirtualItemsDataForCurrentAppAsync, DEFVAL(""), DEFVAL(100), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getWithVirtualItemsDataByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataByAppIdsAsync", "appIds", "startAfter", "limit", "onSuccess", "onFail"), &G_InventoryModule::getWithVirtualItemsDataByAppIdsAsync, DEFVAL(""), DEFVAL(100), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::parseInventoryItemData, GCLASS_METHOD_SIGNATURE("parseInventoryItemData", "json", "onSuccess", "onFail"), &G_InventoryModule::parseInventoryItemData, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::parseInventoryItemsData, GCLASS_METHOD_SIGNATURE("parseInventoryItemsData", "json", "onSuccess", "onFail"), &G_InventoryModule::parseInventoryItemsData, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), &G_InventoryModule::getByTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "ownedItemId", "onSuccess", "onFail"), &G_InventoryModule::getTagsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "ownedItemId", "tags", "appId", "onSuccess", "onFail"), &G_InventoryModule::setTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_VirtualItemId_Quantity_Properties, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_VirtualItemId_Quantity_Properties", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), DEFVAL(1), DEFVAL(godot::Dictionary()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_UserId_VirtualItemId_Quantity_Properties", "userId", "virtualItemId", "quantity", "properties", "onSuccess", "onFail"), DEFVAL(1), DEFVAL(godot::Dictionary()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::addToInventoryAsync_UserId_InventoryData, GCLASS_METHOD_SIGNATURE("addToInventoryAsync_UserId_InventoryData", "userId", "inventoryData", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::removeByVirtualItemIdAsync, GCLASS_METHOD_SIGNATURE("removeByVirtualItemIdAsync", "userId", "virtualItemId", "quantity", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::removeByInventoryItemIdAsync, GCLASS_METHOD_SIGNATURE("removeByInventoryItemIdAsync", "userId", "ownedItemId", "quantity", "onSuccess", "onFail"), DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "ownedItemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "ownedItemId", "json", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getUpgradesAsync, GCLASS_METHOD_SIGNATURE("getUpgradesAsync", "ownedItemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::upgradeAsync, GCLASS_METHOD_SIGNATURE("upgradeAsync", "ownedItemId", "newUpgradeLevel", "upgradePrice", "upgradeId", "onSuccess", "onFail"), DEFVAL(godot::Array()), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByIdAsync, GCLASS_METHOD_SIGNATURE("getByIdAsync", "ownedItemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ownedItemIds", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByVirtualItemIdsAsync, GCLASS_METHOD_SIGNATURE("getByVirtualItemIdsAsync", "virtualItemIds", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getAllForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getAllForCurrentAppAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getWithVirtualItemsDataForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataForCurrentAppAsync", "startAfter", "limit", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(100), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getWithVirtualItemsDataByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataByAppIdsAsync", "appIds", "startAfter", "limit", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(100), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::parseInventoryItemData, GCLASS_METHOD_SIGNATURE("parseInventoryItemData", "json", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::parseInventoryItemsData, GCLASS_METHOD_SIGNATURE("parseInventoryItemsData", "json", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "ownedItemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_InventoryModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "ownedItemId", "tags", "appId", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void addToInventoryAsync_VirtualItemId_Quantity_Properties(
         godot::String virtualItemId,

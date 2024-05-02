@@ -32,7 +32,7 @@ using namespace std;
 class G_VirtualItemsModule : public godot::Object {
     REG_GCLASS(G_VirtualItemsModule, godot::Object);
 #ifdef GODOT4
-    static G_VirtualItemsModule* singleton;
+    static inline G_VirtualItemsModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -51,22 +51,22 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::addVirtualItemAsync, GCLASS_METHOD_SIGNATURE("addVirtualItemAsync", "virtualItem", "onSuccess", "onFail"), &G_VirtualItemsModule::addVirtualItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::addFromCSVAsync, GCLASS_METHOD_SIGNATURE("addFromCSVAsync", "virtualItemName", "csvContent", "csvDelimiter", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::addFromCSVAsync, DEFVAL(","), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::updateVirtualItemAsync, GCLASS_METHOD_SIGNATURE("updateVirtualItemAsync", "itemId", "virtualItem", "onSuccess", "onFail"), &G_VirtualItemsModule::updateVirtualItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::deleteVirtualItemAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemAsync", "itemId", "onSuccess", "onFail"), &G_VirtualItemsModule::deleteVirtualItemAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsAsync, GCLASS_METHOD_SIGNATURE("getVirtualItemsAsync", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsAsync_Limit_StartAfter, GCLASS_METHOD_SIGNATURE("getVirtualItemsAsync_Limit_StartAfter", "limit", "startAfter", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsAsync_Limit_StartAfter, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsByIdsAsync, GCLASS_METHOD_SIGNATURE("getVirtualItemsByIdsAsync", "virtualItemsIds", "onSuccess", "onFail"), &G_VirtualItemsModule::getVirtualItemsByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule::getByTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "virtualItemId", "onSuccess", "onFail"), &G_VirtualItemsModule::getTagsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "virtualItemId", "tags", "appId", "onSuccess", "onFail"), &G_VirtualItemsModule::setTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setNameAsync, GCLASS_METHOD_SIGNATURE("setNameAsync", "virtualItemId", "name", "onSuccess", "onFail"), &G_VirtualItemsModule::setNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setDescriptionAsync, GCLASS_METHOD_SIGNATURE("setDescriptionAsync", "virtualItemId", "description", "onSuccess", "onFail"), &G_VirtualItemsModule::setDescriptionAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "virtualItemId", "onSuccess", "onFail"), &G_VirtualItemsModule::getPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "virtualItemId", "json", "onSuccess", "onFail"), &G_VirtualItemsModule::setPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::uploadImageAsync, GCLASS_METHOD_SIGNATURE("uploadImageAsync", "virtualItemId", "thumbnailTextureBytes", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::uploadImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::downloadImageAsync, GCLASS_METHOD_SIGNATURE("downloadImageAsync", "virtualItemId", "size", "cancellationToken", "onSuccess", "onFail"), &G_VirtualItemsModule::downloadImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::addVirtualItemAsync, GCLASS_METHOD_SIGNATURE("addVirtualItemAsync", "virtualItem", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::addFromCSVAsync, GCLASS_METHOD_SIGNATURE("addFromCSVAsync", "virtualItemName", "csvContent", "csvDelimiter", "cancellationToken", "onSuccess", "onFail"), DEFVAL(","), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::updateVirtualItemAsync, GCLASS_METHOD_SIGNATURE("updateVirtualItemAsync", "itemId", "virtualItem", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::deleteVirtualItemAsync, GCLASS_METHOD_SIGNATURE("deleteVirtualItemAsync", "itemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsAsync, GCLASS_METHOD_SIGNATURE("getVirtualItemsAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsAsync_Limit_StartAfter, GCLASS_METHOD_SIGNATURE("getVirtualItemsAsync_Limit_StartAfter", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getVirtualItemsByIdsAsync, GCLASS_METHOD_SIGNATURE("getVirtualItemsByIdsAsync", "virtualItemsIds", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "virtualItemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "virtualItemId", "tags", "appId", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setNameAsync, GCLASS_METHOD_SIGNATURE("setNameAsync", "virtualItemId", "name", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setDescriptionAsync, GCLASS_METHOD_SIGNATURE("setDescriptionAsync", "virtualItemId", "description", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "virtualItemId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "virtualItemId", "json", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::uploadImageAsync, GCLASS_METHOD_SIGNATURE("uploadImageAsync", "virtualItemId", "thumbnailTextureBytes", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_VirtualItemsModule::downloadImageAsync, GCLASS_METHOD_SIGNATURE("downloadImageAsync", "virtualItemId", "size", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void addVirtualItemAsync(
         godot::Dictionary virtualItem,

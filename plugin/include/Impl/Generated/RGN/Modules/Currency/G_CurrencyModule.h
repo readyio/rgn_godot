@@ -30,7 +30,7 @@ using namespace std;
 class G_CurrencyModule : public godot::Object {
     REG_GCLASS(G_CurrencyModule, godot::Object);
 #ifdef GODOT4
-    static G_CurrencyModule* singleton;
+    static inline G_CurrencyModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -49,12 +49,12 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getRGNCoinEconomyAsync, GCLASS_METHOD_SIGNATURE("getRGNCoinEconomyAsync", "onSuccess", "onFail"), &G_CurrencyModule::getRGNCoinEconomyAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::purchaseRGNCoinAsync, GCLASS_METHOD_SIGNATURE("purchaseRGNCoinAsync", "iapUUID", "iapTransactionId", "iapReceipt", "onSuccess", "onFail"), &G_CurrencyModule::purchaseRGNCoinAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getInAppPurchaseCurrencyDataAsync, GCLASS_METHOD_SIGNATURE("getInAppPurchaseCurrencyDataAsync", "onSuccess", "onFail"), &G_CurrencyModule::getInAppPurchaseCurrencyDataAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::purchaseCurrencyProductAsync, GCLASS_METHOD_SIGNATURE("purchaseCurrencyProductAsync", "productId", "onSuccess", "onFail"), &G_CurrencyModule::purchaseCurrencyProductAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::addUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("addUserCurrenciesAsync", "currencies", "onSuccess", "onFail"), &G_CurrencyModule::addUserCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("getUserCurrenciesAsync", "onSuccess", "onFail"), &G_CurrencyModule::getUserCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getRGNCoinEconomyAsync, GCLASS_METHOD_SIGNATURE("getRGNCoinEconomyAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::purchaseRGNCoinAsync, GCLASS_METHOD_SIGNATURE("purchaseRGNCoinAsync", "iapUUID", "iapTransactionId", "iapReceipt", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getInAppPurchaseCurrencyDataAsync, GCLASS_METHOD_SIGNATURE("getInAppPurchaseCurrencyDataAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::purchaseCurrencyProductAsync, GCLASS_METHOD_SIGNATURE("purchaseCurrencyProductAsync", "productId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::addUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("addUserCurrenciesAsync", "currencies", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_CurrencyModule::getUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("getUserCurrenciesAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void getRGNCoinEconomyAsync(
         GCALLBACK onSuccess,

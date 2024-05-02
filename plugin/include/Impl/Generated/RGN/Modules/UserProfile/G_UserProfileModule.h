@@ -36,7 +36,7 @@ using namespace std;
 class G_UserProfileModule : public godot::Object {
     REG_GCLASS(G_UserProfileModule, godot::Object);
 #ifdef GODOT4
-    static G_UserProfileModule* singleton;
+    static inline G_UserProfileModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -55,27 +55,27 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getProfileAsync, GCLASS_METHOD_SIGNATURE("getProfileAsync", "onSuccess", "onFail"), &G_UserProfileModule::getProfileAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getProfileAsync_UserId, GCLASS_METHOD_SIGNATURE("getProfileAsync_UserId", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getProfileAsync_UserId, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getFullUserProfileAsync, GCLASS_METHOD_SIGNATURE("getFullUserProfileAsync", "onSuccess", "onFail"), &G_UserProfileModule::getFullUserProfileAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getFullUserProfileAsync_UserId, GCLASS_METHOD_SIGNATURE("getFullUserProfileAsync_UserId", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getFullUserProfileAsync_UserId, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::searchUsersAsync, GCLASS_METHOD_SIGNATURE("searchUsersAsync", "nicknameQuery", "onSuccess", "onFail"), &G_UserProfileModule::searchUsersAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("getUserCurrenciesAsync", "onSuccess", "onFail"), &G_UserProfileModule::getUserCurrenciesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserIdByShortUIDAsync, GCLASS_METHOD_SIGNATURE("getUserIdByShortUIDAsync", "shortUID", "onSuccess", "onFail"), &G_UserProfileModule::getUserIdByShortUIDAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setDisplayNameAsync, GCLASS_METHOD_SIGNATURE("setDisplayNameAsync", "displayName", "onSuccess", "onFail"), &G_UserProfileModule::setDisplayNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setBioAsync, GCLASS_METHOD_SIGNATURE("setBioAsync", "bio", "onSuccess", "onFail"), &G_UserProfileModule::setBioAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setDisplayNameAndBioAsync, GCLASS_METHOD_SIGNATURE("setDisplayNameAndBioAsync", "displayName", "bio", "onSuccess", "onFail"), &G_UserProfileModule::setDisplayNameAndBioAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::uploadAvatarImageAsync, GCLASS_METHOD_SIGNATURE("uploadAvatarImageAsync", "bytes", "cancellationToken", "onSuccess", "onFail"), &G_UserProfileModule::uploadAvatarImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::downloadAvatarImageAsync, GCLASS_METHOD_SIGNATURE("downloadAvatarImageAsync", "userId", "size", "cancellationToken", "onSuccess", "onFail"), &G_UserProfileModule::downloadAvatarImageAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::changeAdminStatusByEmailAsync, GCLASS_METHOD_SIGNATURE("changeAdminStatusByEmailAsync", "email", "isAdmin", "accessLevel", "onSuccess", "onFail"), &G_UserProfileModule::changeAdminStatusByEmailAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::changeAdminStatusByUserIdAsync, GCLASS_METHOD_SIGNATURE("changeAdminStatusByUserIdAsync", "userId", "isAdmin", "accessLevel", "onSuccess", "onFail"), &G_UserProfileModule::changeAdminStatusByUserIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCustomClaimsByUserIdAsync, GCLASS_METHOD_SIGNATURE("getUserCustomClaimsByUserIdAsync", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getUserCustomClaimsByUserIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCustomClaimsByEmailAsync, GCLASS_METHOD_SIGNATURE("getUserCustomClaimsByEmailAsync", "email", "onSuccess", "onFail"), &G_UserProfileModule::getUserCustomClaimsByEmailAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setInvisibleStatusAsync, GCLASS_METHOD_SIGNATURE("setInvisibleStatusAsync", "invisibleStatus", "onSuccess", "onFail"), &G_UserProfileModule::setInvisibleStatusAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::pingAsync, GCLASS_METHOD_SIGNATURE("pingAsync", "onSuccess", "onFail"), &G_UserProfileModule::pingAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::suspendAsync, GCLASS_METHOD_SIGNATURE("suspendAsync", "onSuccess", "onFail"), &G_UserProfileModule::suspendAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserStateAsync, GCLASS_METHOD_SIGNATURE("getUserStateAsync", "userId", "onSuccess", "onFail"), &G_UserProfileModule::getUserStateAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::deleteUser, GCLASS_METHOD_SIGNATURE("deleteUser", "onSuccess", "onFail"), &G_UserProfileModule::deleteUser, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getProfileAsync, GCLASS_METHOD_SIGNATURE("getProfileAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getProfileAsync_UserId, GCLASS_METHOD_SIGNATURE("getProfileAsync_UserId", "userId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getFullUserProfileAsync, GCLASS_METHOD_SIGNATURE("getFullUserProfileAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getFullUserProfileAsync_UserId, GCLASS_METHOD_SIGNATURE("getFullUserProfileAsync_UserId", "userId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::searchUsersAsync, GCLASS_METHOD_SIGNATURE("searchUsersAsync", "nicknameQuery", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCurrenciesAsync, GCLASS_METHOD_SIGNATURE("getUserCurrenciesAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserIdByShortUIDAsync, GCLASS_METHOD_SIGNATURE("getUserIdByShortUIDAsync", "shortUID", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setDisplayNameAsync, GCLASS_METHOD_SIGNATURE("setDisplayNameAsync", "displayName", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setBioAsync, GCLASS_METHOD_SIGNATURE("setBioAsync", "bio", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setDisplayNameAndBioAsync, GCLASS_METHOD_SIGNATURE("setDisplayNameAndBioAsync", "displayName", "bio", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::uploadAvatarImageAsync, GCLASS_METHOD_SIGNATURE("uploadAvatarImageAsync", "bytes", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::downloadAvatarImageAsync, GCLASS_METHOD_SIGNATURE("downloadAvatarImageAsync", "userId", "size", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::changeAdminStatusByEmailAsync, GCLASS_METHOD_SIGNATURE("changeAdminStatusByEmailAsync", "email", "isAdmin", "accessLevel", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::changeAdminStatusByUserIdAsync, GCLASS_METHOD_SIGNATURE("changeAdminStatusByUserIdAsync", "userId", "isAdmin", "accessLevel", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCustomClaimsByUserIdAsync, GCLASS_METHOD_SIGNATURE("getUserCustomClaimsByUserIdAsync", "userId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserCustomClaimsByEmailAsync, GCLASS_METHOD_SIGNATURE("getUserCustomClaimsByEmailAsync", "email", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::setInvisibleStatusAsync, GCLASS_METHOD_SIGNATURE("setInvisibleStatusAsync", "invisibleStatus", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::pingAsync, GCLASS_METHOD_SIGNATURE("pingAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::suspendAsync, GCLASS_METHOD_SIGNATURE("suspendAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::getUserStateAsync, GCLASS_METHOD_SIGNATURE("getUserStateAsync", "userId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_UserProfileModule::deleteUser, GCLASS_METHOD_SIGNATURE("deleteUser", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void getProfileAsync(
         GCALLBACK onSuccess,
