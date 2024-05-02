@@ -14,7 +14,7 @@ using namespace std;
 class G_MessagingModule : public godot::Object {
     REG_GCLASS(G_MessagingModule, godot::Object);
 #ifdef GODOT4
-    static G_MessagingModule* singleton;
+    static inline G_MessagingModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -33,9 +33,9 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::subscribe, GCLASS_METHOD_SIGNATURE("subscribe", "topic", "messageReceiver", "onSuccess", "onFail"), &G_MessagingModule::subscribe, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::unsubscribe, GCLASS_METHOD_SIGNATURE("unsubscribe", "topic", "messageReceiver", "onSuccess", "onFail"), &G_MessagingModule::unsubscribe, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::sendMessageByUserId, GCLASS_METHOD_SIGNATURE("sendMessageByUserId", "appId", "userId", "payload", "title", "text", "onSuccess", "onFail"), &G_MessagingModule::sendMessageByUserId, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::subscribe, GCLASS_METHOD_SIGNATURE("subscribe", "topic", "messageReceiver", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::unsubscribe, GCLASS_METHOD_SIGNATURE("unsubscribe", "topic", "messageReceiver", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MessagingModule::sendMessageByUserId, GCLASS_METHOD_SIGNATURE("sendMessageByUserId", "appId", "userId", "payload", "title", "text", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void subscribe(
         godot::String topic,

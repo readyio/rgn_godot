@@ -18,7 +18,7 @@ using namespace std;
 class G_GamePassModule_Admin : public godot::Object {
     REG_GCLASS(G_GamePassModule_Admin, godot::Object);
 #ifdef GODOT4
-    static G_GamePassModule_Admin* singleton;
+    static inline G_GamePassModule_Admin* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -37,10 +37,10 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::addAsync, GCLASS_METHOD_SIGNATURE("addAsync", "gamepassData", "onSuccess", "onFail"), &G_GamePassModule_Admin::addAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::deleteAsync, GCLASS_METHOD_SIGNATURE("deleteAsync", "id", "requestName", "onSuccess", "onFail"), &G_GamePassModule_Admin::deleteAsync, DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::addToUserAsync, GCLASS_METHOD_SIGNATURE("addToUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), &G_GamePassModule_Admin::addToUserAsync, DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::deleteFromUserAsync, GCLASS_METHOD_SIGNATURE("deleteFromUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), &G_GamePassModule_Admin::deleteFromUserAsync, DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::addAsync, GCLASS_METHOD_SIGNATURE("addAsync", "gamepassData", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::deleteAsync, GCLASS_METHOD_SIGNATURE("deleteAsync", "id", "requestName", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::addToUserAsync, GCLASS_METHOD_SIGNATURE("addToUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule_Admin::deleteFromUserAsync, GCLASS_METHOD_SIGNATURE("deleteFromUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void addAsync(
         godot::Dictionary gamepassData,

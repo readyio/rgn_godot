@@ -12,7 +12,7 @@ using namespace std;
 class G_MatchmakingModule_Admin : public godot::Object {
     REG_GCLASS(G_MatchmakingModule_Admin, godot::Object);
 #ifdef GODOT4
-    static G_MatchmakingModule_Admin* singleton;
+    static inline G_MatchmakingModule_Admin* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -31,7 +31,7 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule_Admin::deleteMatchesByAppIdAsync, GCLASS_METHOD_SIGNATURE("deleteMatchesByAppIdAsync", "appIdToRemoveTheMatchesFor", "onSuccess", "onFail"), &G_MatchmakingModule_Admin::deleteMatchesByAppIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_MatchmakingModule_Admin::deleteMatchesByAppIdAsync, GCLASS_METHOD_SIGNATURE("deleteMatchesByAppIdAsync", "appIdToRemoveTheMatchesFor", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void deleteMatchesByAppIdAsync(
         godot::String appIdToRemoveTheMatchesFor,

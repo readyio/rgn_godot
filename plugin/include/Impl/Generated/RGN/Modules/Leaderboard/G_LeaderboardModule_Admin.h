@@ -14,7 +14,7 @@ using namespace std;
 class G_LeaderboardModule_Admin : public godot::Object {
     REG_GCLASS(G_LeaderboardModule_Admin, godot::Object);
 #ifdef GODOT4
-    static G_LeaderboardModule_Admin* singleton;
+    static inline G_LeaderboardModule_Admin* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -33,9 +33,9 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule_Admin::addLeaderboardAsync, GCLASS_METHOD_SIGNATURE("addLeaderboardAsync", "leaderboardData", "onSuccess", "onFail"), &G_LeaderboardModule_Admin::addLeaderboardAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule_Admin::updateLeaderboardAsync, GCLASS_METHOD_SIGNATURE("updateLeaderboardAsync", "leaderboardData", "onSuccess", "onFail"), &G_LeaderboardModule_Admin::updateLeaderboardAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule_Admin::deleteLeaderboardAsync, GCLASS_METHOD_SIGNATURE("deleteLeaderboardAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule_Admin::deleteLeaderboardAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule_Admin::addLeaderboardAsync, GCLASS_METHOD_SIGNATURE("addLeaderboardAsync", "leaderboardData", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule_Admin::updateLeaderboardAsync, GCLASS_METHOD_SIGNATURE("updateLeaderboardAsync", "leaderboardData", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule_Admin::deleteLeaderboardAsync, GCLASS_METHOD_SIGNATURE("deleteLeaderboardAsync", "leaderboardId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void addLeaderboardAsync(
         godot::Dictionary leaderboardData,

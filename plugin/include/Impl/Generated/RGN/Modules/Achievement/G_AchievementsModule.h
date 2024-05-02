@@ -36,7 +36,7 @@ using namespace std;
 class G_AchievementsModule : public godot::Object {
     REG_GCLASS(G_AchievementsModule, godot::Object);
 #ifdef GODOT4
-    static G_AchievementsModule* singleton;
+    static inline G_AchievementsModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -55,22 +55,22 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ids", "onSuccess", "onFail"), &G_AchievementsModule::getByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getByAppIdsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getByTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getForCurrentAppAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByAppIdsWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsWithUserDataAsync", "appIds", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getByAppIdsWithUserDataAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByTagsWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getByTagsWithUserDataAsync", "tags", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getByTagsWithUserDataAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getForCurrentAppWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppWithUserDataAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_AchievementsModule::getForCurrentAppWithUserDataAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByRequestNameAsync, GCLASS_METHOD_SIGNATURE("getByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::getByRequestNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByRequestNamesAsync, GCLASS_METHOD_SIGNATURE("getByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), &G_AchievementsModule::getByRequestNamesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::triggerByIdAsync, GCLASS_METHOD_SIGNATURE("triggerByIdAsync", "id", "progress", "onSuccess", "onFail"), &G_AchievementsModule::triggerByIdAsync, DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::triggerByRequestNameAsync, GCLASS_METHOD_SIGNATURE("triggerByRequestNameAsync", "requestName", "progress", "onSuccess", "onFail"), &G_AchievementsModule::triggerByRequestNameAsync, DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::claimByIdAsync, GCLASS_METHOD_SIGNATURE("claimByIdAsync", "achievementId", "onSuccess", "onFail"), &G_AchievementsModule::claimByIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::claimByRequestNameAsync, GCLASS_METHOD_SIGNATURE("claimByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_AchievementsModule::claimByRequestNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getProjectAchievementsAsync, GCLASS_METHOD_SIGNATURE("getProjectAchievementsAsync", "onSuccess", "onFail"), &G_AchievementsModule::getProjectAchievementsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getUserAchievementsAsync, GCLASS_METHOD_SIGNATURE("getUserAchievementsAsync", "userId", "withHistory", "startAfter", "limit", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementsAsync, DEFVAL(""), DEFVAL(false), DEFVAL((int64_t)9223372036854775807), DEFVAL(2147483647), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getUserAchievementByIdAsync, GCLASS_METHOD_SIGNATURE("getUserAchievementByIdAsync", "achievementId", "userId", "withHistory", "onSuccess", "onFail"), &G_AchievementsModule::getUserAchievementByIdAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ids", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByAppIdsWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsWithUserDataAsync", "appIds", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByTagsWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getByTagsWithUserDataAsync", "tags", "limit", "startAfter", "withHistory", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getForCurrentAppWithUserDataAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppWithUserDataAsync", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByRequestNameAsync, GCLASS_METHOD_SIGNATURE("getByRequestNameAsync", "requestName", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getByRequestNamesAsync, GCLASS_METHOD_SIGNATURE("getByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::triggerByIdAsync, GCLASS_METHOD_SIGNATURE("triggerByIdAsync", "id", "progress", "onSuccess", "onFail"), DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::triggerByRequestNameAsync, GCLASS_METHOD_SIGNATURE("triggerByRequestNameAsync", "requestName", "progress", "onSuccess", "onFail"), DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::claimByIdAsync, GCLASS_METHOD_SIGNATURE("claimByIdAsync", "achievementId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::claimByRequestNameAsync, GCLASS_METHOD_SIGNATURE("claimByRequestNameAsync", "requestName", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getProjectAchievementsAsync, GCLASS_METHOD_SIGNATURE("getProjectAchievementsAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getUserAchievementsAsync, GCLASS_METHOD_SIGNATURE("getUserAchievementsAsync", "userId", "withHistory", "startAfter", "limit", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), DEFVAL((int64_t)9223372036854775807), DEFVAL(2147483647), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AchievementsModule::getUserAchievementByIdAsync, GCLASS_METHOD_SIGNATURE("getUserAchievementByIdAsync", "achievementId", "userId", "withHistory", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void getByIdsAsync(
         godot::Array ids,

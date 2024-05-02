@@ -50,7 +50,7 @@ using namespace std;
 class G_StoreModule : public godot::Object {
     REG_GCLASS(G_StoreModule, godot::Object);
 #ifdef GODOT4
-    static G_StoreModule* singleton;
+    static inline G_StoreModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -69,33 +69,33 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::buyVirtualItemsAsync, GCLASS_METHOD_SIGNATURE("buyVirtualItemsAsync", "itemIds", "currencies", "offerId", "onSuccess", "onFail"), &G_StoreModule::buyVirtualItemsAsync, DEFVAL(godot::Array()), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::buyStoreOfferAsync, GCLASS_METHOD_SIGNATURE("buyStoreOfferAsync", "offerId", "currencies", "onSuccess", "onFail"), &G_StoreModule::buyStoreOfferAsync, DEFVAL(godot::Array()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getLootBoxesByIdsAsync, GCLASS_METHOD_SIGNATURE("getLootBoxesByIdsAsync", "ids", "onSuccess", "onFail"), &G_StoreModule::getLootBoxesByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getLootBoxesByAppIdAsync, GCLASS_METHOD_SIGNATURE("getLootBoxesByAppIdAsync", "appId", "limit", "startAfter", "onSuccess", "onFail"), &G_StoreModule::getLootBoxesByAppIdAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getLootBoxesForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getLootBoxesForCurrentAppAsync", "limit", "startAfter", "onSuccess", "onFail"), &G_StoreModule::getLootBoxesForCurrentAppAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::lootboxIsAvailableAsync, GCLASS_METHOD_SIGNATURE("lootboxIsAvailableAsync", "name", "onSuccess", "onFail"), &G_StoreModule::lootboxIsAvailableAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getAvailableLootBoxItemsCountAsync, GCLASS_METHOD_SIGNATURE("getAvailableLootBoxItemsCountAsync", "name", "onSuccess", "onFail"), &G_StoreModule::getAvailableLootBoxItemsCountAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::openLootboxAsync, GCLASS_METHOD_SIGNATURE("openLootboxAsync", "name", "onSuccess", "onFail"), &G_StoreModule::openLootboxAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::addAsync, GCLASS_METHOD_SIGNATURE("addAsync", "appIds", "itemIds", "tags", "name", "description", "quantity", "onSuccess", "onFail"), &G_StoreModule::addAsync, DEFVAL(godot::Array()), DEFVAL(""), DEFVAL(""), DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::importStoreOffersFromCSVAsync, GCLASS_METHOD_SIGNATURE("importStoreOffersFromCSVAsync", "content", "delimiter", "cancellationToken", "onSuccess", "onFail"), &G_StoreModule::importStoreOffersFromCSVAsync, DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "ignoreTimestamp", "onSuccess", "onFail"), &G_StoreModule::getByTagsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByTimestampAsync, GCLASS_METHOD_SIGNATURE("getByTimestampAsync", "appId", "timestamp", "onSuccess", "onFail"), &G_StoreModule::getByTimestampAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_StoreModule::getByAppIdsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_StoreModule::getForCurrentAppAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getWithVirtualItemsDataForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_StoreModule::getWithVirtualItemsDataForCurrentAppAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getWithVirtualItemsDataByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_StoreModule::getWithVirtualItemsDataByAppIdsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ids", "onSuccess", "onFail"), &G_StoreModule::getByIdsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "offerId", "onSuccess", "onFail"), &G_StoreModule::getTagsAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "offerId", "tags", "appId", "onSuccess", "onFail"), &G_StoreModule::setTagsAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setNameAsync, GCLASS_METHOD_SIGNATURE("setNameAsync", "offerId", "name", "onSuccess", "onFail"), &G_StoreModule::setNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setDescriptionAsync, GCLASS_METHOD_SIGNATURE("setDescriptionAsync", "offerId", "description", "onSuccess", "onFail"), &G_StoreModule::setDescriptionAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setPricesAsync, GCLASS_METHOD_SIGNATURE("setPricesAsync", "offerId", "prices", "onSuccess", "onFail"), &G_StoreModule::setPricesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setTimeAsync, GCLASS_METHOD_SIGNATURE("setTimeAsync", "offerId", "time", "onSuccess", "onFail"), &G_StoreModule::setTimeAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setImageUrlAsync, GCLASS_METHOD_SIGNATURE("setImageUrlAsync", "offerId", "imageUrl", "onSuccess", "onFail"), &G_StoreModule::setImageUrlAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::isAvailableAsync, GCLASS_METHOD_SIGNATURE("isAvailableAsync", "storeOfferId", "onSuccess", "onFail"), &G_StoreModule::isAvailableAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "storeOfferId", "onSuccess", "onFail"), &G_StoreModule::getPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "storeOfferId", "json", "onSuccess", "onFail"), &G_StoreModule::setPropertiesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::buyVirtualItemsAsync, GCLASS_METHOD_SIGNATURE("buyVirtualItemsAsync", "itemIds", "currencies", "offerId", "onSuccess", "onFail"), DEFVAL(godot::Array()), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::buyStoreOfferAsync, GCLASS_METHOD_SIGNATURE("buyStoreOfferAsync", "offerId", "currencies", "onSuccess", "onFail"), DEFVAL(godot::Array()), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getLootBoxesByIdsAsync, GCLASS_METHOD_SIGNATURE("getLootBoxesByIdsAsync", "ids", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getLootBoxesByAppIdAsync, GCLASS_METHOD_SIGNATURE("getLootBoxesByAppIdAsync", "appId", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getLootBoxesForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getLootBoxesForCurrentAppAsync", "limit", "startAfter", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::lootboxIsAvailableAsync, GCLASS_METHOD_SIGNATURE("lootboxIsAvailableAsync", "name", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getAvailableLootBoxItemsCountAsync, GCLASS_METHOD_SIGNATURE("getAvailableLootBoxItemsCountAsync", "name", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::openLootboxAsync, GCLASS_METHOD_SIGNATURE("openLootboxAsync", "name", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::addAsync, GCLASS_METHOD_SIGNATURE("addAsync", "appIds", "itemIds", "tags", "name", "description", "quantity", "onSuccess", "onFail"), DEFVAL(godot::Array()), DEFVAL(""), DEFVAL(""), DEFVAL(1), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::importStoreOffersFromCSVAsync, GCLASS_METHOD_SIGNATURE("importStoreOffersFromCSVAsync", "content", "delimiter", "cancellationToken", "onSuccess", "onFail"), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByTagsAsync, GCLASS_METHOD_SIGNATURE("getByTagsAsync", "tags", "appId", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByTimestampAsync, GCLASS_METHOD_SIGNATURE("getByTimestampAsync", "appId", "timestamp", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getWithVirtualItemsDataForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getWithVirtualItemsDataByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getWithVirtualItemsDataByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getByIdsAsync, GCLASS_METHOD_SIGNATURE("getByIdsAsync", "ids", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getTagsAsync, GCLASS_METHOD_SIGNATURE("getTagsAsync", "offerId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setTagsAsync, GCLASS_METHOD_SIGNATURE("setTagsAsync", "offerId", "tags", "appId", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setNameAsync, GCLASS_METHOD_SIGNATURE("setNameAsync", "offerId", "name", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setDescriptionAsync, GCLASS_METHOD_SIGNATURE("setDescriptionAsync", "offerId", "description", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setPricesAsync, GCLASS_METHOD_SIGNATURE("setPricesAsync", "offerId", "prices", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setTimeAsync, GCLASS_METHOD_SIGNATURE("setTimeAsync", "offerId", "time", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setImageUrlAsync, GCLASS_METHOD_SIGNATURE("setImageUrlAsync", "offerId", "imageUrl", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::isAvailableAsync, GCLASS_METHOD_SIGNATURE("isAvailableAsync", "storeOfferId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::getPropertiesAsync, GCLASS_METHOD_SIGNATURE("getPropertiesAsync", "storeOfferId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_StoreModule::setPropertiesAsync, GCLASS_METHOD_SIGNATURE("setPropertiesAsync", "storeOfferId", "json", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void buyVirtualItemsAsync(
         godot::Array itemIds,

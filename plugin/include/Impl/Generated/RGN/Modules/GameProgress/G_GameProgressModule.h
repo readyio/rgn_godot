@@ -30,7 +30,7 @@ using namespace std;
 class G_GameProgressModule : public godot::Object {
     REG_GCLASS(G_GameProgressModule, godot::Object);
 #ifdef GODOT4
-    static G_GameProgressModule* singleton;
+    static inline G_GameProgressModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -49,11 +49,11 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::onGameCompleteAsync, GCLASS_METHOD_SIGNATURE("onGameCompleteAsync", "reward", "onSuccess", "onFail"), &G_GameProgressModule::onGameCompleteAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::getGameProgressAsync, GCLASS_METHOD_SIGNATURE("getGameProgressAsync", "onSuccess", "onFail"), &G_GameProgressModule::getGameProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::addUserProgressAsync, GCLASS_METHOD_SIGNATURE("addUserProgressAsync", "userProgressJson", "onSuccess", "onFail"), &G_GameProgressModule::addUserProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::updateUserProgressAsync, GCLASS_METHOD_SIGNATURE("updateUserProgressAsync", "userProgressJson", "reward", "onSuccess", "onFail"), &G_GameProgressModule::updateUserProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::getUserProgressAsync, GCLASS_METHOD_SIGNATURE("getUserProgressAsync", "onSuccess", "onFail"), &G_GameProgressModule::getUserProgressAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::onGameCompleteAsync, GCLASS_METHOD_SIGNATURE("onGameCompleteAsync", "reward", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::getGameProgressAsync, GCLASS_METHOD_SIGNATURE("getGameProgressAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::addUserProgressAsync, GCLASS_METHOD_SIGNATURE("addUserProgressAsync", "userProgressJson", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::updateUserProgressAsync, GCLASS_METHOD_SIGNATURE("updateUserProgressAsync", "userProgressJson", "reward", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GameProgressModule::getUserProgressAsync, GCLASS_METHOD_SIGNATURE("getUserProgressAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void onGameCompleteAsync(
         godot::Array reward,

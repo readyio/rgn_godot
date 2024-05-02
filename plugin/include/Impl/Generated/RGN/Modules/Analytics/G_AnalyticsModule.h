@@ -14,7 +14,7 @@ using namespace std;
 class G_AnalyticsModule : public godot::Object {
     REG_GCLASS(G_AnalyticsModule, godot::Object);
 #ifdef GODOT4
-    static G_AnalyticsModule* singleton;
+    static inline G_AnalyticsModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -33,7 +33,7 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_AnalyticsModule::logEventAsync, GCLASS_METHOD_SIGNATURE("logEventAsync", "eventName", "eventParameters", "cancellationToken", "onSuccess", "onFail"), &G_AnalyticsModule::logEventAsync, DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_AnalyticsModule::logEventAsync, GCLASS_METHOD_SIGNATURE("logEventAsync", "eventName", "eventParameters", "cancellationToken", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(nullptr), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void logEventAsync(
         godot::String eventName,

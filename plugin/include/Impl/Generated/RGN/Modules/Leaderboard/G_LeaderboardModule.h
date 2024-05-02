@@ -36,7 +36,7 @@ using namespace std;
 class G_LeaderboardModule : public godot::Object {
     REG_GCLASS(G_LeaderboardModule, godot::Object);
 #ifdef GODOT4
-    static G_LeaderboardModule* singleton;
+    static inline G_LeaderboardModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -55,23 +55,23 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByIdAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByIdAsync", "id", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByIdAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByRequestNameAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByRequestNameAsync", "requestName", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByRequestNameAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByRequestNamesAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByRequestNamesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByAppIdsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByTagsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByTagsAsync", "tags", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardByTagsAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardForCurrentAppAsync, DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardIdsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardIdsAsync", "ignoreTimestamp", "onSuccess", "onFail"), &G_LeaderboardModule::getLeaderboardIdsAsync, DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isLeaderboardAvailableAsync, GCLASS_METHOD_SIGNATURE("isLeaderboardAvailableAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isLeaderboardAvailableAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isInPromoPeriodAsync, GCLASS_METHOD_SIGNATURE("isInPromoPeriodAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isInPromoPeriodAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isInGracePeriodAsync, GCLASS_METHOD_SIGNATURE("isInGracePeriodAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::isInGracePeriodAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::setScoreAsync, GCLASS_METHOD_SIGNATURE("setScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), &G_LeaderboardModule::setScoreAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::addScoreAsync, GCLASS_METHOD_SIGNATURE("addScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), &G_LeaderboardModule::addScoreAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getUserEntryAsync, GCLASS_METHOD_SIGNATURE("getUserEntryAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::getUserEntryAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getEntriesAsync, GCLASS_METHOD_SIGNATURE("getEntriesAsync", "leaderboardId", "quantityTop", "includeUser", "quantityAroundUser", "onSuccess", "onFail"), &G_LeaderboardModule::getEntriesAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getResetsAsync, GCLASS_METHOD_SIGNATURE("getResetsAsync", "leaderboardId", "withEntries", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), &G_LeaderboardModule::getResetsAsync, DEFVAL(-1), DEFVAL(-1), DEFVAL("asc"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getResetAsync, GCLASS_METHOD_SIGNATURE("getResetAsync", "leaderboardId", "resetId", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), &G_LeaderboardModule::getResetAsync, DEFVAL(0), DEFVAL(0), DEFVAL("asc"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::resetLeaderboardAsync, GCLASS_METHOD_SIGNATURE("resetLeaderboardAsync", "leaderboardId", "onSuccess", "onFail"), &G_LeaderboardModule::resetLeaderboardAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByIdAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByIdAsync", "id", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByRequestNameAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByRequestNameAsync", "requestName", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByRequestNamesAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByRequestNamesAsync", "requestNames", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByAppIdsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByAppIdsAsync", "appIds", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardByTagsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardByTagsAsync", "tags", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardForCurrentAppAsync", "limit", "startAfter", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getLeaderboardIdsAsync, GCLASS_METHOD_SIGNATURE("getLeaderboardIdsAsync", "ignoreTimestamp", "onSuccess", "onFail"), DEFVAL(false), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isLeaderboardAvailableAsync, GCLASS_METHOD_SIGNATURE("isLeaderboardAvailableAsync", "leaderboardId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isInPromoPeriodAsync, GCLASS_METHOD_SIGNATURE("isInPromoPeriodAsync", "leaderboardId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::isInGracePeriodAsync, GCLASS_METHOD_SIGNATURE("isInGracePeriodAsync", "leaderboardId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::setScoreAsync, GCLASS_METHOD_SIGNATURE("setScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::addScoreAsync, GCLASS_METHOD_SIGNATURE("addScoreAsync", "leaderboardId", "score", "extraData", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getUserEntryAsync, GCLASS_METHOD_SIGNATURE("getUserEntryAsync", "leaderboardId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getEntriesAsync, GCLASS_METHOD_SIGNATURE("getEntriesAsync", "leaderboardId", "quantityTop", "includeUser", "quantityAroundUser", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getResetsAsync, GCLASS_METHOD_SIGNATURE("getResetsAsync", "leaderboardId", "withEntries", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), DEFVAL(-1), DEFVAL(-1), DEFVAL("asc"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::getResetAsync, GCLASS_METHOD_SIGNATURE("getResetAsync", "leaderboardId", "resetId", "startAfter", "limit", "orderDirection", "onSuccess", "onFail"), DEFVAL(0), DEFVAL(0), DEFVAL("asc"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_LeaderboardModule::resetLeaderboardAsync, GCLASS_METHOD_SIGNATURE("resetLeaderboardAsync", "leaderboardId", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void getLeaderboardByIdAsync(
         godot::String id,

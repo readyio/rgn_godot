@@ -22,7 +22,7 @@ using namespace std;
 class G_GamePassModule : public godot::Object {
     REG_GCLASS(G_GamePassModule, godot::Object);
 #ifdef GODOT4
-    static G_GamePassModule* singleton;
+    static inline G_GamePassModule* singleton = nullptr;
 #endif
 public:
 #ifdef GODOT3
@@ -41,10 +41,10 @@ public:
     }
 #endif
     REG_GCLASS_METHODS_HEADER() {
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getAsync, GCLASS_METHOD_SIGNATURE("getAsync", "id", "requestName", "onSuccess", "onFail"), &G_GamePassModule::getAsync, DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "onSuccess", "onFail"), &G_GamePassModule::getForCurrentAppAsync, GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getForUserAsync, GCLASS_METHOD_SIGNATURE("getForUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), &G_GamePassModule::getForUserAsync, DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
-        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getAllForUserAsync, GCLASS_METHOD_SIGNATURE("getAllForUserAsync", "userId", "onSuccess", "onFail"), &G_GamePassModule::getAllForUserAsync, DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getAsync, GCLASS_METHOD_SIGNATURE("getAsync", "id", "requestName", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getForCurrentAppAsync, GCLASS_METHOD_SIGNATURE("getForCurrentAppAsync", "onSuccess", "onFail"), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getForUserAsync, GCLASS_METHOD_SIGNATURE("getForUserAsync", "id", "requestName", "userId", "onSuccess", "onFail"), DEFVAL(""), DEFVAL(""), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
+        BIND_GCLASS_METHOD_DEFVAL(G_GamePassModule::getAllForUserAsync, GCLASS_METHOD_SIGNATURE("getAllForUserAsync", "userId", "onSuccess", "onFail"), DEFVAL(""), GCALLBACK_DEFVAL, GCALLBACK_DEFVAL);
     }
     void getAsync(
         godot::String id,
