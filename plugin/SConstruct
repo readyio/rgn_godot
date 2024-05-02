@@ -2,9 +2,6 @@
 import SCons.Script
 import platform
 
-# Define the version of godot used to compile
-version = 3
-
 # Define the GlobRecursive function
 def GlobRecursive(pattern, node="."):
     results = []
@@ -14,14 +11,17 @@ def GlobRecursive(pattern, node="."):
     results += Glob(str(node) + "/" + pattern, source=True)
     return results
 
+# Retrieve version from the command line or default to 3
+version = int(ARGUMENTS.get("version", 4))
+
 # Import SCons and create the base environment
 env = SConscript("godot-cpp/SConstruct")
 
 # Pass the version
-if version == 3:
-    env.Append(CPPDEFINES=[("GODOT3", 1)])
-elif version == 4:
+if version == 4:
     env.Append(CPPDEFINES=[("GODOT4", 1)])
+elif version == 3:
+    env.Append(CPPDEFINES=[("GODOT3", 1)])
 
 # Define platform-specific macro
 if "platform" in env:
