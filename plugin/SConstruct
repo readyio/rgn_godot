@@ -12,7 +12,7 @@ def GlobRecursive(pattern, node="."):
     return results
 
 # Retrieve version from the command line or default to 3
-version = int(ARGUMENTS.get("version", 4))
+version = int(ARGUMENTS.pop("version", 4))
 
 # Import SCons and create the base environment
 env = SConscript("godot-cpp/SConstruct")
