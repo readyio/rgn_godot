@@ -19,13 +19,16 @@ env = SConscript("godot-cpp/SConstruct")
 
 # Used for the arch cross the 3 and 4 godot version
 acrh = ""
+dlib_suffix = ""
 
 # Pass the version
 if version == 4:
     acrh = env["arch"]
+    dlib_suffix = "." + env["SHLIBSUFFIX"]
     env.Append(CPPDEFINES=[("GODOT4", 1)])
 elif version == 3:
     arch = env["arch_suffix"]
+    dlib_suffix = env["SHLIBSUFFIX"]
     env.Append(CPPDEFINES=[("GODOT3", 1)])
 
 # Define platform-specific macro
@@ -44,7 +47,7 @@ env.Append(CPPPATH=["include"])
 sources = GlobRecursive("*.cpp", node="src")
 
 # Create shared library
-output_name = "rgn.{}.{}.{}{}".format(env["platform"], env["target"], acrh, env["SHLIBSUFFIX"])
+output_name = "rgn.{}.{}{}{}".format(env["platform"], env["target"], acrh, dlib_suffix)
 if env["platform"] == "android":
     output_name = "lib" + output_name  # Append "lib" for Android platform
 library = env.SharedLibrary(
@@ -53,7 +56,7 @@ library = env.SharedLibrary(
 )
 
 # Install the built library
-shlib_only = [x for x in library if x.name.endswith(env["SHLIBSUFFIX"])]
+shlib_only = [x for x in library if x.name.endswith(dlib_suffix)]
 install_targets = env.Install(env.Dir("../demo/addons/rgn/bin"), shlib_only)
 
 # Set default targets
