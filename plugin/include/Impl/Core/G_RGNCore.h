@@ -6,12 +6,20 @@
 #include <functional>
 #include <vector>
 
-class G_RGNCore : public godot::Node {
-	REG_GCLASS(G_RGNCore, godot::Node);
+#ifdef GODOT3 
+typedef godot::Node G_RGNCoreType;
+#else
+typedef godot::Object G_RGNCoreType;
+#endif
+
+class G_RGNCore : public G_RGNCoreType {
+	REG_GCLASS(G_RGNCore, G_RGNCoreType);
 	static G_RGNCore *singleton;
 	std::vector<GCALLBACK> _authCallbacks;
 #ifdef GODOT3
 	bool _hasAppFocus = true;
+#else
+	godot::Node* _node;
 #endif
 protected:
 	void _onFocus();
@@ -29,7 +37,11 @@ public:
 	RGN::Utility::FunctionEvent<void()> onFocusEvent;
 	RGN::Utility::FunctionEvent<void()> onUnfocusEvent;
 	void startTimer(double delay, std::function<void()> callback);
+#ifdef GODOT3
 	void initialize(G_RGNConfigurationData* configure_data, GCALLBACK on_initialize);
+#else
+	void initialize(godot::Node* node, G_RGNConfigurationData* configure_data, GCALLBACK on_initialize);
+#endif
 	void update();
 	void bindAuthChangeCallback(GCALLBACK callback);
 	void unbindAuthChangeCallback(GCALLBACK callback);

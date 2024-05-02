@@ -15,10 +15,14 @@
 void G_RGNCore::startTimer(double delay, std::function<void()> callback) {
 #ifdef GODOT3
 	G_Timer* timer = G_Timer::_new();
-#else
-	G_Timer* timer = memnew(G_Timer());
-#endif
 	add_child(timer);
+#else
+	if (_node == nullptr) {
+		return;
+	}
+	G_Timer* timer = memnew(G_Timer());
+	_node->add_child(timer);
+#endif
 	timer->start(delay, callback);
 }
 
@@ -43,8 +47,12 @@ REG_GCLASS_METHODS_SOURCE(G_RGNCore) {
 	BIND_GCLASS_METHOD(G_RGNCore::_onUnfocus, GCLASS_METHOD_SIGNATURE("on_unfocus"));
 	BIND_GCLASS_METHOD(G_RGNCore::_onSignIn, GCLASS_METHOD_SIGNATURE("on_signin"));
 	BIND_GCLASS_METHOD(G_RGNCore::_onWebFormRedirect, GCLASS_METHOD_SIGNATURE("on_webform_redirect", "url"));
+#ifdef GODOT3
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::initialize, GCLASS_METHOD_SIGNATURE("initialize", "configure_data", "on_initialize"), nullptr, GCALLBACK_DEFVAL);
+#else
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::initialize, GCLASS_METHOD_SIGNATURE("initialize", "node", "configure_data", "on_initialize"), nullptr, GCALLBACK_DEFVAL);
-	BIND_GCLASS_METHOD(G_RGNCore::update, GCLASS_METHOD_SIGNATURE("update", "node"));
+#endif
+	BIND_GCLASS_METHOD(G_RGNCore::update, GCLASS_METHOD_SIGNATURE("update"));
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::bindAuthChangeCallback, GCLASS_METHOD_SIGNATURE("bindAuthChangeCallback", "callback"), GCALLBACK_DEFVAL);
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::unbindAuthChangeCallback, GCLASS_METHOD_SIGNATURE("unbindAuthChangeCallback", "callback"), GCALLBACK_DEFVAL);
 	BIND_GCLASS_METHOD(G_RGNCore::signIn, GCLASS_METHOD_SIGNATURE("signIn", "callback"));
@@ -78,7 +86,12 @@ void G_RGNCore::_onWebFormRedirect(godot::String url) {
 	RGN::WebForm::OnWebFormRedirect(cancelled, urlString);
 }
 
+#ifdef GODOT3
 void G_RGNCore::initialize(G_RGNConfigurationData* configure_data, GCALLBACK on_initialize) {
+#else
+void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_data, GCALLBACK on_initialize) {
+	_node = node;
+#endif
 	RGN::RGNConfigureData configureData;
 	if (configure_data) {
 		configureData.appId = std::string(configure_data->getAppId().utf8().get_data());
@@ -111,9 +124,11 @@ void G_RGNCore::initialize(G_RGNConfigurationData* configure_data, GCALLBACK on_
     }
 #ifdef GODOT4
 	// Observer events when the app is focused/unfocused to properly handle cancel of webform process
-	godot::Window* gwin = get_window();
-	gwin->connect("focus_entered", godot::Callable(this, "on_focus"));
-	gwin->connect("focus_exited", godot::Callable(this, "on_unfocus"));
+	if (_node != nullptr) {
+		godot::Window* gwin = _node->get_window();
+		gwin->connect("focus_entered", godot::Callable(this, "on_focus"));
+		gwin->connect("focus_exited", godot::Callable(this, "on_unfocus"));
+	}
 #endif
 }
 
@@ -122,7 +137,6 @@ void G_RGNCore::update() {
 #ifdef GODOT3
 	if (_hasAppFocus && !godot::OS::get_singleton()->is_window_focused()) {
 		onUnfocusEvent.raise();
-		RGN::Utility::Logger::Debug("App unfocused");
 	} else if (!_hasAppFocus && godot::OS::get_singleton()->is_window_focused()) {
 		onFocusEvent.raise();
 	}
