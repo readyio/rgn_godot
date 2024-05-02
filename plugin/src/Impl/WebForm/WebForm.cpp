@@ -9,7 +9,7 @@
 #include <vector>
 #include <unordered_map>
 #ifdef GODOT3
-#include <ClassDB.hpp>
+#include <Engine.hpp>
 #else
 #include <godot_cpp/classes/engine.hpp>
 #endif
@@ -53,12 +53,9 @@ namespace RGN {
         if (!view.empty()) {
             url = url + "&view=" + view;
         }
+        godot::Engine::get_singleton()->get_singleton("READYggWebview");
     #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
-    #if GODOT3
-        godot::Object* webview = godot::ClassDB::get_singleton()->instance("READYggWebview");
-    #else
         godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
-    #endif
         if (webview != nullptr) {
     #if defined(PLATFORM_ANDROID)
             webview->call("setInstanceId", G_RGNCore::get_singleton()->get_instance_id());
