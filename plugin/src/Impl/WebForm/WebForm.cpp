@@ -35,7 +35,7 @@ namespace RGN {
     void WebForm::OpenWebForm(std::string idToken, std::string view, std::function<void(bool, std::string)> callback) {
         _redirectEvent.bind(callback);
         std::string redirectUrl;
-    #if defined(PLATFORM_WINDOWS) || defined(PLATFORM_MACOS)
+    #if defined(PLATFORM_WINDOWS) || (defined(PLATFORM_MACOS) || defined(PLATFORM_OSX))
         Http::WaitForInRequest(0, [](std::string url) {
             OnWebFormRedirect(false, url);
         }, _editorCurrBoundedPort);
@@ -53,13 +53,10 @@ namespace RGN {
         if (!view.empty()) {
             url = url + "&view=" + view;
         }
-        godot::Engine::get_singleton()->get_singleton("READYggWebview");
     #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
         godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
         if (webview != nullptr) {
-    #if defined(PLATFORM_ANDROID)
             webview->call("setInstanceId", G_RGNCore::get_singleton()->get_instance_id());
-    #endif
             webview->call("setUrlScheme", godot::String(redirectUrl.c_str()));
             webview->call("openUrl", godot::String(url.c_str()));
         }

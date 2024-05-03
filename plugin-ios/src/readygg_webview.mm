@@ -2,8 +2,10 @@
 #import "readygg_webview.h"
 #if VERSION_MAJOR == 4
 #import "core/config/engine.h"
+#import "core/object/object.h"
 #else
 #import "core/engine.h"
+#import "core/object.h"
 #endif
 
 static READYggWebviewPlugin *singleton;
@@ -13,6 +15,7 @@ static READYggWebviewPlugin *singleton;
 @property (nonatomic, retain) UIButton *closeButton;
 @end
 
+static int32_t InstanceId = -1;
 static NSString *URLScheme = @"urlscheme_set_from_c_sharp";
 static NSString *BackButtonText = @"Close";
 
@@ -51,20 +54,24 @@ static NSString *BackButtonText = @"Close";
     self.webView.hidden = YES;
     self.closeButton.hidden = YES;
     NSString *urlToOpenString = [URLScheme stringByAppendingString:@"/cancelled"];
-    Object *rgnCoreInstance = Engine::get_singleton()->get_singleton_object("RGNCore");
-    if (rgnCoreInstance != nil) {
-        String godotURL = String([urlToOpenString UTF8String]);
-        rgnCoreInstance->call("on_webform_redirect", godotURL);
+    if (InstanceId >= 0) {
+        Object *rgnCoreInstance = ObjectDB::get_instance(InstanceId);
+        if (rgnCoreInstance != nil) {
+            String godotURL = String([urlToOpenString UTF8String]);
+            rgnCoreInstance->call("on_webform_redirect", godotURL);
+        }
     }
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSURL *url = navigationAction.request.URL;
     if ([url.scheme isEqualToString:URLScheme]) {
-        Object *rgnCoreInstance = Engine::get_singleton()->get_singleton_object("RGNCore");
-        if (rgnCoreInstance != nil) {
-            String godotURL = String([[url absoluteString] UTF8String]);
-            rgnCoreInstance->call("on_webform_redirect", godotURL);
+        if (InstanceId >= 0) {
+            Object *rgnCoreInstance = ObjectDB::get_instance(InstanceId);
+            if (rgnCoreInstance != nil) {
+                String godotURL = String([[url absoluteString] UTF8String]);
+                rgnCoreInstance->call("on_webform_redirect", godotURL);
+            }
         }
         self.webView.hidden = YES;
         self.closeButton.hidden = YES;
@@ -83,9 +90,14 @@ READYggWebviewPlugin *READYggWebviewPlugin::get_singleton() {
 }
 
 void READYggWebviewPlugin::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("setInstanceId", "instanceId"), &READYggWebviewPlugin::setInstanceId);
 	ClassDB::bind_method(D_METHOD("setUrlScheme", "urlScheme"), &READYggWebviewPlugin::setUrlScheme);
 	ClassDB::bind_method(D_METHOD("setBackButtonText", "backButtonText"), &READYggWebviewPlugin::setBackButtonText);
 	ClassDB::bind_method(D_METHOD("openUrl", "url"), &READYggWebviewPlugin::openUrl);
+}
+
+void READYggWebviewPlugin::setInstanceId(int32_t instanceId) {
+    InstanceId = instanceId;
 }
 
 void READYggWebviewPlugin::setUrlScheme(String urlScheme) {
