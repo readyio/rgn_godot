@@ -10,13 +10,21 @@ config_version=4
 
 [application]
 
-config/name="demo"
-run/main_scene="res://demo.tscn"
-config/icon="res://icon.png"
+config/name="READYgg DEMO v3"
+run/main_scene="res://scenes/demo.tscn"
+config/icon="res://sprites/icon.png"
 
 [autoload]
 
 RGNCore="*res://addons/rgn/core.gdns"
+
+[display]
+
+window/size/width=540
+window/size/height=960
+window/handheld/orientation="portrait"
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [gui]
 
