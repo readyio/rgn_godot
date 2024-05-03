@@ -19,10 +19,10 @@ func _addButtonPressed():
 		Dictionary(),
 		func (response):
 			_getLoadingPanelNode().hide_panel()
-			_getMessagePanelNode().show("Success", "ItemId: " + response.id + "\n\rItemQuantity: " + str(response.quantity)),
+			_getMessagePanelNode().show_panel("Success", "ItemId: " + response.id + "\n\rItemQuantity: " + str(response.quantity)),
 		func (_errorCode, errorMessage):
 			_getLoadingPanelNode().hide_panel()
-			_getMessagePanelNode().show("Error", errorMessage)
+			_getMessagePanelNode().show_panel("Error", errorMessage)
 	)
 
 func _cancelButtonPressed():

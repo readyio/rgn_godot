@@ -10,7 +10,7 @@ func _ready():
 func _onOkButtonPressed():
 	hide_panel()
 
-func show(title: String, message: String):
+func show_panel(title: String, message: String):
 	titleLabel.text = title
 	if (message.length() > 600):
 		message = message.substr(0, 600) + "..."

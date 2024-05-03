@@ -16,10 +16,10 @@ func _getUserAchievementsButtonPressed():
 		10,
 		func (userAchievements):
 			_getLoadingPanelNode().hide_panel()
-			_getMessagePanelNode().show("Success", JSON.stringify(userAchievements)),
+			_getMessagePanelNode().show_panel("Success", JSON.stringify(userAchievements)),
 		func (_errorCode, errorMessage):
 			_getLoadingPanelNode().hide_panel()
-			_getMessagePanelNode().show("Error", errorMessage)
+			_getMessagePanelNode().show_panel("Error", errorMessage)
 	)
 
 func _backButtonPressed():

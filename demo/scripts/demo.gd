@@ -20,7 +20,7 @@ func _process(_delta):
 	RGNCore.update()
 
 func _initReady():
-	loadingPanel.show()
+	loadingPanel.show_panel()
 	# Initialize READYgg SDK
 	var configure_data = G_RGNConfigurationData.new()
 	configure_data.setAppId("io.getready.rgntest")

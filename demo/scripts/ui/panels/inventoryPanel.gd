@@ -17,11 +17,11 @@ func _getUserInventoryButtonPressed():
     _getLoadingPanelNode().show_panel()
     InventoryModule.getAllForCurrentAppAsync(
 		func (userItems):
-            _getLoadingPanelNode().hide()
-            _getMessagePanelNode().show("Success", JSON.stringify(userItems)),
+            _getLoadingPanelNode().hide_panel()
+            _getMessagePanelNode().show_panel("Success", JSON.stringify(userItems)),
 		func (_errorCode, errorMessage):
-            _getLoadingPanelNode().hide()
-            _getMessagePanelNode().show("Error", errorMessage)
+            _getLoadingPanelNode().hide_panel()
+            _getMessagePanelNode().show_panel("Error", errorMessage)
     )
 
 func _backButtonPressed():
