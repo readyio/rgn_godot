@@ -13,7 +13,7 @@ import org.godotengine.godot.plugin.UsedByGodot;
 
 public class READYggPlugin extends GodotPlugin {
 
-    private static long webformInstanceId;
+    private static int webformInstanceId;
     private static String webformUrlScheme;
     private static String webformUrl;
 
@@ -28,7 +28,7 @@ public class READYggPlugin extends GodotPlugin {
     }
 
     @UsedByGodot
-    public void setInstanceId(long instanceId) {
+    public void setInstanceId(int instanceId) {
         webformInstanceId = instanceId;
     }
 
