@@ -15,7 +15,7 @@ class READYggWebviewPlugin : public Object {
 public:
 	static READYggWebviewPlugin *get_singleton();
 
-    void setInstanceId(int32_t instanceId);
+    void setInstanceId(int64_t instanceId);
     void setUrlScheme(String urlScheme);
     void setBackButtonText(String backButtonText);
     void openUrl(String url);

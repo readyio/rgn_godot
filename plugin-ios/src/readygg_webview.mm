@@ -15,7 +15,7 @@ static READYggWebviewPlugin *singleton;
 @property (nonatomic, retain) UIButton *closeButton;
 @end
 
-static int32_t InstanceId = -1;
+static int64_t InstanceId = -1;
 static NSString *URLScheme = @"urlscheme_set_from_c_sharp";
 static NSString *BackButtonText = @"Close";
 
@@ -55,7 +55,7 @@ static NSString *BackButtonText = @"Close";
     self.closeButton.hidden = YES;
     NSString *urlToOpenString = [URLScheme stringByAppendingString:@"/cancelled"];
     if (InstanceId >= 0) {
-        Object *rgnCoreInstance = ObjectDB::get_instance(InstanceId);
+        Object *rgnCoreInstance = ObjectDB::get_instance(ObjectID(InstanceId));
         if (rgnCoreInstance != nil) {
             String godotURL = String([urlToOpenString UTF8String]);
             rgnCoreInstance->call("on_webform_redirect", godotURL);
@@ -67,7 +67,7 @@ static NSString *BackButtonText = @"Close";
     NSURL *url = navigationAction.request.URL;
     if ([url.scheme isEqualToString:URLScheme]) {
         if (InstanceId >= 0) {
-            Object *rgnCoreInstance = ObjectDB::get_instance(InstanceId);
+            Object *rgnCoreInstance = ObjectDB::get_instance(ObjectID(InstanceId));
             if (rgnCoreInstance != nil) {
                 String godotURL = String([[url absoluteString] UTF8String]);
                 rgnCoreInstance->call("on_webform_redirect", godotURL);
@@ -96,7 +96,7 @@ void READYggWebviewPlugin::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("openUrl", "url"), &READYggWebviewPlugin::openUrl);
 }
 
-void READYggWebviewPlugin::setInstanceId(int32_t instanceId) {
+void READYggWebviewPlugin::setInstanceId(int64_t instanceId) {
     InstanceId = instanceId;
 }
 
