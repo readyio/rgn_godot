@@ -1,0 +1,17 @@
+[config]
+name="rgn"
+binary="rgn.xcframework"
+
+initialization="rgn_plugin_init"
+deinitialization="rgn_plugin_deinit"
+
+[dependencies]
+linked=[]
+embedded=[]
+system=["WebKit.framework"]
+
+capabilities=[]
+
+files=[]
+
+[plist]
