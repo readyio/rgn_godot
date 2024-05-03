@@ -23,8 +23,8 @@ dlib_suffix = ""
 
 # Pass the version
 if version == 4:
-    acrh = env["arch"]
-    dlib_suffix = "." + env["SHLIBSUFFIX"]
+    acrh = "." + env["arch"]
+    dlib_suffix = env["SHLIBSUFFIX"]
     env.Append(CPPDEFINES=[("GODOT4", 1)])
 elif version == 3:
     arch = env["arch_suffix"]
