@@ -16,7 +16,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-READYgg="*res://addons/rgn/core.gdns"
+RGNCore="*res://addons/rgn/core.gdns"
 
 [gui]
 

@@ -9,9 +9,10 @@ reloadable=false
 
 Android.armeabi-v7a="res://addons/rgn/bin/librgn.android.release.armv7.so"
 Android.arm64-v8a="res://addons/rgn/bin/librgn.android.release.arm64.so"
-OSX.64="res://addons/rgn/bin/rgn.windows.debug.64.dylib"
-Windows.64="res://addons/rgn/bin/rgn.windows.debug.64.dll"
-X11.64="res://addons/rgn/bin/rgn.windows.debug.64.so"
+OSX.64="res://addons/rgn/bin/librgn.osx.release.universal.dylib"
+Windows.64="res://addons/rgn/bin/rgn.windows.release.64.dll"
+iOS.armv7="res://addons/rgn/bin/librgn.ios.release.armv7.dylib"
+iOS.arm64="res://addons/rgn/bin/librgn.ios.release.arm64.dylib"
 
 [dependencies]
 
@@ -19,4 +20,5 @@ Android.armeabi-v7a=[  ]
 Android.arm64-v8a=[  ]
 OSX.64=[  ]
 Windows.64=[  ]
-X11.64=[  ]
+iOS.armv7=[  ]
+iOS.arm64=[  ]

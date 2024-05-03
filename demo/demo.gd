@@ -6,16 +6,19 @@ func _ready():
 	var config = configScript.new()
 	config.setAppId("io.getready.rgntest")
 	config.setDevelopmentEnvironment()
-	READYgg.initialize(config, funcref(self, "_on_initialize"))
+	RGNCore.initialize(config, funcref(self, "_on_initialize"))
 	pass
 	
 func _process(dt):
-	READYgg.update()
+	RGNCore.update()
 	pass
 
 func _on_initialize():
 	print("READYgg has been initialized")
-	print("UserId is " + READYgg.getUserId())
+	print("UserId is " + RGNCore.getUserId())
+	RGNCore.signIn(funcref(self, "_on_signin"))
+	
+func _on_signin(isLoggedIn):
 	$UserProfileModule.getProfileAsync(funcref(self, "_on_get_profile"))
 	
 func _on_get_profile(response):
