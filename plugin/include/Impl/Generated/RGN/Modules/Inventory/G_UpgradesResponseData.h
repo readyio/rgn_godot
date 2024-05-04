@@ -15,8 +15,9 @@ struct G_UpgradesResponseData {
         godot::Array g_target_itemUpgrades;
         for (const auto& source_itemUpgrades_item : source.itemUpgrades) {
             godot::Dictionary g_source_itemUpgrades_item;
-            godot::Dictionary g_g_source_itemUpgrades_item = g_source_itemUpgrades_item;
+            godot::Dictionary g_g_source_itemUpgrades_item;
             G_VirtualItemUpgrade::ConvertToGodotModel(source_itemUpgrades_item, g_g_source_itemUpgrades_item);
+            g_source_itemUpgrades_item = g_g_source_itemUpgrades_item;
             g_target_itemUpgrades.push_back(g_source_itemUpgrades_item);
         }
         target["itemUpgrades"] = g_target_itemUpgrades;

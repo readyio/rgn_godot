@@ -84,8 +84,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::UserData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_UserData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -107,8 +108,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::UserData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_UserData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -177,8 +179,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_UserData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -204,8 +207,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_Currency::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -412,8 +416,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::UserCustomClaims response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -447,8 +452,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::UserCustomClaims response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -474,8 +480,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::UserCustomClaims response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -499,8 +506,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::UserCustomClaims response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_UserCustomClaims::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -572,8 +580,9 @@ public:
                 [onSuccess](RGN::Modules::UserProfile::GetUserStatusResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_GetUserStatusResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },

@@ -13,8 +13,9 @@ struct G_RGNCoinEconomy {
         godot::Array g_target_products;
         for (const auto& source_products_item : source.products) {
             godot::Dictionary g_source_products_item;
-            godot::Dictionary g_g_source_products_item = g_source_products_item;
+            godot::Dictionary g_g_source_products_item;
             G_RGNCoinEconomyProduct::ConvertToGodotModel(source_products_item, g_g_source_products_item);
+            g_source_products_item = g_g_source_products_item;
             g_target_products.push_back(g_source_products_item);
         }
         target["products"] = g_target_products;

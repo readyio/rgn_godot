@@ -40,13 +40,15 @@ struct G_StoreOffer {
         target["updatedAt"] = source.updatedAt;
         target["createdBy"] = godot::String(source.createdBy.c_str());
         target["updatedBy"] = godot::String(source.updatedBy.c_str());
-        godot::Dictionary g_target_time = target["time"];
+        godot::Dictionary g_target_time;
         G_TimeInfo::ConvertToGodotModel(source.time, g_target_time);
+        target["time"] = g_target_time;
         godot::Array g_target_properties;
         for (const auto& source_properties_item : source.properties) {
             godot::Dictionary g_source_properties_item;
-            godot::Dictionary g_g_source_properties_item = g_source_properties_item;
+            godot::Dictionary g_g_source_properties_item;
             G_Properties::ConvertToGodotModel(source_properties_item, g_g_source_properties_item);
+            g_source_properties_item = g_g_source_properties_item;
             g_target_properties.push_back(g_source_properties_item);
         }
         target["properties"] = g_target_properties;
@@ -60,18 +62,21 @@ struct G_StoreOffer {
         godot::Array g_target_prices;
         for (const auto& source_prices_item : source.prices) {
             godot::Dictionary g_source_prices_item;
-            godot::Dictionary g_g_source_prices_item = g_source_prices_item;
+            godot::Dictionary g_g_source_prices_item;
             G_PriceInfo::ConvertToGodotModel(source_prices_item, g_g_source_prices_item);
+            g_source_prices_item = g_g_source_prices_item;
             g_target_prices.push_back(g_source_prices_item);
         }
         target["prices"] = g_target_prices;
-        godot::Dictionary g_target_requiredToPurchase = target["requiredToPurchase"];
+        godot::Dictionary g_target_requiredToPurchase;
         G_RequirementData::ConvertToGodotModel(source.requiredToPurchase, g_target_requiredToPurchase);
+        target["requiredToPurchase"] = g_target_requiredToPurchase;
         godot::Array g_target_virtualItems;
         for (const auto& source_virtualItems_item : source.virtualItems) {
             godot::Dictionary g_source_virtualItems_item;
-            godot::Dictionary g_g_source_virtualItems_item = g_source_virtualItems_item;
+            godot::Dictionary g_g_source_virtualItems_item;
             G_VirtualItem::ConvertToGodotModel(source_virtualItems_item, g_g_source_virtualItems_item);
+            g_source_virtualItems_item = g_g_source_virtualItems_item;
             g_target_virtualItems.push_back(g_source_virtualItems_item);
         }
         target["virtualItems"] = g_target_virtualItems;

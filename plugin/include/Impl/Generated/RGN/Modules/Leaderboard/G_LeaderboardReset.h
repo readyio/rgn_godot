@@ -21,8 +21,9 @@ struct G_LeaderboardReset {
         godot::Array g_target_entries;
         for (const auto& source_entries_item : source.entries) {
             godot::Dictionary g_source_entries_item;
-            godot::Dictionary g_g_source_entries_item = g_source_entries_item;
+            godot::Dictionary g_g_source_entries_item;
             G_LeaderboardEntryWithRewards::ConvertToGodotModel(source_entries_item, g_g_source_entries_item);
+            g_source_entries_item = g_g_source_entries_item;
             g_target_entries.push_back(g_source_entries_item);
         }
         target["entries"] = g_target_entries;

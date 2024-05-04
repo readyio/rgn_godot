@@ -13,8 +13,9 @@ struct G_GetVirtualItemsInventoryResponseData {
         godot::Array g_target_virtualItemInventoryDatas;
         for (const auto& source_virtualItemInventoryDatas_item : source.virtualItemInventoryDatas) {
             godot::Dictionary g_source_virtualItemInventoryDatas_item;
-            godot::Dictionary g_g_source_virtualItemInventoryDatas_item = g_source_virtualItemInventoryDatas_item;
+            godot::Dictionary g_g_source_virtualItemInventoryDatas_item;
             G_InventoryItemData::ConvertToGodotModel(source_virtualItemInventoryDatas_item, g_g_source_virtualItemInventoryDatas_item);
+            g_source_virtualItemInventoryDatas_item = g_g_source_virtualItemInventoryDatas_item;
             g_target_virtualItemInventoryDatas.push_back(g_source_virtualItemInventoryDatas_item);
         }
         target["virtualItemInventoryDatas"] = g_target_virtualItemInventoryDatas;

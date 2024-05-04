@@ -13,8 +13,9 @@ struct G_GetAchievementsResponse {
         godot::Array g_target_achievements;
         for (const auto& source_achievements_item : source.achievements) {
             godot::Dictionary g_source_achievements_item;
-            godot::Dictionary g_g_source_achievements_item = g_source_achievements_item;
+            godot::Dictionary g_g_source_achievements_item;
             G_AchievementData::ConvertToGodotModel(source_achievements_item, g_g_source_achievements_item);
+            g_source_achievements_item = g_g_source_achievements_item;
             g_target_achievements.push_back(g_source_achievements_item);
         }
         target["achievements"] = g_target_achievements;

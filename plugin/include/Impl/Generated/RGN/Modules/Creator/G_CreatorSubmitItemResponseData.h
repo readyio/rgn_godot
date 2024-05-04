@@ -10,8 +10,9 @@
 
 struct G_CreatorSubmitItemResponseData {
 	static void ConvertToGodotModel(const RGN::Modules::Creator::CreatorSubmitItemResponseData& source, godot::Dictionary& target) {
-        godot::Dictionary g_target_addedItem = target["addedItem"];
+        godot::Dictionary g_target_addedItem;
         G_VirtualItem::ConvertToGodotModel(source.addedItem, g_target_addedItem);
+        target["addedItem"] = g_target_addedItem;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Creator::CreatorSubmitItemResponseData& target) {

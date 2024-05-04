@@ -73,8 +73,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_MatchmakingData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -113,8 +114,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_MatchmakingData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -153,8 +155,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_MatchmakingData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -186,8 +189,9 @@ public:
                 [onSuccess](RGN::Modules::Matchmaking::MatchmakingData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_MatchmakingData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -233,8 +237,9 @@ public:
                 [onSuccess](RGN::Modules::Matchmaking::MatchmakingData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_MatchmakingData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },

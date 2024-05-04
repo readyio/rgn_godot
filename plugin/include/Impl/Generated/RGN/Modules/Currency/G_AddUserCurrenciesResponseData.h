@@ -13,8 +13,9 @@ struct G_AddUserCurrenciesResponseData {
         godot::Array g_target_userCurrencies;
         for (const auto& source_userCurrencies_item : source.userCurrencies) {
             godot::Dictionary g_source_userCurrencies_item;
-            godot::Dictionary g_g_source_userCurrencies_item = g_source_userCurrencies_item;
+            godot::Dictionary g_g_source_userCurrencies_item;
             G_Currency::ConvertToGodotModel(source_userCurrencies_item, g_g_source_userCurrencies_item);
+            g_source_userCurrencies_item = g_g_source_userCurrencies_item;
             g_target_userCurrencies.push_back(g_source_userCurrencies_item);
         }
         target["userCurrencies"] = g_target_userCurrencies;

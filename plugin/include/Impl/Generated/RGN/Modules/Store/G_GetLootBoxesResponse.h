@@ -13,8 +13,9 @@ struct G_GetLootBoxesResponse {
         godot::Array g_target_lootBoxes;
         for (const auto& source_lootBoxes_item : source.lootBoxes) {
             godot::Dictionary g_source_lootBoxes_item;
-            godot::Dictionary g_g_source_lootBoxes_item = g_source_lootBoxes_item;
+            godot::Dictionary g_g_source_lootBoxes_item;
             G_LootBox::ConvertToGodotModel(source_lootBoxes_item, g_g_source_lootBoxes_item);
+            g_source_lootBoxes_item = g_g_source_lootBoxes_item;
             g_target_lootBoxes.push_back(g_source_lootBoxes_item);
         }
         target["lootBoxes"] = g_target_lootBoxes;

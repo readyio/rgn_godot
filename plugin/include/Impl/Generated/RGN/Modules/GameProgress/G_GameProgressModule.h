@@ -71,8 +71,9 @@ public:
                 [onSuccess](RGN::Modules::GameProgress::OnGameCompleteResult response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_OnGameCompleteResult::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -92,8 +93,9 @@ public:
                 [onSuccess](RGN::Modules::GameProgress::GameProgress response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_GameProgress::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },

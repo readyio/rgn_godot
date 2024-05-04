@@ -19,16 +19,18 @@ struct G_LeaderboardEntryWithRewards {
         godot::Array g_target_givenRewards;
         for (const auto& source_givenRewards_item : source.givenRewards) {
             godot::Dictionary g_source_givenRewards_item;
-            godot::Dictionary g_g_source_givenRewards_item = g_source_givenRewards_item;
+            godot::Dictionary g_g_source_givenRewards_item;
             G_LeaderboardReward::ConvertToGodotModel(source_givenRewards_item, g_g_source_givenRewards_item);
+            g_source_givenRewards_item = g_g_source_givenRewards_item;
             g_target_givenRewards.push_back(g_source_givenRewards_item);
         }
         target["givenRewards"] = g_target_givenRewards;
         godot::Array g_target_failedRewards;
         for (const auto& source_failedRewards_item : source.failedRewards) {
             godot::Dictionary g_source_failedRewards_item;
-            godot::Dictionary g_g_source_failedRewards_item = g_source_failedRewards_item;
+            godot::Dictionary g_g_source_failedRewards_item;
             G_LeaderboardReward::ConvertToGodotModel(source_failedRewards_item, g_g_source_failedRewards_item);
+            g_source_failedRewards_item = g_g_source_failedRewards_item;
             g_target_failedRewards.push_back(g_source_failedRewards_item);
         }
         target["failedRewards"] = g_target_failedRewards;

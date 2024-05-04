@@ -15,8 +15,9 @@ struct G_OnGameCompleteRequestData {
         godot::Array g_target_reward;
         for (const auto& source_reward_item : source.reward) {
             godot::Dictionary g_source_reward_item;
-            godot::Dictionary g_g_source_reward_item = g_source_reward_item;
+            godot::Dictionary g_g_source_reward_item;
             G_Currency::ConvertToGodotModel(source_reward_item, g_g_source_reward_item);
+            g_source_reward_item = g_g_source_reward_item;
             g_target_reward.push_back(g_source_reward_item);
         }
         target["reward"] = g_target_reward;

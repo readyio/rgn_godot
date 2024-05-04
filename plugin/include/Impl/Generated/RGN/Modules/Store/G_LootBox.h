@@ -23,8 +23,9 @@ struct G_LootBox {
         godot::Array g_target_prices;
         for (const auto& source_prices_item : source.prices) {
             godot::Dictionary g_source_prices_item;
-            godot::Dictionary g_g_source_prices_item = g_source_prices_item;
+            godot::Dictionary g_g_source_prices_item;
             G_PriceInfo::ConvertToGodotModel(source_prices_item, g_g_source_prices_item);
+            g_source_prices_item = g_g_source_prices_item;
             g_target_prices.push_back(g_source_prices_item);
         }
         target["prices"] = g_target_prices;

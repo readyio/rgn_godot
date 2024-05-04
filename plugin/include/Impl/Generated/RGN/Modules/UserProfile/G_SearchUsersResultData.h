@@ -13,8 +13,9 @@ struct G_SearchUsersResultData {
         godot::Array g_target_queryResult;
         for (const auto& source_queryResult_item : source.queryResult) {
             godot::Dictionary g_source_queryResult_item;
-            godot::Dictionary g_g_source_queryResult_item = g_source_queryResult_item;
+            godot::Dictionary g_g_source_queryResult_item;
             G_UserData::ConvertToGodotModel(source_queryResult_item, g_g_source_queryResult_item);
+            g_source_queryResult_item = g_g_source_queryResult_item;
             g_target_queryResult.push_back(g_source_queryResult_item);
         }
         target["queryResult"] = g_target_queryResult;

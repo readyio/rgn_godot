@@ -63,8 +63,9 @@ public:
                 [onSuccess](RGN::Modules::Creator::CreatorSignupResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_CreatorSignupResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -87,8 +88,9 @@ public:
                 [onSuccess](RGN::Modules::Creator::CreatorSubmitItemResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_CreatorSubmitItemResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -108,8 +110,9 @@ public:
                 [onSuccess](RGN::Modules::Creator::CreatorData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_CreatorData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -127,8 +130,9 @@ public:
                 [onSuccess](RGN::Modules::Currency::ClaimCurrencyResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_ClaimCurrencyResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },

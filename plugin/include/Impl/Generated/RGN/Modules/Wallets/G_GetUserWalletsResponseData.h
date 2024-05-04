@@ -15,8 +15,9 @@ struct G_GetUserWalletsResponseData {
         godot::Array g_target_wallets;
         for (const auto& source_wallets_item : source.wallets) {
             godot::Dictionary g_source_wallets_item;
-            godot::Dictionary g_g_source_wallets_item = g_source_wallets_item;
+            godot::Dictionary g_g_source_wallets_item;
             G_RGNWallet::ConvertToGodotModel(source_wallets_item, g_g_source_wallets_item);
+            g_source_wallets_item = g_g_source_wallets_item;
             g_target_wallets.push_back(g_source_wallets_item);
         }
         target["wallets"] = g_target_wallets;

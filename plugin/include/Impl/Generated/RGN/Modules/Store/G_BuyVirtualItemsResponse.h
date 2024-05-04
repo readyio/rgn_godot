@@ -16,16 +16,18 @@ struct G_BuyVirtualItemsResponse {
         godot::Array g_target_purchasedItems;
         for (const auto& source_purchasedItems_item : source.purchasedItems) {
             godot::Dictionary g_source_purchasedItems_item;
-            godot::Dictionary g_g_source_purchasedItems_item = g_source_purchasedItems_item;
+            godot::Dictionary g_g_source_purchasedItems_item;
             G_PurchaseItem::ConvertToGodotModel(source_purchasedItems_item, g_g_source_purchasedItems_item);
+            g_source_purchasedItems_item = g_g_source_purchasedItems_item;
             g_target_purchasedItems.push_back(g_source_purchasedItems_item);
         }
         target["purchasedItems"] = g_target_purchasedItems;
         godot::Array g_target_updatedCurrencies;
         for (const auto& source_updatedCurrencies_item : source.updatedCurrencies) {
             godot::Dictionary g_source_updatedCurrencies_item;
-            godot::Dictionary g_g_source_updatedCurrencies_item = g_source_updatedCurrencies_item;
+            godot::Dictionary g_g_source_updatedCurrencies_item;
             G_Currency::ConvertToGodotModel(source_updatedCurrencies_item, g_g_source_updatedCurrencies_item);
+            g_source_updatedCurrencies_item = g_g_source_updatedCurrencies_item;
             g_target_updatedCurrencies.push_back(g_source_updatedCurrencies_item);
         }
         target["updatedCurrencies"] = g_target_updatedCurrencies;

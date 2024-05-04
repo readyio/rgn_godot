@@ -40,21 +40,24 @@ struct G_InventoryItemData {
         godot::Array g_target_itemUpgrades;
         for (const auto& source_itemUpgrades_item : source.itemUpgrades) {
             godot::Dictionary g_source_itemUpgrades_item;
-            godot::Dictionary g_g_source_itemUpgrades_item = g_source_itemUpgrades_item;
+            godot::Dictionary g_g_source_itemUpgrades_item;
             G_VirtualItemUpgrade::ConvertToGodotModel(source_itemUpgrades_item, g_g_source_itemUpgrades_item);
+            g_source_itemUpgrades_item = g_g_source_itemUpgrades_item;
             g_target_itemUpgrades.push_back(g_source_itemUpgrades_item);
         }
         target["itemUpgrades"] = g_target_itemUpgrades;
         godot::Array g_target_properties;
         for (const auto& source_properties_item : source.properties) {
             godot::Dictionary g_source_properties_item;
-            godot::Dictionary g_g_source_properties_item = g_source_properties_item;
+            godot::Dictionary g_g_source_properties_item;
             G_Properties::ConvertToGodotModel(source_properties_item, g_g_source_properties_item);
+            g_source_properties_item = g_g_source_properties_item;
             g_target_properties.push_back(g_source_properties_item);
         }
         target["properties"] = g_target_properties;
-        godot::Dictionary g_target_virtualItem = target["virtualItem"];
+        godot::Dictionary g_target_virtualItem;
         G_VirtualItem::ConvertToGodotModel(source.virtualItem, g_target_virtualItem);
+        target["virtualItem"] = g_target_virtualItem;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Inventory::InventoryItemData& target) {

@@ -13,8 +13,9 @@
 struct G_UpdateVirtualItemsRequestData {
 	static void ConvertToGodotModel(const RGN::Modules::VirtualItems::UpdateVirtualItemsRequestData& source, godot::Dictionary& target) {
         target["itemId"] = godot::String(source.itemId.c_str());
-        godot::Dictionary g_target_virtualItem = target["virtualItem"];
+        godot::Dictionary g_target_virtualItem;
         G_VirtualItem::ConvertToGodotModel(source.virtualItem, g_target_virtualItem);
+        target["virtualItem"] = g_target_virtualItem;
 		G_BaseRequestData::ConvertToGodotModel(source, target);
 	}
 

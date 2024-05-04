@@ -15,8 +15,9 @@
  */
 struct G_AchievementWithUserData {
 	static void ConvertToGodotModel(const RGN::Modules::Achievement::AchievementWithUserData& source, godot::Dictionary& target) {
-        godot::Dictionary g_target__userAchievement = target["_userAchievement"];
+        godot::Dictionary g_target__userAchievement;
         G_UserAchievement::ConvertToGodotModel(source._userAchievement, g_target__userAchievement);
+        target["_userAchievement"] = g_target__userAchievement;
 		G_AchievementData::ConvertToGodotModel(source, target);
 	}
 

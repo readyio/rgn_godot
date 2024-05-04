@@ -10,8 +10,9 @@
 
 struct G_GetLeaderboardResetResponseData {
 	static void ConvertToGodotModel(const RGN::Modules::Leaderboard::GetLeaderboardResetResponseData& source, godot::Dictionary& target) {
-        godot::Dictionary g_target_reset = target["reset"];
+        godot::Dictionary g_target_reset;
         G_LeaderboardReset::ConvertToGodotModel(source.reset, g_target_reset);
+        target["reset"] = g_target_reset;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Leaderboard::GetLeaderboardResetResponseData& target) {

@@ -12,8 +12,9 @@
 
 struct G_CreatorSubmitItemRequestData {
 	static void ConvertToGodotModel(const RGN::Modules::Creator::CreatorSubmitItemRequestData& source, godot::Dictionary& target) {
-        godot::Dictionary g_target_customizedItem = target["customizedItem"];
+        godot::Dictionary g_target_customizedItem;
         G_VirtualItem::ConvertToGodotModel(source.customizedItem, g_target_customizedItem);
+        target["customizedItem"] = g_target_customizedItem;
 		G_BaseMigrationRequestData::ConvertToGodotModel(source, target);
 	}
 

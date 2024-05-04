@@ -16,8 +16,9 @@ struct G_GetForCurrentAppResponseData {
         godot::Array g_target_gamePasses;
         for (const auto& source_gamePasses_item : source.gamePasses) {
             godot::Dictionary g_source_gamePasses_item;
-            godot::Dictionary g_g_source_gamePasses_item = g_source_gamePasses_item;
+            godot::Dictionary g_g_source_gamePasses_item;
             G_GamePassData::ConvertToGodotModel(source_gamePasses_item, g_g_source_gamePasses_item);
+            g_source_gamePasses_item = g_g_source_gamePasses_item;
             g_target_gamePasses.push_back(g_source_gamePasses_item);
         }
         target["gamePasses"] = g_target_gamePasses;

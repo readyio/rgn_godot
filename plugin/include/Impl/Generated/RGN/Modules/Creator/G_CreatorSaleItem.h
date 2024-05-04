@@ -16,8 +16,9 @@ struct G_CreatorSaleItem {
         godot::Array g_target_totalCurrencies;
         for (const auto& source_totalCurrencies_item : source.totalCurrencies) {
             godot::Dictionary g_source_totalCurrencies_item;
-            godot::Dictionary g_g_source_totalCurrencies_item = g_source_totalCurrencies_item;
+            godot::Dictionary g_g_source_totalCurrencies_item;
             G_Currency::ConvertToGodotModel(source_totalCurrencies_item, g_g_source_totalCurrencies_item);
+            g_source_totalCurrencies_item = g_g_source_totalCurrencies_item;
             g_target_totalCurrencies.push_back(g_source_totalCurrencies_item);
         }
         target["totalCurrencies"] = g_target_totalCurrencies;

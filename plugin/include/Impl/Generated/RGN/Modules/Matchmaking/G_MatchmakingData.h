@@ -39,8 +39,9 @@ struct G_MatchmakingData {
         godot::Array g_target_votes;
         for (const auto& source_votes_item : source.votes) {
             godot::Dictionary g_source_votes_item;
-            godot::Dictionary g_g_source_votes_item = g_source_votes_item;
+            godot::Dictionary g_g_source_votes_item;
             G_Vote::ConvertToGodotModel(source_votes_item, g_g_source_votes_item);
+            g_source_votes_item = g_g_source_votes_item;
             g_target_votes.push_back(g_source_votes_item);
         }
         target["votes"] = g_target_votes;
@@ -65,8 +66,9 @@ struct G_MatchmakingData {
         godot::Array g_target_participationFees;
         for (const auto& source_participationFees_item : source.participationFees) {
             godot::Dictionary g_source_participationFees_item;
-            godot::Dictionary g_g_source_participationFees_item = g_source_participationFees_item;
+            godot::Dictionary g_g_source_participationFees_item;
             G_ParticipationFee::ConvertToGodotModel(source_participationFees_item, g_g_source_participationFees_item);
+            g_source_participationFees_item = g_g_source_participationFees_item;
             g_target_participationFees.push_back(g_source_participationFees_item);
         }
         target["participationFees"] = g_target_participationFees;

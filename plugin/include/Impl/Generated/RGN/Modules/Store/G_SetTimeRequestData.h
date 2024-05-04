@@ -13,8 +13,9 @@
 struct G_SetTimeRequestData {
 	static void ConvertToGodotModel(const RGN::Modules::Store::SetTimeRequestData& source, godot::Dictionary& target) {
         target["offerId"] = godot::String(source.offerId.c_str());
-        godot::Dictionary g_target_time = target["time"];
+        godot::Dictionary g_target_time;
         G_TimeInfo::ConvertToGodotModel(source.time, g_target_time);
+        target["time"] = g_target_time;
 		G_BaseRequestData::ConvertToGodotModel(source, target);
 	}
 
