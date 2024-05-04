@@ -12,10 +12,12 @@
 
 struct G_OnGameCompleteResult {
 	static void ConvertToGodotModel(const RGN::Modules::GameProgress::OnGameCompleteResult& source, godot::Dictionary& target) {
-        godot::Dictionary g_target_gameProgress = target["gameProgress"];
+        godot::Dictionary g_target_gameProgress;
         G_GameProgress::ConvertToGodotModel(source.gameProgress, g_target_gameProgress);
-        godot::Dictionary g_target_userCurrencies = target["userCurrencies"];
+        target["gameProgress"] = g_target_gameProgress;
+        godot::Dictionary g_target_userCurrencies;
         G_UserCurrencyData::ConvertToGodotModel(source.userCurrencies, g_target_userCurrencies);
+        target["userCurrencies"] = g_target_userCurrencies;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::GameProgress::OnGameCompleteResult& target) {

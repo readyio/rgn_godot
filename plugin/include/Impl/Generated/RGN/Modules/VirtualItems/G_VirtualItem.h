@@ -19,8 +19,9 @@ struct G_VirtualItem {
         target["id"] = godot::String(source.id.c_str());
         target["name"] = godot::String(source.name.c_str());
         target["description"] = godot::String(source.description.c_str());
-        godot::Dictionary g_target_image = target["image"];
+        godot::Dictionary g_target_image;
         G_VirtualItemImage::ConvertToGodotModel(source.image, g_target_image);
+        target["image"] = g_target_image;
         target["createdAt"] = source.createdAt;
         target["updatedAt"] = source.updatedAt;
         target["createdBy"] = godot::String(source.createdBy.c_str());
@@ -43,22 +44,25 @@ struct G_VirtualItem {
         godot::Array g_target_properties;
         for (const auto& source_properties_item : source.properties) {
             godot::Dictionary g_source_properties_item;
-            godot::Dictionary g_g_source_properties_item = g_source_properties_item;
+            godot::Dictionary g_g_source_properties_item;
             G_Properties::ConvertToGodotModel(source_properties_item, g_g_source_properties_item);
+            g_source_properties_item = g_g_source_properties_item;
             g_target_properties.push_back(g_source_properties_item);
         }
         target["properties"] = g_target_properties;
         godot::Array g_target_prices;
         for (const auto& source_prices_item : source.prices) {
             godot::Dictionary g_source_prices_item;
-            godot::Dictionary g_g_source_prices_item = g_source_prices_item;
+            godot::Dictionary g_g_source_prices_item;
             G_PriceInfo::ConvertToGodotModel(source_prices_item, g_g_source_prices_item);
+            g_source_prices_item = g_g_source_prices_item;
             g_target_prices.push_back(g_source_prices_item);
         }
         target["prices"] = g_target_prices;
         target["totalQuantity"] = source.totalQuantity;
-        godot::Dictionary g_target_blockchain = target["blockchain"];
+        godot::Dictionary g_target_blockchain;
         G_BlockchainInfo::ConvertToGodotModel(source.blockchain, g_target_blockchain);
+        target["blockchain"] = g_target_blockchain;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::VirtualItems::VirtualItem& target) {

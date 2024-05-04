@@ -15,8 +15,9 @@ struct G_ChangeVirtualItemsQuantityRequestData {
         godot::Array g_target_inventoryDatas;
         for (const auto& source_inventoryDatas_item : source.inventoryDatas) {
             godot::Dictionary g_source_inventoryDatas_item;
-            godot::Dictionary g_g_source_inventoryDatas_item = g_source_inventoryDatas_item;
+            godot::Dictionary g_g_source_inventoryDatas_item;
             G_InventoryData::ConvertToGodotModel(source_inventoryDatas_item, g_g_source_inventoryDatas_item);
+            g_source_inventoryDatas_item = g_g_source_inventoryDatas_item;
             g_target_inventoryDatas.push_back(g_source_inventoryDatas_item);
         }
         target["inventoryDatas"] = g_target_inventoryDatas;

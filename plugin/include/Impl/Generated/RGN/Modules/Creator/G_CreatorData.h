@@ -15,16 +15,18 @@ struct G_CreatorData {
         godot::Array g_target_unclaimedCurrencies;
         for (const auto& source_unclaimedCurrencies_item : source.unclaimedCurrencies) {
             godot::Dictionary g_source_unclaimedCurrencies_item;
-            godot::Dictionary g_g_source_unclaimedCurrencies_item = g_source_unclaimedCurrencies_item;
+            godot::Dictionary g_g_source_unclaimedCurrencies_item;
             G_Currency::ConvertToGodotModel(source_unclaimedCurrencies_item, g_g_source_unclaimedCurrencies_item);
+            g_source_unclaimedCurrencies_item = g_g_source_unclaimedCurrencies_item;
             g_target_unclaimedCurrencies.push_back(g_source_unclaimedCurrencies_item);
         }
         target["unclaimedCurrencies"] = g_target_unclaimedCurrencies;
         godot::Array g_target_creatorSaleItems;
         for (const auto& source_creatorSaleItems_item : source.creatorSaleItems) {
             godot::Dictionary g_source_creatorSaleItems_item;
-            godot::Dictionary g_g_source_creatorSaleItems_item = g_source_creatorSaleItems_item;
+            godot::Dictionary g_g_source_creatorSaleItems_item;
             G_CreatorSaleItem::ConvertToGodotModel(source_creatorSaleItems_item, g_g_source_creatorSaleItems_item);
+            g_source_creatorSaleItems_item = g_g_source_creatorSaleItems_item;
             g_target_creatorSaleItems.push_back(g_source_creatorSaleItems_item);
         }
         target["creatorSaleItems"] = g_target_creatorSaleItems;

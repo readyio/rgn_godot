@@ -13,8 +13,9 @@ struct G_GetLeaderboardResetsResponseData {
         godot::Array g_target_resets;
         for (const auto& source_resets_item : source.resets) {
             godot::Dictionary g_source_resets_item;
-            godot::Dictionary g_g_source_resets_item = g_source_resets_item;
+            godot::Dictionary g_g_source_resets_item;
             G_LeaderboardReset::ConvertToGodotModel(source_resets_item, g_g_source_resets_item);
+            g_source_resets_item = g_g_source_resets_item;
             g_target_resets.push_back(g_source_resets_item);
         }
         target["resets"] = g_target_resets;

@@ -14,16 +14,18 @@ struct G_ClaimCurrencyResponseData {
         godot::Array g_target_unclaimedCurrencies;
         for (const auto& source_unclaimedCurrencies_item : source.unclaimedCurrencies) {
             godot::Dictionary g_source_unclaimedCurrencies_item;
-            godot::Dictionary g_g_source_unclaimedCurrencies_item = g_source_unclaimedCurrencies_item;
+            godot::Dictionary g_g_source_unclaimedCurrencies_item;
             G_Currency::ConvertToGodotModel(source_unclaimedCurrencies_item, g_g_source_unclaimedCurrencies_item);
+            g_source_unclaimedCurrencies_item = g_g_source_unclaimedCurrencies_item;
             g_target_unclaimedCurrencies.push_back(g_source_unclaimedCurrencies_item);
         }
         target["unclaimedCurrencies"] = g_target_unclaimedCurrencies;
         godot::Array g_target_currencies;
         for (const auto& source_currencies_item : source.currencies) {
             godot::Dictionary g_source_currencies_item;
-            godot::Dictionary g_g_source_currencies_item = g_source_currencies_item;
+            godot::Dictionary g_g_source_currencies_item;
             G_Currency::ConvertToGodotModel(source_currencies_item, g_g_source_currencies_item);
+            g_source_currencies_item = g_g_source_currencies_item;
             g_target_currencies.push_back(g_source_currencies_item);
         }
         target["currencies"] = g_target_currencies;

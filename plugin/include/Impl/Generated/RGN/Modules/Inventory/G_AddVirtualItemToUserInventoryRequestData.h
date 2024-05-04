@@ -16,8 +16,9 @@
 struct G_AddVirtualItemToUserInventoryRequestData {
 	static void ConvertToGodotModel(const RGN::Modules::Inventory::AddVirtualItemToUserInventoryRequestData& source, godot::Dictionary& target) {
         target["userId"] = godot::String(source.userId.c_str());
-        godot::Dictionary g_target_virtualItemInventoryData = target["virtualItemInventoryData"];
+        godot::Dictionary g_target_virtualItemInventoryData;
         G_InventoryItemData::ConvertToGodotModel(source.virtualItemInventoryData, g_target_virtualItemInventoryData);
+        target["virtualItemInventoryData"] = g_target_virtualItemInventoryData;
 		G_BaseRequestData::ConvertToGodotModel(source, target);
 	}
 

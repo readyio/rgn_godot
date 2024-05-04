@@ -19,8 +19,9 @@ struct G_TriggerAndClaimResponse {
         godot::Array g_target_rewards;
         for (const auto& source_rewards_item : source.rewards) {
             godot::Dictionary g_source_rewards_item;
-            godot::Dictionary g_g_source_rewards_item = g_source_rewards_item;
+            godot::Dictionary g_g_source_rewards_item;
             G_AchievementReward::ConvertToGodotModel(source_rewards_item, g_g_source_rewards_item);
+            g_source_rewards_item = g_g_source_rewards_item;
             g_target_rewards.push_back(g_source_rewards_item);
         }
         target["rewards"] = g_target_rewards;

@@ -13,8 +13,9 @@ struct G_GetStoreOffersResponse {
         godot::Array g_target_offers;
         for (const auto& source_offers_item : source.offers) {
             godot::Dictionary g_source_offers_item;
-            godot::Dictionary g_g_source_offers_item = g_source_offers_item;
+            godot::Dictionary g_g_source_offers_item;
             G_StoreOffer::ConvertToGodotModel(source_offers_item, g_g_source_offers_item);
+            g_source_offers_item = g_g_source_offers_item;
             g_target_offers.push_back(g_source_offers_item);
         }
         target["offers"] = g_target_offers;

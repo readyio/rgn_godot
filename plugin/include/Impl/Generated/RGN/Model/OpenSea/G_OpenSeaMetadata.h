@@ -25,8 +25,9 @@ struct G_OpenSeaMetadata {
         godot::Array g_target_attributes;
         for (const auto& source_attributes_item : source.attributes) {
             godot::Dictionary g_source_attributes_item;
-            godot::Dictionary g_g_source_attributes_item = g_source_attributes_item;
+            godot::Dictionary g_g_source_attributes_item;
             G_OpenSeaAttribute::ConvertToGodotModel(source_attributes_item, g_g_source_attributes_item);
+            g_source_attributes_item = g_g_source_attributes_item;
             g_target_attributes.push_back(g_source_attributes_item);
         }
         target["attributes"] = g_target_attributes;

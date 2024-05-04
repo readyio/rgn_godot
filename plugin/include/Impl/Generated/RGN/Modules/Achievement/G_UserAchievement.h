@@ -24,8 +24,9 @@ struct G_UserAchievement {
         godot::Array g_target_history;
         for (const auto& source_history_item : source.history) {
             godot::Dictionary g_source_history_item;
-            godot::Dictionary g_g_source_history_item = g_source_history_item;
+            godot::Dictionary g_g_source_history_item;
             G_CompletedAchievementHistoryEntry::ConvertToGodotModel(source_history_item, g_g_source_history_item);
+            g_source_history_item = g_g_source_history_item;
             g_target_history.push_back(g_source_history_item);
         }
         target["history"] = g_target_history;

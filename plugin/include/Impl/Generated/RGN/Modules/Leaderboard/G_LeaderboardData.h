@@ -44,8 +44,9 @@ struct G_LeaderboardData {
         godot::Array g_target_rewardsAtReset;
         for (const auto& source_rewardsAtReset_item : source.rewardsAtReset) {
             godot::Dictionary g_source_rewardsAtReset_item;
-            godot::Dictionary g_g_source_rewardsAtReset_item = g_source_rewardsAtReset_item;
+            godot::Dictionary g_g_source_rewardsAtReset_item;
             G_LeaderboardReward::ConvertToGodotModel(source_rewardsAtReset_item, g_g_source_rewardsAtReset_item);
+            g_source_rewardsAtReset_item = g_g_source_rewardsAtReset_item;
             g_target_rewardsAtReset.push_back(g_source_rewardsAtReset_item);
         }
         target["rewardsAtReset"] = g_target_rewardsAtReset;
@@ -54,16 +55,19 @@ struct G_LeaderboardData {
         target["updatedAt"] = source.updatedAt;
         target["createdBy"] = godot::String(source.createdBy.c_str());
         target["updatedBy"] = godot::String(source.updatedBy.c_str());
-        godot::Dictionary g_target_time = target["time"];
+        godot::Dictionary g_target_time;
         G_TimeInfo::ConvertToGodotModel(source.time, g_target_time);
-        godot::Dictionary g_target_requiredToJoin = target["requiredToJoin"];
+        target["time"] = g_target_time;
+        godot::Dictionary g_target_requiredToJoin;
         G_RequirementData::ConvertToGodotModel(source.requiredToJoin, g_target_requiredToJoin);
+        target["requiredToJoin"] = g_target_requiredToJoin;
         target["autoClaim"] = source.autoClaim;
         godot::Array g_target_participationFees;
         for (const auto& source_participationFees_item : source.participationFees) {
             godot::Dictionary g_source_participationFees_item;
-            godot::Dictionary g_g_source_participationFees_item = g_source_participationFees_item;
+            godot::Dictionary g_g_source_participationFees_item;
             G_ParticipationFee::ConvertToGodotModel(source_participationFees_item, g_g_source_participationFees_item);
+            g_source_participationFees_item = g_g_source_participationFees_item;
             g_target_participationFees.push_back(g_source_participationFees_item);
         }
         target["participationFees"] = g_target_participationFees;

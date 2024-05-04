@@ -15,16 +15,18 @@ struct G_GetAchievementsWithUserDataResponse {
         godot::Array g_target_achievements;
         for (const auto& source_achievements_item : source.achievements) {
             godot::Dictionary g_source_achievements_item;
-            godot::Dictionary g_g_source_achievements_item = g_source_achievements_item;
+            godot::Dictionary g_g_source_achievements_item;
             G_AchievementWithUserData::ConvertToGodotModel(source_achievements_item, g_g_source_achievements_item);
+            g_source_achievements_item = g_g_source_achievements_item;
             g_target_achievements.push_back(g_source_achievements_item);
         }
         target["achievements"] = g_target_achievements;
         godot::Array g_target_userAchievements;
         for (const auto& source_userAchievements_item : source.userAchievements) {
             godot::Dictionary g_source_userAchievements_item;
-            godot::Dictionary g_g_source_userAchievements_item = g_source_userAchievements_item;
+            godot::Dictionary g_g_source_userAchievements_item;
             G_UserAchievement::ConvertToGodotModel(source_userAchievements_item, g_g_source_userAchievements_item);
+            g_source_userAchievements_item = g_g_source_userAchievements_item;
             g_target_userAchievements.push_back(g_source_userAchievements_item);
         }
         target["userAchievements"] = g_target_userAchievements;

@@ -16,16 +16,18 @@ struct G_PurchaseResult {
         godot::Array g_target_items;
         for (const auto& source_items_item : source.items) {
             godot::Dictionary g_source_items_item;
-            godot::Dictionary g_g_source_items_item = g_source_items_item;
+            godot::Dictionary g_g_source_items_item;
             G_InventoryItemData::ConvertToGodotModel(source_items_item, g_g_source_items_item);
+            g_source_items_item = g_g_source_items_item;
             g_target_items.push_back(g_source_items_item);
         }
         target["items"] = g_target_items;
         godot::Array g_target_updatedCurrencies;
         for (const auto& source_updatedCurrencies_item : source.updatedCurrencies) {
             godot::Dictionary g_source_updatedCurrencies_item;
-            godot::Dictionary g_g_source_updatedCurrencies_item = g_source_updatedCurrencies_item;
+            godot::Dictionary g_g_source_updatedCurrencies_item;
             G_Currency::ConvertToGodotModel(source_updatedCurrencies_item, g_g_source_updatedCurrencies_item);
+            g_source_updatedCurrencies_item = g_g_source_updatedCurrencies_item;
             g_target_updatedCurrencies.push_back(g_source_updatedCurrencies_item);
         }
         target["updatedCurrencies"] = g_target_updatedCurrencies;

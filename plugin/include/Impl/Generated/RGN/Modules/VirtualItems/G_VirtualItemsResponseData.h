@@ -13,8 +13,9 @@ struct G_VirtualItemsResponseData {
         godot::Array g_target_virtualItems;
         for (const auto& source_virtualItems_item : source.virtualItems) {
             godot::Dictionary g_source_virtualItems_item;
-            godot::Dictionary g_g_source_virtualItems_item = g_source_virtualItems_item;
+            godot::Dictionary g_g_source_virtualItems_item;
             G_VirtualItem::ConvertToGodotModel(source_virtualItems_item, g_g_source_virtualItems_item);
+            g_source_virtualItems_item = g_g_source_virtualItems_item;
             g_target_virtualItems.push_back(g_source_virtualItems_item);
         }
         target["virtualItems"] = g_target_virtualItems;

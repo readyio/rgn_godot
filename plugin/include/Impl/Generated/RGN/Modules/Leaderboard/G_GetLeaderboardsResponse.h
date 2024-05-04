@@ -13,8 +13,9 @@ struct G_GetLeaderboardsResponse {
         godot::Array g_target_leaderboards;
         for (const auto& source_leaderboards_item : source.leaderboards) {
             godot::Dictionary g_source_leaderboards_item;
-            godot::Dictionary g_g_source_leaderboards_item = g_source_leaderboards_item;
+            godot::Dictionary g_g_source_leaderboards_item;
             G_LeaderboardData::ConvertToGodotModel(source_leaderboards_item, g_g_source_leaderboards_item);
+            g_source_leaderboards_item = g_g_source_leaderboards_item;
             g_target_leaderboards.push_back(g_source_leaderboards_item);
         }
         target["leaderboards"] = g_target_leaderboards;

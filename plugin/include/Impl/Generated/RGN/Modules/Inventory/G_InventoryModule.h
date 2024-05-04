@@ -91,8 +91,9 @@ public:
                 [onSuccess](RGN::Modules::Inventory::AddToInventoryResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_AddToInventoryResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -129,8 +130,9 @@ public:
                 [onSuccess](RGN::Modules::Inventory::AddToInventoryResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_AddToInventoryResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -160,8 +162,9 @@ public:
                 [onSuccess](RGN::Modules::Inventory::AddToInventoryResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_AddToInventoryResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -194,8 +197,9 @@ public:
                 [onSuccess](RGN::Modules::Inventory::RemoveByVirtualItemIdResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_RemoveByVirtualItemIdResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -229,8 +233,9 @@ public:
                 [onSuccess](RGN::Modules::Inventory::RemoveByOwnedIdResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_RemoveByOwnedIdResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -312,8 +317,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_UpgradesResponseData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -360,8 +366,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_VirtualItemUpgrade::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -391,8 +398,9 @@ public:
                 [onSuccess](RGN::Modules::Inventory::InventoryItemData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_InventoryItemData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -425,8 +433,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -462,8 +471,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -489,8 +499,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -524,8 +535,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -559,8 +571,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -605,8 +618,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -670,8 +684,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_InventoryItemData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;

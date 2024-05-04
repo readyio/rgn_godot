@@ -84,8 +84,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::LeaderboardData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_LeaderboardData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -109,8 +110,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::LeaderboardData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_LeaderboardData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -143,8 +145,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_LeaderboardData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -192,8 +195,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_LeaderboardData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -244,8 +248,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_LeaderboardData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -286,8 +291,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_LeaderboardData::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -346,8 +352,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::IsLeaderboardAvailableResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_IsLeaderboardAvailableResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -371,8 +378,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::IsInPromoPeriodResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_IsInPromoPeriodResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -396,8 +404,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::IsInGracePeriodResponseData response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_IsInGracePeriodResponseData::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -489,8 +498,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::LeaderboardEntry response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_LeaderboardEntry::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },
@@ -529,8 +539,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_LeaderboardEntry::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -579,8 +590,9 @@ public:
                     godot::Array g_gResponse;
                     for (const auto& response_item : response) {
                         godot::Dictionary g_response_item;
-                        godot::Dictionary g_g_response_item = g_response_item;
+                        godot::Dictionary g_g_response_item;
                         G_LeaderboardReset::ConvertToGodotModel(response_item, g_g_response_item);
+                        g_response_item = g_g_response_item;
                         g_gResponse.push_back(g_response_item);
                     }
                     gResponse = g_gResponse;
@@ -627,8 +639,9 @@ public:
                 [onSuccess](RGN::Modules::Leaderboard::LeaderboardReset response) {
                     godot::Array gArgs;
                     godot::Dictionary gResponse;
-                    godot::Dictionary g_gResponse = gResponse;
+                    godot::Dictionary g_gResponse;
                     G_LeaderboardReset::ConvertToGodotModel(response, g_gResponse);
+                    gResponse = g_gResponse;
                     gArgs.push_back(gResponse);
                     EXECUTE_GCALLBACK_DEFVAL(onSuccess, gArgs);
                 },

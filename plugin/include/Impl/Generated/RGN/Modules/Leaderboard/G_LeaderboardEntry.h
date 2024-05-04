@@ -16,8 +16,9 @@ struct G_LeaderboardEntry {
 	static void ConvertToGodotModel(const RGN::Modules::Leaderboard::LeaderboardEntry& source, godot::Dictionary& target) {
         target["userId"] = godot::String(source.userId.c_str());
         target["displayName"] = godot::String(source.displayName.c_str());
-        godot::Dictionary g_target_profilePicture = target["profilePicture"];
+        godot::Dictionary g_target_profilePicture;
         G_UserProfilePicture::ConvertToGodotModel(source.profilePicture, g_target_profilePicture);
+        target["profilePicture"] = g_target_profilePicture;
         target["score"] = source.score;
         target["formattedScore"] = godot::String(source.formattedScore.c_str());
         target["place"] = source.place;

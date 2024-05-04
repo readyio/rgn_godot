@@ -15,16 +15,18 @@ struct G_CurrencyProductsData {
         godot::Array g_target_products;
         for (const auto& source_products_item : source.products) {
             godot::Dictionary g_source_products_item;
-            godot::Dictionary g_g_source_products_item = g_source_products_item;
+            godot::Dictionary g_g_source_products_item;
             G_CurrencyProduct::ConvertToGodotModel(source_products_item, g_g_source_products_item);
+            g_source_products_item = g_g_source_products_item;
             g_target_products.push_back(g_source_products_item);
         }
         target["products"] = g_target_products;
         godot::Array g_target_offers;
         for (const auto& source_offers_item : source.offers) {
             godot::Dictionary g_source_offers_item;
-            godot::Dictionary g_g_source_offers_item = g_source_offers_item;
+            godot::Dictionary g_g_source_offers_item;
             G_CurrencyOffer::ConvertToGodotModel(source_offers_item, g_g_source_offers_item);
+            g_source_offers_item = g_g_source_offers_item;
             g_target_offers.push_back(g_source_offers_item);
         }
         target["offers"] = g_target_offers;

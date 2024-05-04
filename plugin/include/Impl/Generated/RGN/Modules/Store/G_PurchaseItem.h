@@ -12,10 +12,12 @@
 
 struct G_PurchaseItem {
 	static void ConvertToGodotModel(const RGN::Modules::Store::PurchaseItem& source, godot::Dictionary& target) {
-        godot::Dictionary g_target_virtualItem = target["virtualItem"];
+        godot::Dictionary g_target_virtualItem;
         G_VirtualItem::ConvertToGodotModel(source.virtualItem, g_target_virtualItem);
-        godot::Dictionary g_target_inventoryItem = target["inventoryItem"];
+        target["virtualItem"] = g_target_virtualItem;
+        godot::Dictionary g_target_inventoryItem;
         G_InventoryItemData::ConvertToGodotModel(source.inventoryItem, g_target_inventoryItem);
+        target["inventoryItem"] = g_target_inventoryItem;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Store::PurchaseItem& target) {

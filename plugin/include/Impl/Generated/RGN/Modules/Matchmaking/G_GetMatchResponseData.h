@@ -10,8 +10,9 @@
 
 struct G_GetMatchResponseData {
 	static void ConvertToGodotModel(const RGN::Modules::Matchmaking::GetMatchResponseData& source, godot::Dictionary& target) {
-        godot::Dictionary g_target_match = target["match"];
+        godot::Dictionary g_target_match;
         G_MatchmakingData::ConvertToGodotModel(source.match, g_target_match);
+        target["match"] = g_target_match;
 	}
 
 	static void ConvertToCoreModel(const godot::Dictionary& source, RGN::Modules::Matchmaking::GetMatchResponseData& target) {

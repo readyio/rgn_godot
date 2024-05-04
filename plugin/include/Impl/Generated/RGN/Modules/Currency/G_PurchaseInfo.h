@@ -13,8 +13,9 @@ struct G_PurchaseInfo {
         godot::Array g_target_cost;
         for (const auto& source_cost_item : source.cost) {
             godot::Dictionary g_source_cost_item;
-            godot::Dictionary g_g_source_cost_item = g_source_cost_item;
+            godot::Dictionary g_g_source_cost_item;
             G_Currency::ConvertToGodotModel(source_cost_item, g_g_source_cost_item);
+            g_source_cost_item = g_g_source_cost_item;
             g_target_cost.push_back(g_source_cost_item);
         }
         target["cost"] = g_target_cost;

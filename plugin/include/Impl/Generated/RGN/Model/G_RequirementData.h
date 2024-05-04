@@ -17,8 +17,9 @@ struct G_RequirementData {
         godot::Array g_target_requirements;
         for (const auto& source_requirements_item : source.requirements) {
             godot::Dictionary g_source_requirements_item;
-            godot::Dictionary g_g_source_requirements_item = g_source_requirements_item;
+            godot::Dictionary g_g_source_requirements_item;
             G_Requirement::ConvertToGodotModel(source_requirements_item, g_g_source_requirements_item);
+            g_source_requirements_item = g_g_source_requirements_item;
             g_target_requirements.push_back(g_source_requirements_item);
         }
         target["requirements"] = g_target_requirements;

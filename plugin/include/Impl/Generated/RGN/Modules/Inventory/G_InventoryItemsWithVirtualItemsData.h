@@ -15,16 +15,18 @@ struct G_InventoryItemsWithVirtualItemsData {
         godot::Array g_target_items;
         for (const auto& source_items_item : source.items) {
             godot::Dictionary g_source_items_item;
-            godot::Dictionary g_g_source_items_item = g_source_items_item;
+            godot::Dictionary g_g_source_items_item;
             G_InventoryItemData::ConvertToGodotModel(source_items_item, g_g_source_items_item);
+            g_source_items_item = g_g_source_items_item;
             g_target_items.push_back(g_source_items_item);
         }
         target["items"] = g_target_items;
         godot::Array g_target_virtualItems;
         for (const auto& source_virtualItems_item : source.virtualItems) {
             godot::Dictionary g_source_virtualItems_item;
-            godot::Dictionary g_g_source_virtualItems_item = g_source_virtualItems_item;
+            godot::Dictionary g_g_source_virtualItems_item;
             G_VirtualItem::ConvertToGodotModel(source_virtualItems_item, g_g_source_virtualItems_item);
+            g_source_virtualItems_item = g_g_source_virtualItems_item;
             g_target_virtualItems.push_back(g_source_virtualItems_item);
         }
         target["virtualItems"] = g_target_virtualItems;

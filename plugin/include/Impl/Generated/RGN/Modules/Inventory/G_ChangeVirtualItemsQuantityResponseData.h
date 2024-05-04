@@ -15,8 +15,9 @@ struct G_ChangeVirtualItemsQuantityResponseData {
         godot::Array g_target_updatedItems;
         for (const auto& source_updatedItems_item : source.updatedItems) {
             godot::Dictionary g_source_updatedItems_item;
-            godot::Dictionary g_g_source_updatedItems_item = g_source_updatedItems_item;
+            godot::Dictionary g_g_source_updatedItems_item;
             G_VirtualItem::ConvertToGodotModel(source_updatedItems_item, g_g_source_updatedItems_item);
+            g_source_updatedItems_item = g_g_source_updatedItems_item;
             g_target_updatedItems.push_back(g_source_updatedItems_item);
         }
         target["updatedItems"] = g_target_updatedItems;
