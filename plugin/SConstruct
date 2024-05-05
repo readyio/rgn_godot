@@ -18,12 +18,12 @@ version = int(ARGUMENTS.pop("version", 4))
 env = SConscript("godot-cpp/SConstruct")
 
 # Used for the arch cross the 3 and 4 godot version
-acrh = ""
+arch = ""
 dlib_suffix = ""
 
 # Pass the version
 if version == 4:
-    acrh = "." + env["arch"]
+    arch = env["arch"]
     dlib_suffix = env["SHLIBSUFFIX"]
     env.Append(CPPDEFINES=[("GODOT4", 1)])
 elif version == 3:
@@ -47,7 +47,7 @@ env.Append(CPPPATH=["include"])
 sources = GlobRecursive("*.cpp", node="src")
 
 # Create shared library
-output_name = "rgn.{}.{}{}{}".format(env["platform"], env["target"], acrh, dlib_suffix)
+output_name = "rgn.{}.{}.{}{}".format(env["platform"], env["target"], arch, dlib_suffix)
 if env["platform"] == "android":
     output_name = "lib" + output_name  # Append "lib" for Android platform
 library = env.SharedLibrary(
