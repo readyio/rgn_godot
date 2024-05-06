@@ -26,7 +26,7 @@ To add this plugin to your project, follow these steps:
 1. Download a release compatible with your version of Godot.
 2. Copy the `addons/rgn` folder to your project.
 3. Add `core.gdns` as an autoload singleton to your project settings with the name `RGNCore`.
-4. For Android support, copy `android/plugins/rgn.aar` and `android/plugins/rgn.gdap` to your project, and enable the plugin in export settings.
+4. For Android support, copy `android/plugins/rgn.aar` and `android/plugins/rgn.gdap` to your project, and enable the plugin in export settings. Also, don't forget to enable Internet permission in the Android Export settings.
 5. For iOS support, copy the `ios/plugin/rgn` folder to your project, and enable the plugin in export settings.
 
 ## Building the Plugin
