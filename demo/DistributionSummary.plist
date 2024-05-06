@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>demo.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1.0</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>80B758F5C823B73CB2768CC66456AA6C19FCEBDD</string>
+				<key>dateExpires</key>
+				<string>30.10.2024</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>1</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>80B758F5C823B73CB2768CC66456AA6C19FCEBDD</string>
+						<key>dateExpires</key>
+						<string>30.10.2024</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>librgn.ios.template_debug.universal.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>Z78F9UJQBJ</string>
+						<key>name</key>
+						<string></string>
+					</dict>
+					<key>versionNumber</key>
+					<string>1.0</string>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>Z78F9UJQBJ.io.getready.rgntest</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>Z78F9UJQBJ</string>
+				<key>get-task-allow</key>
+				<true/>
+			</dict>
+			<key>name</key>
+			<string>demo.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>698a9819-fcc6-417f-a4a0-51962ffdd6d7</string>
+				<key>dateExpires</key>
+				<string>07.12.2024</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: io.getready.rgntest</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>Z78F9UJQBJ</string>
+				<key>name</key>
+				<string></string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>

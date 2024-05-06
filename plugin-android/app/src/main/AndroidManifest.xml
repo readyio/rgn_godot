@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.getready.android">
+
+    <application>
+        <activity
+            android:name=".READYggWebview"
+            android:exported="false" />
+        <meta-data
+            android:name="org.godotengine.plugin.v1.READYggWebview"
+            android:value="io.getready.android.READYggPlugin" />
+    </application>
+
+</manifest>

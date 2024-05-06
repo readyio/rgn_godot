@@ -1,0 +1,10 @@
+*.obj
+.sconsign.dblite
+*.os
+*.o
+*.d
+/.vscode
+/plugin/bin/*
+/plugin/vc140.pdb
+/plugin-ios/bin/**/*.a
+/plugin-ios/bin/**/*.plist

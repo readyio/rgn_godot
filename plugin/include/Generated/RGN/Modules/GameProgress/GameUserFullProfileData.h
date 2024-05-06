@@ -1,0 +1,131 @@
+#pragma once
+// This file is generated: please don't modify. Go to Unity code generator if you need changes.
+#include "../../../../json.hpp"
+#include "../UserProfile/UserProfileData.h"
+#include <string>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+namespace RGN { namespace Modules { namespace GameProgress {
+    struct GameUserFullProfileData : public RGN::Modules::UserProfile::UserProfileData {
+        int32_t readyWins = 0;
+        int32_t readyLosses = 0;
+        int32_t readyDraws = 0;
+        int32_t readyTrophies = 0;
+        int32_t readyAchievements = 0;
+        int32_t previousThreshold = 0;
+        int32_t nextThreshold = 0;
+
+        friend void to_json(nlohmann::json& nlohmann_json_j, const GameUserFullProfileData& nlohmann_json_t) {
+            nlohmann_json_j["lastAppPackageName"] = nlohmann_json_t.lastAppPackageName;
+            nlohmann_json_j["invisibleStatus"] = nlohmann_json_t.invisibleStatus;
+            nlohmann_json_j["currencies"] = nlohmann_json_t.currencies;
+            nlohmann_json_j["userId"] = nlohmann_json_t.userId;
+            nlohmann_json_j["email"] = nlohmann_json_t.email;
+            nlohmann_json_j["displayName"] = nlohmann_json_t.displayName;
+            nlohmann_json_j["profilePicture"] = nlohmann_json_t.profilePicture;
+            nlohmann_json_j["bio"] = nlohmann_json_t.bio;
+            nlohmann_json_j["readyWins"] = nlohmann_json_t.readyWins;
+            nlohmann_json_j["readyLosses"] = nlohmann_json_t.readyLosses;
+            nlohmann_json_j["readyDraws"] = nlohmann_json_t.readyDraws;
+            nlohmann_json_j["readyTrophies"] = nlohmann_json_t.readyTrophies;
+            nlohmann_json_j["readyAchievements"] = nlohmann_json_t.readyAchievements;
+            nlohmann_json_j["previousThreshold"] = nlohmann_json_t.previousThreshold;
+            nlohmann_json_j["nextThreshold"] = nlohmann_json_t.nextThreshold;
+        }
+
+        friend void from_json(const nlohmann::json& nlohmann_json_j, GameUserFullProfileData& nlohmann_json_t) {
+            if (nlohmann_json_j.contains("lastAppPackageName")) {
+                auto json_lastAppPackageName = nlohmann_json_j.at("lastAppPackageName");
+                if (!json_lastAppPackageName.is_null() && json_lastAppPackageName.is_string()) {
+                    json_lastAppPackageName.get_to(nlohmann_json_t.lastAppPackageName);
+                }
+            }
+            if (nlohmann_json_j.contains("invisibleStatus")) {
+                auto json_invisibleStatus = nlohmann_json_j.at("invisibleStatus");
+                if (!json_invisibleStatus.is_null() && json_invisibleStatus.is_boolean()) {
+                    json_invisibleStatus.get_to(nlohmann_json_t.invisibleStatus);
+                }
+            }
+            if (nlohmann_json_j.contains("currencies")) {
+                auto json_currencies = nlohmann_json_j.at("currencies");
+                if (!json_currencies.is_null() && json_currencies.is_array()) {
+                    json_currencies.get_to(nlohmann_json_t.currencies);
+                }
+            }
+            if (nlohmann_json_j.contains("userId")) {
+                auto json_userId = nlohmann_json_j.at("userId");
+                if (!json_userId.is_null() && json_userId.is_string()) {
+                    json_userId.get_to(nlohmann_json_t.userId);
+                }
+            }
+            if (nlohmann_json_j.contains("email")) {
+                auto json_email = nlohmann_json_j.at("email");
+                if (!json_email.is_null() && json_email.is_string()) {
+                    json_email.get_to(nlohmann_json_t.email);
+                }
+            }
+            if (nlohmann_json_j.contains("displayName")) {
+                auto json_displayName = nlohmann_json_j.at("displayName");
+                if (!json_displayName.is_null() && json_displayName.is_string()) {
+                    json_displayName.get_to(nlohmann_json_t.displayName);
+                }
+            }
+            if (nlohmann_json_j.contains("profilePicture")) {
+                auto json_profilePicture = nlohmann_json_j.at("profilePicture");
+                if (!json_profilePicture.is_null()) {
+                    json_profilePicture.get_to(nlohmann_json_t.profilePicture);
+                }
+            }
+            if (nlohmann_json_j.contains("bio")) {
+                auto json_bio = nlohmann_json_j.at("bio");
+                if (!json_bio.is_null() && json_bio.is_string()) {
+                    json_bio.get_to(nlohmann_json_t.bio);
+                }
+            }
+            if (nlohmann_json_j.contains("readyWins")) {
+                auto json_readyWins = nlohmann_json_j.at("readyWins");
+                if (!json_readyWins.is_null() && json_readyWins.is_number()) {
+                    json_readyWins.get_to(nlohmann_json_t.readyWins);
+                }
+            }
+            if (nlohmann_json_j.contains("readyLosses")) {
+                auto json_readyLosses = nlohmann_json_j.at("readyLosses");
+                if (!json_readyLosses.is_null() && json_readyLosses.is_number()) {
+                    json_readyLosses.get_to(nlohmann_json_t.readyLosses);
+                }
+            }
+            if (nlohmann_json_j.contains("readyDraws")) {
+                auto json_readyDraws = nlohmann_json_j.at("readyDraws");
+                if (!json_readyDraws.is_null() && json_readyDraws.is_number()) {
+                    json_readyDraws.get_to(nlohmann_json_t.readyDraws);
+                }
+            }
+            if (nlohmann_json_j.contains("readyTrophies")) {
+                auto json_readyTrophies = nlohmann_json_j.at("readyTrophies");
+                if (!json_readyTrophies.is_null() && json_readyTrophies.is_number()) {
+                    json_readyTrophies.get_to(nlohmann_json_t.readyTrophies);
+                }
+            }
+            if (nlohmann_json_j.contains("readyAchievements")) {
+                auto json_readyAchievements = nlohmann_json_j.at("readyAchievements");
+                if (!json_readyAchievements.is_null() && json_readyAchievements.is_number()) {
+                    json_readyAchievements.get_to(nlohmann_json_t.readyAchievements);
+                }
+            }
+            if (nlohmann_json_j.contains("previousThreshold")) {
+                auto json_previousThreshold = nlohmann_json_j.at("previousThreshold");
+                if (!json_previousThreshold.is_null() && json_previousThreshold.is_number()) {
+                    json_previousThreshold.get_to(nlohmann_json_t.previousThreshold);
+                }
+            }
+            if (nlohmann_json_j.contains("nextThreshold")) {
+                auto json_nextThreshold = nlohmann_json_j.at("nextThreshold");
+                if (!json_nextThreshold.is_null() && json_nextThreshold.is_number()) {
+                    json_nextThreshold.get_to(nlohmann_json_t.nextThreshold);
+                }
+            }
+        }
+    };
+}}}
