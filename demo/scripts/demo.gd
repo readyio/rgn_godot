@@ -31,7 +31,7 @@ func _initReady():
 	)
 	RGNCore.bindAuthChangeCallback(_onAuthChange)
 
-func _onAuthChange(isLoggedIn:):
+func _onAuthChange(isLoggedIn):
 	if (!isLoggedIn):
 		_hideAllPanels()
 		signInPanel.show_panel()

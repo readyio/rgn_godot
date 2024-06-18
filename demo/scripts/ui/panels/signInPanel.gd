@@ -6,18 +6,19 @@ extends Node
 func _ready():
 	signInButton.connect("pressed", _onSignInButtonPressed)
 	guestSignInButton.connect("pressed", _onGuestSignInButtonPressed)
+	RGNCore.bindAuthChangeCallback(_onSignInEvent)
 
 func _onSignInButtonPressed():
 	_getLoadingPanelNode().show_panel()
-	RGNCore.signIn(_onSignIn)
+	RGNCore.signIn()
 
 func _onGuestSignInButtonPressed():
 	_getLoadingPanelNode().show_panel()
-	RGNCore.signInAnonymously(_onSignIn)
+	RGNCore.signInAnonymously()
 
-func _onSignIn(isLoggedIn: bool):
+func _onSignInEvent(isLoggedIn):
 	_getLoadingPanelNode().hide_panel()
-	if (isLoggedIn):
+	if (RGNCore.isLoggedIn()):
 		hide_panel()
 		_getHomePanelNode().show_panel()
 
