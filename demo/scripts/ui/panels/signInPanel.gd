@@ -6,16 +6,17 @@ onready var guestSignInButton: Button = $"PanelContainer/VBoxContainer/ButtonGue
 func _ready():
 	signInButton.connect("pressed", self, "_onSignInButtonPressed")
 	guestSignInButton.connect("pressed", self, "_onGuestSignInButtonPressed")
+	RGNCore.bindAuthChangeCallback(funcref(self, "_onSignInEvent"))
 
 func _onSignInButtonPressed():
 	_getLoadingPanelNode().show_panel()
-	RGNCore.signIn(funcref(self, "_onSignIn"))
+	RGNCore.signIn()
 
 func _onGuestSignInButtonPressed():
 	_getLoadingPanelNode().show_panel()
-	RGNCore.signInAnonymously(funcref(self, "_onSignIn"))
+	RGNCore.signInAnonymously()
 
-func _onSignIn(isLoggedIn: bool):
+func _onSignInEvent(isLoggedIn: bool):
 	_getLoadingPanelNode().hide_panel()
 	if (isLoggedIn):
 		hide_panel()
