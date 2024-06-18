@@ -3,13 +3,16 @@
 #include "RGNEnvironmentTarget.h"
 #include <string>
 
+using namespace std;
+
 namespace RGN {
     struct RGNConfigureData {
-        std::string appId;
-        std::string apiKey;
+        string appId;
+        string apiKey;
         RGNEnvironmentTarget environmentTarget;
+        bool autoGuestLogin;
         bool useFunctionsEmulator;
-        std::string emulatorHost;
-        std::string emulatorPort;
+        string emulatorHost;
+        string emulatorPort;
     };
 }

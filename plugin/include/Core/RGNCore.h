@@ -2,8 +2,8 @@
 
 #include "RGNConfigureData.h"
 #include "RGNEnvironmentTarget.h"
-#include "Utility/CancellationToken.h"
-#include "json.hpp"
+#include "../Utility/CancellationToken.h"
+#include "../json.hpp"
 
 namespace RGN {
     class RGNCore {
@@ -15,7 +15,7 @@ namespace RGN {
         static std::string _emulatorHostAndPort;
 
     public:
-        static void Initialize(RGNConfigureData configureData);
+        static void Initialize(RGNConfigureData configureData, std::function<void()> onInitialize);
         static void SetEmulator(bool useEmulator, std::string endpoint);
         static void Update();
         static void InternalCallAPI(const std::string& name, const std::string& body,
@@ -156,4 +156,4 @@ namespace RGN {
             CallAPI<TRequestBody>(name, body, complete, fail, computeHmac, CancellationToken());
         }
     };
-}   
+}

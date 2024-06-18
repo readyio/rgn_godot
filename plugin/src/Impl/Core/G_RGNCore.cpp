@@ -55,7 +55,7 @@ REG_GCLASS_METHODS_SOURCE(G_RGNCore) {
 	BIND_GCLASS_METHOD(G_RGNCore::update, GCLASS_METHOD_SIGNATURE("update"));
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::bindAuthChangeCallback, GCLASS_METHOD_SIGNATURE("bindAuthChangeCallback", "callback"), GCALLBACK_DEFVAL);
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::unbindAuthChangeCallback, GCLASS_METHOD_SIGNATURE("unbindAuthChangeCallback", "callback"), GCALLBACK_DEFVAL);
-	BIND_GCLASS_METHOD(G_RGNCore::signIn, GCLASS_METHOD_SIGNATURE("signIn", "callback"));
+	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::signIn, GCLASS_METHOD_SIGNATURE("signIn", "callback"), GCALLBACK_DEFVAL);
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::signInAnonymously, GCLASS_METHOD_SIGNATURE("signInAnonymously", "callback"), GCALLBACK_DEFVAL);
 	BIND_GCLASS_METHOD(G_RGNCore::signOut, GCLASS_METHOD_SIGNATURE("signOut"));
 	BIND_GCLASS_METHOD_DEFVAL(G_RGNCore::createWallet, GCLASS_METHOD_SIGNATURE("createWallet", "callback"), GCALLBACK_DEFVAL);
@@ -97,6 +97,7 @@ void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_
 		configureData.appId = std::string(configure_data->getAppId().utf8().get_data());
 		configureData.apiKey = std::string(configure_data->getApiKey().utf8().get_data());
 		configureData.environmentTarget = static_cast<RGN::RGNEnvironmentTarget>(configure_data->getEnvironmentTarget());
+		configureData.autoGuestLogin = configure_data->getAutoGuestLogin();
 		configureData.useFunctionsEmulator = configure_data->getUseFunctionsEmulator();
 		configureData.emulatorHost = std::string(configure_data->getEmulatorHost().utf8().get_data());
 		configureData.emulatorPort = std::string(configure_data->getEmulatorPort().utf8().get_data());
@@ -110,18 +111,11 @@ void G_RGNCore::initialize(godot::Node* node, G_RGNConfigurationData* configure_
 			}
         }
     });
-	RGN::RGNCore::Initialize(configureData);
-	if (configure_data->getAutoGuestLogin() && !isLoggedIn()) {
-        RGN::RGNAuth::SignInAnonymously([on_initialize](bool isLoggedIn) {
-			if (on_initialize.is_valid()) {
-				EXECUTE_GCALLBACK_DEFVAL(on_initialize, godot::Array());
-			}
-        });
-    } else {
+    RGN::RGNCore::Initialize(configureData,[on_initialize]() {
 		if (on_initialize.is_valid()) {
 			EXECUTE_GCALLBACK_DEFVAL(on_initialize, godot::Array());
 		}
-    }
+    });
 #ifdef GODOT4
 	// Observer events when the app is focused/unfocused to properly handle cancel of webform process
 	if (_node != nullptr) {

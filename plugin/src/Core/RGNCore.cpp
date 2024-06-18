@@ -8,7 +8,6 @@
 #include "Http/Http.h"
 #include "Crypto/hmac.h"
 #include "Crypto/sha256.h"
-#include "Utility/Logger.h"
 
 namespace RGN {
     std::string RGNCore::_appId;
@@ -17,19 +16,30 @@ namespace RGN {
     bool RGNCore::_useFunctionsEmulator;
     std::string RGNCore::_emulatorHostAndPort;
 
-    void RGNCore::Initialize(RGNConfigureData configureData) {
+    void RGNCore::Initialize(RGNConfigureData configureData, std::function<void()> onInitialize) {
         _appId = configureData.appId;
         _apiKey = configureData.apiKey;
         _environmentTarget = configureData.environmentTarget;
         _useFunctionsEmulator = configureData.useFunctionsEmulator;
         _emulatorHostAndPort = configureData.emulatorHost + ":" + configureData.emulatorPort;
 
-        RGNAuth::Initialize();
+        RGNAuth::Initialize(configureData.autoGuestLogin);
         DeepLink::Initialize();
         DeepLink::Start();
         WebForm::Initialize();
 
-        Utility::Logger::Debug("READYgg SDK initialized. AppId: " + _appId + ", Environment: " + GetEnvironmentTargetName(_environmentTarget));
+        if (configureData.autoGuestLogin && !RGNAuth::IsLoggedIn()) {
+            RGN::RGNAuth::SignInAnonymously([onInitialize](bool isLoggedIn) {
+                if (onInitialize) {
+                    onInitialize();
+                }
+            });
+        }
+        else {
+            if (onInitialize) {
+                onInitialize();
+            }
+        }
     }
 
     void RGNCore::SetEmulator(bool useEmulator, std::string endpoint) {
@@ -133,14 +143,12 @@ namespace RGN {
 
     std::string RGNCore::GetApiProjectId() {
         switch (_environmentTarget) {
-            case RGNEnvironmentTarget::NONE:
-                return "";
-            case RGNEnvironmentTarget::DEVELOPMENT:
-                return "readymaster-development";
-            case RGNEnvironmentTarget::STAGING:
-                return "readysandbox";
-            case RGNEnvironmentTarget::PRODUCTION:
-                return "readymaster-2b268";
+        case RGNEnvironmentTarget::DEVELOPMENT:
+            return "readymaster-development";
+        case RGNEnvironmentTarget::STAGING:
+            return "readysandbox";
+        case RGNEnvironmentTarget::PRODUCTION:
+            return "readymaster-2b268";
         }
         return "";
     }
@@ -154,29 +162,25 @@ namespace RGN {
 
     std::string RGNCore::GetOAuthUrl() {
         switch (_environmentTarget) {
-            case RGNEnvironmentTarget::NONE:
-                return "";
-            case RGNEnvironmentTarget::DEVELOPMENT:
-                return "https://development-oauth.ready.gg/?url_redirect=";
-            case RGNEnvironmentTarget::STAGING:
-                return "https://staging-oauth.ready.gg/?url_redirect=";
-            case RGNEnvironmentTarget::PRODUCTION:
-                return "https://oauth.ready.gg/?url_redirect=";
-            }
+        case RGNEnvironmentTarget::DEVELOPMENT:
+            return "https://development-oauth.ready.gg/?url_redirect=";
+        case RGNEnvironmentTarget::STAGING:
+            return "https://staging-oauth.ready.gg/?url_redirect=";
+        case RGNEnvironmentTarget::PRODUCTION:
+            return "https://oauth.ready.gg/?url_redirect=";
+        }
         return "";
     }
 
     std::string RGNCore::GetStorageBucket() {
         switch (_environmentTarget) {
-            case RGNEnvironmentTarget::NONE:
-                return "";
-            case RGNEnvironmentTarget::DEVELOPMENT:
-                return "readymaster-development";
-            case RGNEnvironmentTarget::STAGING:
-                return "readysandbox";
-            case RGNEnvironmentTarget::PRODUCTION:
-                return "readymaster-2b268";
-            }
+        case RGNEnvironmentTarget::DEVELOPMENT:
+            return "readymaster-development";
+        case RGNEnvironmentTarget::STAGING:
+            return "readysandbox";
+        case RGNEnvironmentTarget::PRODUCTION:
+            return "readymaster-2b268";
+        }
         return "";
     }
 
