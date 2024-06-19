@@ -37,7 +37,7 @@ scons version=4 platform=windows target=template_debug/template_release
 
 ### macOS
 ```bash
-scons version=4 platform=osx target=template_debug/template_release
+scons version=4 platform=macos target=template_debug/template_release
 ```
 
 ### Android
