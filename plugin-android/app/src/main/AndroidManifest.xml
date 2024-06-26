@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".READYggWebview"
+            android:name=".RGNWebview"
             android:exported="false" />
         <meta-data
             android:name="org.godotengine.plugin.v1.READYggWebview"

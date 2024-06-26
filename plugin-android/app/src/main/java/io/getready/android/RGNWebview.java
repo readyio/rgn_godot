@@ -12,7 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class READYggWebview extends Activity {
+public class RGNWebview extends Activity {
 
     private static WebView webView = null;
 
@@ -30,7 +30,7 @@ public class READYggWebview extends Activity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
-                if (url.startsWith(READYggPlugin.getWebformUrlScheme())) {
+                if (url.startsWith(RGNPlugin.getWebformUrlScheme())) {
                     onWebformRedirect(url);
                     finish();
                     return true;
@@ -44,15 +44,15 @@ public class READYggWebview extends Activity {
         webViewSettings.setDomStorageEnabled(true);
 
         webView.setVisibility(View.VISIBLE);
-        webView.loadUrl(READYggPlugin.getWebformUrl());
+        webView.loadUrl(RGNPlugin.getWebformUrl());
     }
 
     private static void onWebformRedirect(String url) {
-        READYggPlugin.onWebformRedirect(url);
+        RGNPlugin.onWebformRedirect(url);
     }
 
     private static void onWebformActionCancel() {
-        READYggPlugin.onWebformRedirect("canceled");
+        RGNPlugin.onWebformRedirect("canceled");
     }
 
     @Override
