@@ -49,7 +49,7 @@ scons version=3 platform=android target=debug/release android_arch=arm64v8/armv7
 
 ### iOS
 ```bash
-scons version=3 platform=ios target=debug/release
+scons version=3 platform=ios target=debug/release ios_arch=arm64/armv7
 ```
 
 ## Building the Android Plugin
