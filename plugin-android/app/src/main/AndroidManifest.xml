@@ -7,8 +7,8 @@
             android:name=".RGNWebview"
             android:exported="false" />
         <meta-data
-            android:name="org.godotengine.plugin.v1.READYggWebview"
-            android:value="io.getready.android.READYggPlugin" />
+            android:name="org.godotengine.plugin.v1.RGNPluginMobile"
+            android:value="io.getready.android.RGNPlugin" />
     </application>
 
 </manifest>
