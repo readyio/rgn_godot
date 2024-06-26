@@ -96,8 +96,6 @@ public class RGNPlugin extends GodotPlugin {
     }
 
     public static void onWebformRedirect(String url) {
-        Log.v("godot", "onWebformRedirect, instanceId: " + webformInstanceId);
-        Log.v("godot", "onWebformRedirect, url: " + url);
         GodotLib.calldeferred(webformInstanceId, "on_webform_redirect", new Object[] { url });
     }
 
