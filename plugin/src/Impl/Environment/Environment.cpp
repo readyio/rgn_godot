@@ -21,11 +21,7 @@ namespace RGN {
 	}
 
 	int32_t Environment::GetSystemMemorySize() {
-#ifdef GODOT3
 		return 0;
-#else
-		return godot::OS::get_singleton()->get_memory_info()["physical"];
-#endif
 	}
 
 	std::string Environment::GetGraphicsDeviceName() {
