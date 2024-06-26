@@ -54,11 +54,11 @@ namespace RGN {
             url = url + "&view=" + view;
         }
     #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
-        godot::Object* webview = godot::Engine::get_singleton()->get_singleton("READYggWebview");
+        godot::Object* webview = godot::Engine::get_singleton()->get_singleton("RGNPluginMobile");
         if (webview != nullptr) {
-            webview->call("setInstanceId", G_RGNCore::get_singleton()->get_instance_id());
-            webview->call("setUrlScheme", godot::String(redirectUrl.c_str()));
-            webview->call("openUrl", godot::String(url.c_str()));
+            webview->call("setWebviewInstanceId", G_RGNCore::get_singleton()->get_instance_id());
+            webview->call("setWebviewUrlScheme", godot::String(redirectUrl.c_str()));
+            webview->call("openWebviewUrl", godot::String(url.c_str()));
         }
     #else
         Environment::OpenURL(url);
