@@ -3,7 +3,7 @@
 #include "Core/RGNAuth.h"
 #include "Impl/Core/G_RGNCore.h"
 #include "DeepLink/DeepLink.h"
-#include "Os/Os.h"
+#include "Environment/Environment.h"
 #include "Http/Http.h"
 #include "Utility/Logger.h"
 #include <vector>
@@ -61,7 +61,7 @@ namespace RGN {
             webview->call("openUrl", godot::String(url.c_str()));
         }
     #else
-        Os::OpenURL(url);
+        Environment::OpenURL(url);
     #endif
     }
 
