@@ -69,7 +69,7 @@ RGNPlugin* plugin = nullptr;
 
 void rgn_plugin_init() {
     plugin = memnew(RGNPlugin);
-	Engine::get_singleton()->add_singleton(Engine::Singleton("RGNPluginIOS", plugin));
+	Engine::get_singleton()->add_singleton(Engine::Singleton("RGNPluginMobile", plugin));
 }
 
 void rgn_plugin_deinit() {
