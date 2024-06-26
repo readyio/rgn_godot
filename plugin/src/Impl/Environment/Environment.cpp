@@ -49,7 +49,8 @@ namespace RGN {
 	}
 
 	std::string Environment::GetEngineVersion() {
-		return std::string(godot::Engine::get_singleton()->get_version_info()["string"].stringify().utf8().get_data());
+		godot::String version = godot::Engine::get_singleton()->get_version_info()["version"];
+		return std::string(version.utf8().get_data());
 	}
 
 	std::string Environment::GetAppIdentifier() {
